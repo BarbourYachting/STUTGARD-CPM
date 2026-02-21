@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>STUTGARD CPM | GLOBAL MARKETPLACE v4.0</title>
+    <meta name="description" content="Stutgard CPM - The Elite Marketplace for Car Parking Multiplayer">
+    <meta name="theme-color" content="#030303">
+    <title>STUTGARD CPM | GLOBAL MARKETPLACE v5.0 PRO FINAL</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* STUTGARD CPM - CORE STYLING SYSTEM 
-           ENFORCING DARK THEME & MINECRAFT AESTHETICS
-        */
+        /* CORE VARIABLES */
         :root {
             --st-cyan: #00f2ff;
             --st-blue: #0062ff;
@@ -24,779 +24,1053 @@
             --st-grad: linear-gradient(135deg, #0062ff, #00f2ff);
             --st-danger: #ff3b3b;
             --st-success: #00ff88;
+            --st-gold: #ffea00;
             --mc-font: 'Minecraftia', sans-serif;
+            --st-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            --st-glass: rgba(13, 13, 15, 0.95);
         }
 
-        /* Essential Reset & Anti-Zoom Shield */
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-            outline: none; 
-            touch-action: manipulation; 
+        /* GLOBAL RESET & BASE */
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            touch-action: manipulation;
+            margin: 0;
+            padding: 0;
         }
 
         html, body {
-            margin: 0; padding: 0; 
-            background: var(--st-bg); 
+            width: 100%;
+            height: 100%;
+            background: var(--st-bg);
             color: var(--st-text);
             font-family: 'Rajdhani', sans-serif;
             overflow-x: hidden;
-            width: 100%; height: 100%;
+            -webkit-font-smoothing: antialiased;
             user-select: none;
-            -webkit-user-select: none;
         }
 
-        /* Minecraft Headers Branding */
-        h1, h2, h3, .st-logo, .mc-style, .st-btn, .admin-service-btn, .st-user-pill, .badge-label {
+        /* TYPOGRAPHY */
+        h1, h2, h3, h4, .st-logo, .mc-style, .st-btn, .admin-service-btn, .st-user-pill, .badge-label, .wallet-item, .stat-value {
             font-family: var(--mc-font) !important;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* -------------------------------------------
-           [1] LOADING SYSTEM (PRELOADER)
-           ------------------------------------------- */
+        /* [COMPONENTS: LOADING SCREEN] */
         #st-preloader {
-            position: fixed; inset: 0; background: #000; z-index: 100000;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            transition: opacity 0.8s ease;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 100000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .loader-box { text-align: center; }
-        .st-loader-logo { font-size: 32px; font-weight: 900; color: #fff; margin-bottom: 20px; }
-        .st-loader-logo span { color: var(--st-cyan); }
-        .st-progress-bar { width: 250px; height: 4px; background: #111; border-radius: 10px; overflow: hidden; margin: 0 auto; }
-        .st-progress-fill { width: 0%; height: 100%; background: var(--st-grad); animation: fillProgress 2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        @keyframes fillProgress { 0% { width: 0%; } 100% { width: 100%; } }
-        .loading-text { font-size: 10px; color: #444; margin-top: 15px; font-family: var(--mc-font); }
 
-        /* -------------------------------------------
-           [2] HEADER & TOP NAVIGATION
-           ------------------------------------------- */
+        .st-loader-content { text-align: center; }
+        
+        .st-progress-bar {
+            width: 280px;
+            height: 2px;
+            background: #111;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 30px;
+            border: 1px solid #1a1a1c;
+        }
+
+        .st-progress-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--st-grad);
+            box-shadow: 0 0 15px var(--st-cyan);
+            animation: fillProgress 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes fillProgress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        /* [COMPONENTS: HEADER] */
         .st-header {
-            background: rgba(13, 13, 15, 0.98); backdrop-filter: blur(30px);
-            padding: 0 5%; height: 70px; border-bottom: 2px solid var(--st-border);
-            position: sticky; top: 0; z-index: 1000; display: flex;
-            justify-content: space-between; align-items: center;
+            background: var(--st-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0 4%;
+            height: 85px;
+            border-bottom: 1px solid var(--st-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
-        .st-logo { font-size: 20px; text-decoration: none; color: #fff; display: flex; align-items: center; gap: 10px; }
-        .st-logo i { color: var(--st-cyan); font-size: 24px; }
-        .st-logo span { color: var(--st-cyan); }
 
-        .header-actions { display: flex; align-items: center; gap: 15px; }
-        
+        .st-logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .st-logo i {
+            background: var(--st-grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 5px rgba(0,242,255,0.5));
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* [COMPONENTS: WALLET] */
+        .st-wallet-hub {
+            display: flex;
+            gap: 12px;
+            padding: 5px;
+            background: #000;
+            border-radius: 12px;
+            border: 1px solid #1a1a1c;
+        }
+
+        .wallet-item {
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #0d0d0f;
+            transition: 0.3s;
+        }
+
+        .wallet-item.cash { color: var(--st-success); border-left: 3px solid var(--st-success); }
+        .wallet-item.coins { color: var(--st-gold); border-left: 3px solid var(--st-gold); }
+
+        /* [COMPONENTS: BUTTONS] */
+        .st-btn {
+            padding: 16px 24px;
+            border-radius: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .st-btn-main {
+            background: var(--st-grad);
+            color: #000;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0, 242, 255, 0.2);
+        }
+
+        .st-btn-main:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 255, 0.4);
+        }
+
+        .st-btn-main:active { transform: scale(0.98); }
+
         .admin-service-btn {
-            background: #222; border: 2px solid #fff; color: #fff;
-            padding: 8px 16px; font-size: 9px; cursor: pointer;
-            box-shadow: -4px -4px 0px #000 inset, 4px 4px 0px #444 inset;
-            display: none; transition: 0.2s;
+            background: #ff003c;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 9px;
+            display: none;
         }
-        .admin-service-btn:hover { background: #333; transform: scale(1.05); }
 
-        .st-user-pill {
-            background: var(--st-card); border: 1px solid var(--st-border);
-            padding: 8px 15px; border-radius: 8px; display: flex; align-items: center; gap: 10px;
-        }
-        .status-dot { width: 8px; height: 8px; background: var(--st-success); border-radius: 50%; box-shadow: 0 0 10px var(--st-success); }
+        /* [COMPONENTS: SIDEBAR] */
+        .st-main-layout { display: flex; min-height: calc(100vh - 85px); }
 
-        /* -------------------------------------------
-           [3] SIDEBAR & MAIN LAYOUT
-           ------------------------------------------- */
-        .st-main-layout { display: flex; min-height: calc(100vh - 70px); }
-        
         .st-sidebar {
-            width: 280px; background: var(--st-card); border-right: 1px solid var(--st-border);
-            padding: 30px 0; display: flex; flex-direction: column; gap: 5px;
+            width: 300px;
+            background: var(--st-card);
+            border-right: 1px solid var(--st-border);
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 85px;
+            height: calc(100vh - 85px);
         }
-        @media (max-width: 900px) { .st-sidebar { display: none; } }
-        
+
         .st-nav-link {
-            padding: 18px 30px; color: var(--st-dim); text-decoration: none;
-            font-weight: 700; transition: 0.3s; display: flex; align-items: center; gap: 20px;
-            cursor: pointer; font-size: 14px; position: relative;
+            padding: 20px 35px;
+            color: var(--st-dim);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+            font-weight: 600;
         }
-        .st-nav-link:hover { color: #fff; background: rgba(255,255,255,0.02); }
-        .st-nav-link.active { color: var(--st-cyan); background: rgba(0,242,255,0.05); border-right: 4px solid var(--st-cyan); }
+
         .st-nav-link i { font-size: 18px; width: 25px; text-align: center; }
 
-        /* -------------------------------------------
-           [4] CONTENT PAGES SYSTEM
-           ------------------------------------------- */
-        .st-content { flex: 1; padding: 40px; overflow-y: auto; height: calc(100vh - 70px); background: #050505; }
-        .st-page { display: none; animation: pageSlideIn 0.5s ease forwards; }
-        .st-page.active { display: block; }
-        @keyframes pageSlideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-
-        /* DASHBOARD CARDS */
-        .st-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
-        .stat-card { background: var(--st-card); padding: 25px; border-radius: 15px; border: 1px solid var(--st-border); position: relative; overflow: hidden; }
-        .stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: var(--st-grad); }
-        .stat-val { font-family: var(--mc-font); font-size: 24px; color: var(--st-cyan); margin-bottom: 5px; }
-        .stat-lbl { font-size: 12px; color: var(--st-dim); text-transform: uppercase; font-weight: bold; }
-
-        /* SEARCH ENGINE */
-        .search-container { margin-bottom: 30px; position: relative; }
-        .search-container input {
-            width: 100%; background: var(--st-card); border: 2px solid var(--st-border);
-            padding: 18px 25px 18px 60px; border-radius: 15px; color: #fff; font-size: 16px; transition: 0.3s;
+        .st-nav-link.active {
+            color: var(--st-cyan);
+            background: linear-gradient(90deg, rgba(0,242,255,0.08) 0%, transparent 100%);
+            border-right: 4px solid var(--st-cyan);
         }
-        .search-container input:focus { border-color: var(--st-cyan); box-shadow: 0 0 20px rgba(0,242,255,0.1); }
-        .search-container i { position: absolute; left: 25px; top: 50%; transform: translateY(-50%); color: var(--st-dim); font-size: 20px; }
 
-        /* MARKETPLACE GRID */
-        .st-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .st-nav-link:hover:not(.active) {
+            color: #fff;
+            padding-left: 45px;
+        }
+
+        /* [COMPONENTS: CONTENT & PAGES] */
+        .st-content {
+            flex: 1;
+            padding: 50px;
+            background: #050505;
+            height: calc(100vh - 85px);
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .st-page {
+            display: none;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .st-page.active {
+            display: block;
+            animation: pageEnter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes pageEnter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* [COMPONENTS: MARKET CARDS] */
+        .st-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 35px;
+        }
+
         .st-car-card {
-            background: var(--st-card); border: 1px solid var(--st-border); border-radius: 25px;
-            overflow: hidden; transition: 0.4s; position: relative;
+            background: var(--st-card);
+            border: 1px solid var(--st-border);
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .st-car-card:hover { transform: translateY(-10px); border-color: var(--st-cyan); box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
-        .car-img-box { width: 100%; height: 220px; background: #000; position: relative; }
-        .car-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        
+
+        .st-car-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--st-cyan);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .car-img-box {
+            width: 100%;
+            height: 240px;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .car-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.8s;
+        }
+
+        .st-car-card:hover .car-img-box img { transform: scale(1.1); }
+
         .type-badge {
-            position: absolute; top: 15px; right: 15px; padding: 6px 12px;
-            border-radius: 8px; font-size: 10px; font-weight: 900; z-index: 10;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 900;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .badge-sale { background: var(--st-cyan); color: #000; }
-        .badge-rent { background: #ffea00; color: #000; }
-        .badge-exchange { background: #ff00ff; color: #fff; }
+
+        .badge-SALE { background: var(--st-cyan); color: #000; }
+        .badge-RENT { background: var(--st-gold); color: #000; }
+        .badge-EXCHANGE { background: #ff00ff; color: #fff; }
 
         .car-info { padding: 25px; }
-        .car-price { font-size: 26px; color: var(--st-cyan); font-family: var(--mc-font); margin-bottom: 10px; }
-        .car-title { font-size: 18px; font-weight: 700; margin-bottom: 15px; color: #fff; }
-        .car-meta { display: flex; justify-content: space-between; border-top: 1px solid #1a1a1c; pt: 15px; mt: 15px; font-size: 12px; color: var(--st-dim); }
-
-        /* -------------------------------------------
-           [5] FORMS & UI COMPONENTS
-           ------------------------------------------- */
-        .st-btn {
-            padding: 15px 25px; border-radius: 12px; font-weight: 900; cursor: pointer;
-            transition: 0.3s; border: none; text-align: center; display: inline-block;
-            font-size: 12px; letter-spacing: 1px;
-        }
-        .st-btn-main { background: var(--st-grad); color: #000; width: 100%; box-shadow: 0 5px 20px rgba(0,98,255,0.3); }
-        .st-btn-main:hover { filter: brightness(1.2); transform: translateY(-2px); }
-        .st-btn-danger { background: rgba(255, 59, 59, 0.1); color: var(--st-danger); border: 1px solid var(--st-danger); }
-        .st-btn-danger:hover { background: var(--st-danger); color: #fff; }
-
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 10px; color: var(--st-dim); font-size: 11px; font-family: var(--mc-font); }
         
-        .st-input, select, textarea {
-            width: 100%; background: #000; border: 1px solid var(--st-border);
-            padding: 15px; border-radius: 12px; color: #fff; font-family: inherit; font-size: 14px;
+        .car-price {
+            font-family: var(--mc-font);
+            font-size: 24px;
+            color: var(--st-cyan);
+            margin-bottom: 8px;
         }
-        .st-input:focus { border-color: var(--st-cyan); }
 
-        /* -------------------------------------------
-           [6] CHAT INTERFACE
-           ------------------------------------------- */
+        .car-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        /* [COMPONENTS: MESSENGER] */
         .messenger-layout {
-            display: grid; grid-template-columns: 350px 1fr; height: 70vh;
-            background: var(--st-card); border-radius: 25px; border: 1px solid var(--st-border); overflow: hidden;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            height: 75vh;
+            background: var(--st-card);
+            border-radius: 30px;
+            border: 1px solid var(--st-border);
+            overflow: hidden;
+            box-shadow: var(--st-shadow);
         }
-        @media (max-width: 900px) { .messenger-layout { grid-template-columns: 1fr; } }
-        
-        .contacts-bar { background: #0a0a0c; border-right: 1px solid var(--st-border); overflow-y: auto; }
+
+        .chat-sidebar {
+            background: #0a0a0c;
+            border-right: 1px solid var(--st-border);
+            overflow-y: auto;
+        }
+
         .contact-item {
-            padding: 20px; border-bottom: 1px solid var(--st-border); cursor: pointer;
-            display: flex; align-items: center; gap: 15px; transition: 0.2s;
+            padding: 25px;
+            border-bottom: 1px solid #151517;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
-        .contact-item:hover { background: rgba(0,242,255,0.03); }
-        .contact-item.active { background: rgba(0,242,255,0.08); border-left: 3px solid var(--st-cyan); }
 
-        .chat-view { display: flex; flex-direction: column; background: #050505; }
-        .chat-messages { flex: 1; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .bubble { max-width: 70%; padding: 14px 20px; border-radius: 18px; font-size: 14px; line-height: 1.5; position: relative; }
-        .bubble.sent { align-self: flex-end; background: var(--st-blue); color: #fff; border-bottom-right-radius: 2px; }
-        .bubble.received { align-self: flex-start; background: var(--st-border); color: #fff; border-bottom-left-radius: 2px; }
+        .contact-item:hover { background: #111; }
+        .contact-item.active { background: #151517; border-left: 4px solid var(--st-cyan); }
 
-        /* -------------------------------------------
-           [7] ADMIN SERVICE PANEL
-           ------------------------------------------- */
+        .avatar-circle {
+            width: 45px;
+            height: 45px;
+            background: var(--st-grad);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mc-font);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .chat-main {
+            display: flex;
+            flex-direction: column;
+            background: #050505;
+        }
+
+        .messages-container {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .msg-bubble {
+            max-width: 70%;
+            padding: 16px 22px;
+            border-radius: 20px;
+            font-size: 15px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .msg-sent {
+            align-self: flex-end;
+            background: var(--st-blue);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .msg-received {
+            align-self: flex-start;
+            background: #1a1a1c;
+            color: #fff;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input-box {
+            padding: 25px;
+            background: var(--st-card);
+            border-top: 1px solid var(--st-border);
+            display: flex;
+            gap: 15px;
+        }
+
+        /* [COMPONENTS: ADMIN PANEL] */
         .st-admin-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 10000;
-            padding: 50px; display: none; overflow-y: auto;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 10000;
+            padding: 60px;
+            display: none;
+            overflow-y: auto;
         }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .st-admin-table { width: 100%; border-collapse: collapse; background: #0a0a0c; }
-        .st-admin-table th { padding: 20px; background: #111; color: var(--st-cyan); text-align: left; font-family: var(--mc-font); font-size: 10px; }
-        .st-admin-table td { padding: 20px; border-bottom: 1px solid var(--st-border); font-size: 14px; color: #ddd; }
 
-        /* -------------------------------------------
-           [8] MOBILE BOTTOM NAV
-           ------------------------------------------- */
-        .st-mobile-nav {
-            display: none; position: fixed; bottom: 0; width: 100%; background: var(--st-card);
-            border-top: 1px solid var(--st-border); z-index: 1000; justify-content: space-around; padding: 15px 0;
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
         }
-        @media (max-width: 900px) { .st-mobile-nav { display: flex; } }
-        .mob-item { text-align: center; color: var(--st-dim); font-size: 9px; cursor: pointer; flex: 1; transition: 0.3s; font-family: var(--mc-font); }
-        .mob-item i { font-size: 22px; display: block; margin-bottom: 5px; }
-        .mob-item.active { color: var(--st-cyan); transform: translateY(-5px); }
 
-        /* -------------------------------------------
-           [9] AUTH SYSTEM UI
-           ------------------------------------------- */
+        .stat-card {
+            background: #0d0d0f;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #222;
+        }
+
+        .stat-label { font-size: 12px; color: var(--st-dim); margin-bottom: 10px; }
+        .stat-value { font-size: 22px; color: var(--st-cyan); }
+
+        /* [COMPONENTS: AUTH] */
         .auth-screen {
-            position: fixed; inset: 0; background: #000; z-index: 50000;
-            display: flex; justify-content: center; align-items: center; padding: 20px;
-        }
-        .auth-card {
-            background: var(--st-card); padding: 50px; border-radius: 35px; border: 1px solid var(--st-border);
-            width: 100%; max-width: 450px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 50000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* -------------------------------------------
-           [10] GLOBAL TOAST
-           ------------------------------------------- */
-        .st-toast {
-            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
-            background: var(--st-cyan); color: #000; padding: 15px 35px; border-radius: 50px;
-            font-weight: 900; z-index: 1000000; display: none;
-            box-shadow: 0 10px 40px rgba(0,242,255,0.4); font-family: var(--mc-font); font-size: 11px;
-            animation: toastIn 0.3s ease forwards;
+        .auth-card {
+            background: var(--st-card);
+            padding: 60px;
+            border-radius: 40px;
+            border: 1px solid var(--st-border);
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
-        @keyframes toastIn { from { top: -50px; opacity: 0; } to { top: 30px; opacity: 1; } }
+
+        .st-input {
+            width: 100%;
+            background: #000;
+            border: 1px solid var(--st-border);
+            padding: 18px 25px;
+            border-radius: 15px;
+            color: #fff;
+            margin-bottom: 20px;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .st-input:focus {
+            border-color: var(--st-cyan);
+            box-shadow: 0 0 15px rgba(0,242,255,0.1);
+        }
+
+        /* [COMPONENTS: MOBILE NAVIGATION] */
+        .st-mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: var(--st-glass);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--st-border);
+            z-index: 1000;
+            justify-content: space-around;
+            padding: 15px 0;
+            padding-bottom: calc(15px + env(safe-area-inset-bottom));
+        }
+
+        @media (max-width: 900px) {
+            .st-sidebar { display: none; }
+            .st-content { padding: 25px; padding-bottom: 120px; }
+            .st-mobile-nav { display: flex; }
+            .st-header { height: 75px; }
+            .header-actions .st-user-pill { display: none; }
+        }
+
+        .mob-item {
+            text-align: center;
+            color: var(--st-dim);
+            font-size: 9px;
+            font-family: var(--mc-font);
+            transition: 0.3s;
+        }
+
+        .mob-item i { font-size: 24px; margin-bottom: 5px; display: block; }
+        .mob-item.active { color: var(--st-cyan); }
+
+        .st-toast {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--st-cyan);
+            color: #000;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 900;
+            z-index: 1000000;
+            display: none;
+            box-shadow: 0 10px 30px rgba(0,242,255,0.4);
+            font-family: var(--mc-font);
+            font-size: 11px;
+        }
     </style>
 </head>
 <body>
 
     <div id="st-preloader">
-        <div class="loader-box">
-            <div class="st-loader-logo mc-style">STUTGARD <span>CPM</span></div>
-            <div class="st-progress-bar"><div class="st-progress-fill"></div></div>
-            <div class="loading-text">CONNECTING TO GLOBAL SERVER...</div>
+        <div class="st-loader-content">
+            <h1 class="mc-style" style="font-size: 32px; letter-spacing: 5px;">STUTGARD <span>CPM</span></h1>
+            <p style="color:var(--st-dim); font-size:12px; margin-top:10px;">INITIALIZING SECURE PROTOCOLS</p>
+            <div class="st-progress-bar">
+                <div class="st-progress-fill"></div>
+            </div>
         </div>
     </div>
 
     <div id="st-auth-gate" class="auth-screen">
         <div class="auth-card" id="login-container">
-            <h1 class="mc-style" style="font-size: 26px; margin-bottom: 10px;">STUTGARD <span>CPM</span></h1>
-            <p style="color:var(--st-dim); font-size: 12px; margin-bottom: 40px;">SECURE ACCESS TERMINAL</p>
-            
-            <div class="form-group">
-                <label>IDENTITY (EMAIL)</label>
-                <input type="email" id="gate-email" class="st-input" placeholder="Enter your email...">
-            </div>
-            
-            <div class="form-group">
-                <label>ACCESS CODE (PASSWORD)</label>
-                <input type="password" id="gate-pass" class="st-input" placeholder="••••••••">
-            </div>
-
-            <button class="st-btn st-btn-main mc-style" style="margin-top: 20px;" onclick="handleLogin()">AUTHORIZE ACCESS</button>
-            
-            <div style="margin-top: 30px; font-size: 13px; color: var(--st-dim);">
-                New citizen? <span onclick="toggleAuth(true)" style="color: var(--st-cyan); cursor: pointer; font-weight: bold;">REGISTER HERE</span>
-            </div>
+            <h1 class="mc-style" style="margin-bottom: 10px; color:var(--st-cyan);">SECURITY ACCESS</h1>
+            <p style="color:var(--st-dim); font-size:12px; margin-bottom:40px;">AUTHORIZED PERSONNEL ONLY</p>
+            <input type="email" id="gate-email" class="st-input" placeholder="EMAIL ADDRESS">
+            <input type="password" id="gate-pass" class="st-input" placeholder="ACCESS KEY">
+            <button class="st-btn st-btn-main mc-style" onclick="System.Auth.Login()">AUTHORIZE LOGIN</button>
+            <p style="margin-top:25px; font-size:12px; color:var(--st-dim);">NOT REGISTERED? <span onclick="UI.ToggleAuth(true)" style="color:var(--st-cyan); cursor:pointer">CREATE IDENTITY</span></p>
         </div>
-
+        
         <div class="auth-card" id="register-container" style="display:none">
-            <h1 class="mc-style" style="font-size: 26px; margin-bottom: 10px;">NEW <span>CITIZEN</span></h1>
-            <p style="color:var(--st-dim); font-size: 12px; margin-bottom: 40px;">CREATE YOUR GLOBAL PROFILE</p>
-            
-            <div class="form-group"><label>FULL NAME</label><input type="text" id="reg-name" class="st-input" placeholder="Your Name"></div>
-            <div class="form-group"><label>EMAIL</label><input type="email" id="reg-email" class="st-input" placeholder="name@domain.com"></div>
-            <div class="form-group"><label>PASSWORD</label><input type="password" id="reg-pass" class="st-input" placeholder="Create Password"></div>
-
-            <button class="st-btn st-btn-main mc-style" style="margin-top: 20px;" onclick="handleRegister()">CONFIRM IDENTITY</button>
-            <div style="margin-top: 30px; font-size: 13px; color: var(--st-dim);" onclick="toggleAuth(false)">
-                Already have access? <span style="color: var(--st-cyan); cursor: pointer; font-weight: bold;">LOGIN</span>
-            </div>
+            <h1 class="mc-style" style="margin-bottom: 40px;">CREATE PROFILE</h1>
+            <input type="text" id="reg-name" class="st-input" placeholder="OPERATOR NICKNAME">
+            <input type="email" id="reg-email" class="st-input" placeholder="EMAIL ADDRESS">
+            <input type="password" id="reg-pass" class="st-input" placeholder="SECURE PASSWORD">
+            <button class="st-btn st-btn-main mc-style" onclick="System.Auth.Register()">INITIALIZE ACCOUNT</button>
+            <p style="margin-top:25px; font-size:12px; color:var(--st-dim);">HAVE ACCOUNT? <span onclick="UI.ToggleAuth(false)" style="color:var(--st-cyan); cursor:pointer">BACK TO LOGIN</span></p>
         </div>
     </div>
 
     <div id="admin-panel" class="st-admin-overlay">
-        <div class="admin-header">
-            <h1 class="mc-style" style="color:var(--st-danger); font-size: 24px;">ADMIN <span>SERVICE</span></h1>
-            <button class="admin-service-btn mc-style" style="display:block" onclick="toggleAdminPanel(false)">X CLOSE</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:50px;">
+            <h1 class="mc-style" style="color:var(--st-danger); font-size:28px;">ROOT DIRECTORY</h1>
+            <button class="st-btn" style="background:#222; color:#fff; padding:10px 25px;" onclick="UI.ToggleAdmin(false)">CLOSE ROOT</button>
         </div>
-        <div style="overflow-x: auto; background: #0a0a0c; border-radius: 20px; border: 1px solid var(--st-border);">
-            <table class="st-admin-table">
-                <thead>
+        
+        <div class="admin-grid" id="admin-stats-container">
+            </div>
+
+        <div style="background:var(--st-card); border-radius:25px; border:1px solid var(--st-border); overflow:hidden;">
+            <table style="width:100%; border-collapse:collapse; text-align:left;">
+                <thead style="background:#111; color:var(--st-cyan); font-family:var(--mc-font); font-size:10px;">
                     <tr>
-                        <th>CITIZEN NAME</th>
-                        <th>EMAIL ADDRESS</th>
-                        <th>PASSWORD</th>
-                        <th>JOIN DATE</th>
-                        <th>CONTROLS</th>
+                        <th style="padding:20px 30px;">OPERATOR</th>
+                        <th>EMAIL</th>
+                        <th>KEY</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
                     </tr>
                 </thead>
-                <tbody id="admin-user-rows"></tbody>
+                <tbody id="admin-user-rows" style="font-size:14px; color:var(--st-dim);"></tbody>
             </table>
         </div>
     </div>
 
     <div id="st-app-main" style="display:none">
-        
         <header class="st-header">
-            <a href="#" class="st-logo mc-style"><i class="fas fa-bolt"></i> STUTGARD <span>CPM</span></a>
+            <div class="st-logo mc-style" onclick="UI.SwitchPage('home')">
+                <i class="fas fa-shield-halved"></i> STUTGARD
+            </div>
+            
             <div class="header-actions">
-                <button id="admin-trigger" class="admin-service-btn mc-style" onclick="toggleAdminPanel(true)">ADMIN SERVICE</button>
-                <div class="st-user-pill">
-                    <div class="status-dot"></div>
-                    <span id="current-user-label" class="mc-style" style="font-size:10px; color:#fff;">GUEST</span>
+                <div class="st-wallet-hub" id="main-wallet">
+                    <div class="wallet-item cash">
+                        <i class="fas fa-money-bill-transfer"></i>
+                        <span id="w-cash">0</span>
+                    </div>
+                    <div class="wallet-item coins">
+                        <i class="fas fa-coins"></i>
+                        <span id="w-coins">0</span>
+                    </div>
+                </div>
+                
+                <button id="admin-trigger" class="admin-service-btn mc-style" onclick="UI.ToggleAdmin(true)">
+                    <i class="fas fa-terminal"></i> ROOT
+                </button>
+                
+                <div class="st-user-pill mc-style" style="background:var(--st-card); padding:10px 20px; border-radius:12px; border:1px solid var(--st-border); font-size:11px;">
+                    <i class="fas fa-circle-user" style="color:var(--st-cyan); margin-right:8px;"></i>
+                    <span id="user-display-label">GUEST</span>
                 </div>
             </div>
         </header>
 
         <div class="st-main-layout">
             <aside class="st-sidebar">
-                <div class="st-nav-link active" onclick="switchPage('home', this)"><i class="fas fa-store"></i> MARKETPLACE</div>
-                <div class="st-nav-link" onclick="switchPage('post', this)"><i class="fas fa-plus-square"></i> PUBLISH AD</div>
-                <div class="st-nav-link" onclick="switchPage('chat', this)"><i class="fas fa-comment-dots"></i> MESSAGES</div>
-                <div class="st-nav-link" onclick="switchPage('profile', this)"><i class="fas fa-user-shield"></i> MY PROFILE</div>
-                <div class="st-nav-link" onclick="switchPage('dev', this)"><i class="fas fa-microchip"></i> SYSTEM DEV</div>
-                <div class="st-nav-link" style="margin-top:auto; color:var(--st-danger)" onclick="location.reload()"><i class="fas fa-power-off"></i> DISCONNECT</div>
+                <div class="st-nav-link active" onclick="UI.SwitchPage('home', this)">
+                    <i class="fas fa-layer-group"></i> MARKETPLACE
+                </div>
+                <div class="st-nav-link" onclick="UI.SwitchPage('post', this)">
+                    <i class="fas fa-square-plus"></i> PUBLISH AD
+                </div>
+                <div class="st-nav-link" onclick="UI.SwitchPage('chat', this)">
+                    <i class="fas fa-message"></i> MESSAGES 
+                    <span id="msg-indicator" style="display:none; width:8px; height:8px; background:var(--st-danger); border-radius:50%; margin-left:auto;"></span>
+                </div>
+                <div class="st-nav-link" onclick="UI.SwitchPage('profile', this)">
+                    <i class="fas fa-user-gear"></i> PROFILE & CLOUD
+                </div>
+                
+                <div style="margin-top:auto; padding:20px 35px;">
+                    <div class="st-nav-link" style="color:var(--st-danger); padding:15px 0;" onclick="System.Auth.Logout()">
+                        <i class="fas fa-right-from-bracket"></i> DISCONNECT
+                    </div>
+                </div>
             </aside>
 
             <main class="st-content">
-
                 <section id="page-home" class="st-page active">
-                    <div class="st-stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-val" id="stat-ads-count">0</div>
-                            <div class="stat-lbl">Live Ads</div>
+                    <div style="margin-bottom:40px; display:flex; justify-content:space-between; align-items:flex-end;">
+                        <div>
+                            <h2 class="mc-style" style="font-size:24px;">GLOBAL FEED</h2>
+                            <p style="color:var(--st-dim); font-size:14px;">EXOTIC VEHICLES CURRENTLY IN TRANSIT</p>
                         </div>
-                        <div class="stat-card">
-                            <div class="stat-val" id="stat-users-count">0</div>
-                            <div class="stat-lbl">Citizens</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-val" style="color:var(--st-success)">99.9%</div>
-                            <div class="stat-lbl">Uptime</div>
+                        <div style="background:#111; padding:10px; border-radius:12px; display:flex; gap:10px;">
+                            <button class="st-btn" style="padding:10px 15px; background:var(--st-cyan); color:#000;">ALL</button>
+                            <button class="st-btn" style="padding:10px 15px; background:transparent; color:#fff;">SALE</button>
+                            <button class="st-btn" style="padding:10px 15px; background:transparent; color:#fff;">RENT</button>
                         </div>
                     </div>
-
-                    <div class="search-container">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="market-search" placeholder="Search by model, owner, or listing type..." onkeyup="filterMarket()">
-                    </div>
-
-                    <h2 class="mc-style" style="margin-bottom: 25px; font-size: 18px;">World Market Feed</h2>
-                    <div class="st-grid" id="market-feed">
-                        </div>
+                    <div class="st-grid" id="market-feed-container"></div>
                 </section>
 
                 <section id="page-post" class="st-page">
-                    <div style="max-width: 650px; margin: auto; background: var(--st-card); padding: 40px; border-radius: 30px; border: 1px solid var(--st-border);">
-                        <h2 class="mc-style" style="margin-bottom: 30px; font-size: 20px;">PUBLISH NEW LISTING</h2>
+                    <div style="max-width: 700px; margin: auto; background: var(--st-card); padding: 50px; border-radius: 35px; border: 1px solid var(--st-border);">
+                        <h2 class="mc-style" style="margin-bottom:10px;">LIST NEW ASSET</h2>
+                        <p style="color:var(--st-dim); margin-bottom:40px; font-size:14px;">UPLOAD YOUR VEHICLE TO THE GLOBAL NETWORK</p>
                         
-                        <div class="form-group">
-                            <label>VEHICLE MODEL</label>
-                            <input type="text" id="post-title" class="st-input" placeholder="e.g. BMW M5 CS 2024">
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="form-group">
-                                <label>PRICE (CPM)</label>
-                                <input type="number" id="post-price" class="st-input" placeholder="00,000,000">
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                            <div class="input-group">
+                                <label style="font-size:11px; color:var(--st-dim); margin-bottom:8px; display:block;">VEHICLE MODEL</label>
+                                <input type="text" id="p-title" class="st-input" placeholder="e.g. Mclaren 720S">
                             </div>
-                            <div class="form-group">
-                                <label>LISTING TYPE</label>
-                                <select id="post-type" class="st-input">
-                                    <option value="SALE">FOR SALE</option>
-                                    <option value="RENT">FOR RENT</option>
-                                    <option value="EXCHANGE">FOR EXCHANGE</option>
+                            <div class="input-group">
+                                <label style="font-size:11px; color:var(--st-dim); margin-bottom:8px; display:block;">LISTING TYPE</label>
+                                <select id="p-type" class="st-input">
+                                    <option value="SALE">SELL ASSET</option>
+                                    <option value="RENT">RENTAL SERVICE</option>
+                                    <option value="EXCHANGE">EXCHANGE OFFER</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label>VEHICLE IMAGE</label>
-                            <input type="file" id="post-image" class="st-input" accept="image/*">
+                        <div class="input-group">
+                            <label style="font-size:11px; color:var(--st-dim); margin-bottom:8px; display:block;">PRICE (CPM CURRENCY)</label>
+                            <input type="number" id="p-price" class="st-input" placeholder="0.00">
                         </div>
 
-                        <div class="form-group">
-                            <label>DESCRIPTION (OPTIONAL)</label>
-                            <textarea id="post-desc" class="st-input" style="height: 100px;" placeholder="Add details about upgrades, tuning, etc..."></textarea>
+                        <div class="input-group">
+                            <label style="font-size:11px; color:var(--st-dim); margin-bottom:8px; display:block;">HIGH-RES IMAGERY</label>
+                            <input type="file" id="p-image" class="st-input" accept="image/*" style="padding:12px;">
                         </div>
 
-                        <button class="st-btn st-btn-main mc-style" style="margin-top: 10px;" onclick="execPublish()">CONFIRM & PUBLISH</button>
+                        <button class="st-btn st-btn-main mc-style" style="margin-top:20px;" onclick="System.Market.Publish()">CONFIRM UPLOAD</button>
                     </div>
                 </section>
 
                 <section id="page-chat" class="st-page">
                     <div class="messenger-layout">
-                        <div class="contacts-bar" id="chat-contacts-list">
+                        <aside class="chat-sidebar">
+                            <div style="padding:25px; border-bottom:1px solid var(--st-border);">
+                                <h3 class="mc-style" style="font-size:12px;">SECURE CHATS</h3>
                             </div>
-                        <div class="chat-view">
-                            <div id="chat-header" style="padding: 20px; border-bottom: 1px solid var(--st-border); background: #0a0a0c;">
-                                <h3 class="mc-style" style="font-size: 12px; margin: 0; color: var(--st-cyan);" id="active-chat-name">Select a contact</h3>
-                            </div>
-                            <div class="chat-messages" id="chat-messages-container">
-                                <div style="text-align: center; margin-top: 100px; color: var(--st-dim);">
-                                    <i class="fas fa-comments fa-3x" style="margin-bottom: 20px; opacity: 0.2;"></i>
-                                    <p>Your messages are secured with Stutgard Encryption.</p>
+                            <div id="contacts-list-container"></div>
+                        </aside>
+                        
+                        <main class="chat-main">
+                            <div id="chat-active-header" style="padding:20px 30px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
+                                <div class="avatar-circle" style="width:35px; height:35px; font-size:12px;">?</div>
+                                <div>
+                                    <div id="chat-user-name" class="mc-style" style="font-size:13px;">NO ENCRYPTED SESSION</div>
+                                    <div style="font-size:11px; color:var(--st-success);">P2P CONNECTION STABLE</div>
                                 </div>
                             </div>
-                            <div id="chat-input-row" style="padding: 20px; background: var(--st-card); display: none; gap: 10px;">
-                                <input type="text" id="chat-msg-input" class="st-input" style="margin: 0;" placeholder="Write your message...">
-                                <button class="st-btn st-btn-main" style="width: 80px;" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+                            
+                            <div id="messages-window" class="messages-container">
+                                <div style="margin:auto; text-align:center; color:var(--st-dim);">
+                                    <i class="fas fa-lock" style="font-size:40px; margin-bottom:20px; opacity:0.2;"></i>
+                                    <p>SELECT A CONTACT TO START ENCRYPTED COMMUNICATION</p>
+                                </div>
                             </div>
-                        </div>
+                            
+                            <div id="chat-input-row" class="chat-input-box" style="display:none;">
+                                <input type="text" id="msg-field" class="st-input" style="margin:0;" placeholder="ENTER ENCRYPTED MESSAGE...">
+                                <button class="st-btn st-btn-main" style="width:70px;" onclick="System.Messenger.Send()"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </main>
                     </div>
                 </section>
 
                 <section id="page-profile" class="st-page">
-                    <div style="background: var(--st-card); border-radius: 30px; border: 1px solid var(--st-border); padding: 50px; text-align: center;">
-                        <div style="width: 120px; height: 120px; background: var(--st-grad); border-radius: 50%; margin: 0 auto 30px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #000; font-weight: bold;" id="profile-avatar">U</div>
-                        <h2 class="mc-style" id="profile-name">USER NAME</h2>
-                        <p style="color: var(--st-dim); margin-bottom: 40px;" id="profile-email">email@stutgard.com</p>
-                        
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 400px; margin: auto;">
-                            <button class="st-btn st-btn-danger mc-style" onclick="location.reload()">LOGOUT</button>
-                            <button class="st-btn st-btn-main mc-style" onclick="showToast('PROFILE UPDATED')">EDIT PROFILE</button>
+                    <div style="max-width: 800px; margin: auto;">
+                        <div style="background:var(--st-card); padding:50px; border-radius:35px; border:1px solid var(--st-border); text-align:center; margin-bottom:30px;">
+                            <div id="profile-avatar-big" style="width:120px; height:120px; background:var(--st-grad); border-radius:50%; margin:0 auto 25px; display:flex; align-items:center; justify-content:center; font-size:50px; color:#000; font-weight:bold;">?</div>
+                            <h2 class="mc-style" id="prof-display-name">OPERATOR</h2>
+                            <p id="prof-display-email" style="color:var(--st-dim); margin-bottom:40px;"></p>
+                            
+                            <div id="cloud-sync-panel" style="background:#000; padding:40px; border-radius:25px; border:1px dashed var(--st-cyan); position:relative; overflow:hidden;">
+                                <div id="sync-glow" style="position:absolute; inset:0; background:var(--st-cyan); opacity:0; transition:0.5s;"></div>
+                                <h3 class="mc-style" style="font-size:16px; color:var(--st-cyan); margin-bottom:15px;">CPM CLOUD TERMINAL</h3>
+                                <p style="font-size:13px; color:var(--st-dim); margin-bottom:30px; line-height:1.6;">LINK YOUR GAME IDENTIFIER TO SYNCHRONIZE YOUR FINANCIAL ASSETS FROM CAR PARKING SERVERS.</p>
+                                
+                                <div style="max-width:300px; margin:0 auto;">
+                                    <input type="text" id="game-id-input" class="st-input" style="text-align:center; font-size:20px; letter-spacing:5px;" placeholder="ID: 000000">
+                                    <button class="st-btn st-btn-main mc-style" onclick="System.Cloud.StartSync()">INITIALIZE SYNC</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
-
-                <section id="page-dev" class="st-page">
-                    <div style="background: #000; border: 1px solid var(--st-cyan); padding: 40px; border-radius: 30px;">
-                        <h2 class="mc-style">STUTGARD <span>KERNEL</span></h2>
-                        <p style="color: var(--st-dim); font-size: 14px;">Direct access to core developers. Reports are reviewed every 24 hours.</p>
-                        <div class="form-group" style="margin-top: 30px;">
-                            <label>TICKET TYPE</label>
-                            <select class="st-input"><option>Bug Report</option><option>Feature Suggestion</option><option>Admin Inquiry</option></select>
-                        </div>
-                        <textarea class="st-input" style="height: 150px; margin-top: 10px;" placeholder="Describe your request..."></textarea>
-                        <button class="st-btn st-btn-main mc-style" onclick="showToast('TICKET SUBMITTED')">SUBMIT TICKET</button>
-                    </div>
-                </section>
-
             </main>
         </div>
 
         <nav class="st-mobile-nav">
-            <div class="mob-item active" onclick="switchPage('home', this)"><i class="fas fa-home"></i>HOME</div>
-            <div class="mob-item" onclick="switchPage('post', this)"><i class="fas fa-plus-circle"></i>POST</div>
-            <div class="mob-item" onclick="switchPage('chat', this)"><i class="fas fa-comments"></i>CHAT</div>
-            <div class="mob-item" onclick="switchPage('profile', this)"><i class="fas fa-user"></i>ME</div>
+            <div class="mob-item active" onclick="UI.SwitchPage('home', this)"><i class="fas fa-house"></i>MARKET</div>
+            <div class="mob-item" onclick="UI.SwitchPage('post', this)"><i class="fas fa-circle-plus"></i>POST</div>
+            <div class="mob-item" onclick="UI.SwitchPage('chat', this)"><i class="fas fa-comments"></i>CHAT</div>
+            <div class="mob-item" onclick="UI.SwitchPage('profile', this)"><i class="fas fa-user-gear"></i>SYNC</div>
         </nav>
     </div>
 
-    <div id="st-toast" class="st-toast">ACTION SUCCESSFUL</div>
+    <div id="st-toast" class="st-toast">SYSTEM MESSAGE</div>
 
     <script>
-        /* 1. STATE & DATABASE INITIALIZATION */
-        let users = JSON.parse(localStorage.getItem('st_users')) || [
-            { name: "Global Admin", email: "mustafabarbour5@gmail.com", pass: "Abd120120", role: "admin", date: "2024-01-01" }
-        ];
-        let ads = JSON.parse(localStorage.getItem('st_ads')) || [];
-        let messages = JSON.parse(localStorage.getItem('st_msgs')) || [];
-        
-        let currentUser = null;
-        let activeChatUser = null;
+        /**
+         * STUTGARD CORE ENGINE v5.0
+         * Handles: Auth, Market, Messenger, Cloud Sync, and Admin Root.
+         */
 
-        /* 2. PERSISTENCE LAYER */
-        function syncDB() {
-            localStorage.setItem('st_users', JSON.stringify(users));
-            localStorage.setItem('st_ads', JSON.stringify(ads));
-            localStorage.setItem('st_msgs', JSON.stringify(messages));
-            updateDashboardStats();
-        }
-
-        /* 3. AUTHENTICATION LOGIC */
-        function toggleAuth(isReg) {
-            document.getElementById('login-container').style.display = isReg ? 'none' : 'block';
-            document.getElementById('register-container').style.display = isReg ? 'block' : 'none';
-        }
-
-        function handleRegister() {
-            const n = document.getElementById('reg-name').value;
-            const e = document.getElementById('reg-email').value;
-            const p = document.getElementById('reg-pass').value;
-
-            if(!n || !e || !p) return showToast("PLEASE FILL ALL FIELDS", "error");
-            if(users.find(u => u.email === e)) return showToast("EMAIL ALREADY REGISTERED", "error");
-
-            users.push({
-                name: n, email: e, pass: p, 
-                role: "user", date: new Date().toLocaleDateString()
-            });
-            syncDB();
-            showToast("IDENTITY CREATED! LOGIN NOW.");
-            toggleAuth(false);
-        }
-
-        function handleLogin() {
-            const e = document.getElementById('gate-email').value;
-            const p = document.getElementById('gate-pass').value;
-            const user = users.find(u => u.email === e && u.pass === p);
-
-            if(user) {
-                currentUser = user;
-                initializeSession();
-            } else {
-                showToast("INVALID ACCESS CODE", "error");
-            }
-        }
-
-        function initializeSession() {
-            document.getElementById('st-auth-gate').style.display = 'none';
-            document.getElementById('st-app-main').style.display = 'block';
-            document.getElementById('current-user-label').innerText = currentUser.name;
-            document.getElementById('profile-name').innerText = currentUser.name;
-            document.getElementById('profile-email').innerText = currentUser.email;
-            document.getElementById('profile-avatar').innerText = currentUser.name[0].toUpperCase();
-
-            if(currentUser.role === 'admin') {
-                document.getElementById('admin-trigger').style.display = 'block';
-            }
-
-            renderMarket();
-            renderAdminUsers();
-            updateDashboardStats();
-            showToast("CONNECTED TO STUTGARD CORE");
-        }
-
-        /* 4. NAVIGATION ENGINE */
-        function switchPage(pageId, element) {
-            document.querySelectorAll('.st-page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + pageId).classList.add('active');
-
-            // Handle Desktop Links
-            document.querySelectorAll('.st-nav-link').forEach(l => l.classList.remove('active'));
-            if(element.classList.contains('st-nav-link')) element.classList.add('active');
-
-            // Handle Mobile Tabs
-            document.querySelectorAll('.mob-item').forEach(m => m.classList.remove('active'));
-            if(element.classList.contains('mob-item')) element.classList.add('active');
-
-            if(pageId === 'chat') renderContacts();
-        }
-
-        /* 5. MARKETPLACE ENGINE */
-        function execPublish() {
-            const title = document.getElementById('post-title').value;
-            const price = document.getElementById('post-price').value;
-            const type = document.getElementById('post-type').value;
-            const imgFile = document.getElementById('post-image').files[0];
-
-            if(!title || !price || !imgFile) return showToast("INCOMPLETE DATA", "error");
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const newAd = {
-                    id: Date.now(),
-                    title: title,
-                    price: price,
-                    type: type,
-                    image: e.target.result,
-                    owner: currentUser.name,
-                    ownerEmail: currentUser.email,
-                    date: new Date().toLocaleDateString()
-                };
-                ads.unshift(newAd);
-                syncDB();
-                showToast("AD PUBLISHED SUCCESSFULLY");
-                
-                // Clear Form
-                document.getElementById('post-title').value = "";
-                document.getElementById('post-price').value = "";
-                document.getElementById('post-image').value = "";
-                
-                switchPage('home', document.querySelector('.st-nav-link'));
-                renderMarket();
-            };
-            reader.readAsDataURL(imgFile);
-        }
-
-        function renderMarket(data = null) {
-            const container = document.getElementById('market-feed');
-            container.innerHTML = "";
-            const list = data || ads;
-
-            if(list.length === 0) {
-                container.innerHTML = "<div style='grid-column: 1/-1; text-align:center; padding:50px; color:var(--st-dim);'>NO LISTINGS AVAILABLE AT THE MOMENT</div>";
-                return;
-            }
-
-            list.forEach(ad => {
-                const badgeType = ad.type === 'SALE' ? 'badge-sale' : (ad.type === 'RENT' ? 'badge-rent' : 'badge-exchange');
-                container.innerHTML += `
-                    <div class="st-car-card">
-                        <div class="type-badge ${badgeType}">${ad.type}</div>
-                        <div class="car-img-box">
-                            <img src="${ad.image}" alt="car">
-                        </div>
-                        <div class="car-info">
-                            <div class="car-price">${parseInt(ad.price).toLocaleString()} CPM</div>
-                            <div class="car-title">${ad.title}</div>
-                            <div class="car-meta">
-                                <span><i class="fas fa-user-circle"></i> ${ad.owner}</span>
-                                <span><i class="fas fa-calendar-alt"></i> ${ad.date}</span>
-                            </div>
-                            <div style="margin-top: 20px;">
-                                ${ad.ownerEmail === currentUser.email ? 
-                                `<button class="st-btn st-btn-danger" style="width:100%" onclick="deleteAd(${ad.id})">DELETE LISTING</button>` :
-                                `<button class="st-btn st-btn-main" onclick="openChatWith('${ad.ownerEmail}', '${ad.owner}')">CONTACT SELLER</button>`}
-                            </div>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        function filterMarket() {
-            const q = document.getElementById('market-search').value.toLowerCase();
-            const filtered = ads.filter(a => 
-                a.title.toLowerCase().includes(q) || 
-                a.owner.toLowerCase().includes(q) || 
-                a.type.toLowerCase().includes(q)
-            );
-            renderMarket(filtered);
-        }
-
-        function deleteAd(id) {
-            if(confirm("DELETE THIS LISTING PERMANENTLY?")) {
-                ads = ads.filter(a => a.id !== id);
-                syncDB();
-                renderMarket();
-                showToast("LISTING REMOVED");
-            }
-        }
-
-        /* 6. MESSENGER ENGINE */
-        function openChatWith(email, name) {
-            activeChatUser = { email, name };
-            switchPage('chat', document.querySelectorAll('.st-nav-link')[2]);
-            document.getElementById('active-chat-name').innerText = "CHATTING WITH: " + name;
-            document.getElementById('chat-input-row').style.display = 'flex';
-            renderMessages();
-            renderContacts();
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById('chat-msg-input');
-            if(!input.value.trim()) return;
-
-            messages.push({
-                from: currentUser.email, fromName: currentUser.name,
-                to: activeChatUser.email, toName: activeChatUser.name,
-                text: input.value,
-                timestamp: Date.now()
-            });
-
-            syncDB();
-            input.value = "";
-            renderMessages();
-            renderContacts();
-        }
-
-        function renderMessages() {
-            const container = document.getElementById('chat-messages-container');
-            container.innerHTML = "";
+        // --- DATABASE EMULATION ---
+        const DB = {
+            get: (key) => JSON.parse(localStorage.getItem('st_' + key)),
+            set: (key, val) => localStorage.setItem('st_' + key, JSON.stringify(val)),
             
-            const conversation = messages.filter(m => 
-                (m.from === currentUser.email && m.to === activeChatUser.email) ||
-                (m.to === currentUser.email && m.from === activeChatUser.email)
-            );
-
-            if(conversation.length === 0) {
-                container.innerHTML = "<p style='text-align:center; color:var(--st-dim); margin-top:50px;'>No messages yet. Say hello!</p>";
-            }
-
-            conversation.forEach(m => {
-                const side = m.from === currentUser.email ? 'sent' : 'received';
-                container.innerHTML += `<div class="bubble ${side}">${m.text}</div>`;
-            });
-            container.scrollTop = container.scrollHeight;
-        }
-
-        function renderContacts() {
-            const list = document.getElementById('chat-contacts-list');
-            list.innerHTML = "";
-            
-            let partners = [];
-            messages.forEach(m => {
-                if(m.from === currentUser.email) partners.push({e: m.to, n: m.toName});
-                if(m.to === currentUser.email) partners.push({e: m.from, n: m.fromName});
-            });
-
-            // Unique contacts only
-            const unique = Array.from(new Set(partners.map(p => p.e))).map(e => partners.find(p => p.e === e));
-
-            unique.forEach(p => {
-                const isActive = activeChatUser && activeChatUser.email === p.e ? 'active' : '';
-                list.innerHTML += `
-                    <div class="contact-item ${isActive}" onclick="openChatWith('${p.e}', '${p.n}')">
-                        <div style="width:45px; height:45px; background:var(--st-blue); border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; font-family:var(--mc-font);">${p.n[0]}</div>
-                        <div>
-                            <div style="font-weight:bold; color:#fff; font-size:14px;">${p.n}</div>
-                            <div style="font-size:11px; color:var(--st-dim);">Citizen Profile</div>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        /* 7. ADMIN ENGINE */
-        function toggleAdminPanel(show) {
-            document.getElementById('admin-panel').style.display = show ? 'block' : 'none';
-            if(show) renderAdminUsers();
-        }
-
-        function renderAdminUsers() {
-            const container = document.getElementById('admin-user-rows');
-            container.innerHTML = "";
-            users.forEach((u, index) => {
-                if(u.role === 'admin' && u.email !== currentUser.email) return;
-                container.innerHTML += `
-                    <tr>
-                        <td style="font-weight:bold;">${u.name} ${u.email === currentUser.email ? '(YOU)' : ''}</td>
-                        <td style="color:var(--st-dim);">${u.email}</td>
-                        <td style="font-family:monospace; color:var(--st-cyan);">${u.pass}</td>
-                        <td>${u.date || '---'}</td>
-                        <td>
-                            ${u.role !== 'admin' ? `<button class="st-btn st-btn-danger" style="padding:5px 12px; font-size:9px;" onclick="banUser(${index})">BAN USER</button>` : '<span style="color:var(--st-success)">CORE ADMIN</span>'}
-                        </td>
-                    </tr>`;
-            });
-        }
-
-        function banUser(idx) {
-            if(confirm("ARE YOU SURE YOU WANT TO BAN THIS CITIZEN?")) {
-                users.splice(idx, 1);
-                syncDB();
-                renderAdminUsers();
-                showToast("CITIZEN BANNED");
-            }
-        }
-
-        /* 8. SYSTEM UTILS */
-        function updateDashboardStats() {
-            document.getElementById('stat-ads-count').innerText = ads.length;
-            document.getElementById('stat-users-count').innerText = users.length;
-        }
-
-        function showToast(msg, type = "success") {
-            const t = document.getElementById('st-toast');
-            t.innerText = msg;
-            t.style.background = type === 'success' ? 'var(--st-cyan)' : 'var(--st-danger)';
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
-        }
-
-        /* 9. ANTI-ZOOM & SYSTEM SHIELDS */
-        document.addEventListener('touchstart', (e) => {
-            if (e.touches.length > 1) e.preventDefault();
-        }, { passive: false });
-
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', (e) => {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) e.preventDefault();
-            lastTouchEnd = now;
-        }, false);
-
-        /* 10. INITIALIZATION */
-        window.onload = () => {
-            setTimeout(() => {
-                const loader = document.getElementById('st-preloader');
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 800);
-            }, 2200);
+            users: JSON.parse(localStorage.getItem('st_users')) || [
+                { name: "SuperAdmin", email: "mustafabarbour5@gmail.com", pass: "Abd120120", role: "admin", cash: 1500000, coins: 500, linked: false }
+            ],
+            ads: JSON.parse(localStorage.getItem('st_ads')) || [],
+            msgs: JSON.parse(localStorage.getItem('st_msgs')) || [],
+            session: JSON.parse(localStorage.getItem('st_session')) || null
         };
 
+        // --- SYSTEM MODULES ---
+        const System = {
+            Auth: {
+                Register: () => {
+                    const n = document.getElementById('reg-name').value, e = document.getElementById('reg-email').value, p = document.getElementById('reg-pass').value;
+                    if(!n || !e || !p) return UI.Toast("ERR: INCOMPLETE DATA");
+                    if(DB.users.find(u => u.email === e)) return UI.Toast("ERR: IDENTITY EXISTS");
+                    
+                    const newUser = { name: n, email: e, pass: p, role: "user", cash: 0, coins: 0, linked: false, joined: Date.now() };
+                    DB.users.push(newUser);
+                    DB.set('users', DB.users);
+                    UI.Toast("IDENTITY CREATED - ACCESS GRANTED");
+                    UI.ToggleAuth(false);
+                },
+                Login: () => {
+                    const e = document.getElementById('gate-email').value, p = document.getElementById('gate-pass').value;
+                    const user = DB.users.find(u => u.email === e && u.pass === p);
+                    
+                    if(user) {
+                        DB.session = user;
+                        DB.set('session', user);
+                        UI.Toast("WELCOME BACK, " + user.name);
+                        System.App.Initialize();
+                    } else {
+                        UI.Toast("ACCESS DENIED: INVALID KEY");
+                    }
+                },
+                Logout: () => {
+                    localStorage.removeItem('st_session');
+                    location.reload();
+                }
+            },
+
+            Market: {
+                Publish: () => {
+                    const t = document.getElementById('p-title').value, 
+                          p = document.getElementById('p-price').value, 
+                          type = document.getElementById('p-type').value, 
+                          img = document.getElementById('p-image').files[0];
+
+                    if(!t || !p || !img) return UI.Toast("ERR: DATA MISSING");
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const newAd = {
+                            id: Date.now(),
+                            title: t,
+                            price: p,
+                            type: type,
+                            img: e.target.result,
+                            owner: DB.session.name,
+                            ownerEmail: DB.session.email
+                        };
+                        DB.ads.unshift(newAd);
+                        DB.set('ads', DB.ads);
+                        UI.Toast("ASSET PUBLISHED TO GLOBAL FEED");
+                        UI.SwitchPage('home', document.querySelectorAll('.st-nav-link')[0]);
+                        System.Market.Render();
+                    };
+                    reader.readAsDataURL(img);
+                },
+                Render: () => {
+                    const container = document.getElementById('market-feed-container');
+                    container.innerHTML = DB.ads.length ? "" : "<div style='grid-column:1/-1; text-align:center; padding:100px; color:#222; font-family:var(--mc-font);'>FEED_EMPTY</div>";
+                    
+                    DB.ads.forEach(ad => {
+                        container.innerHTML += `
+                            <div class="st-car-card">
+                                <div class="type-badge badge-${ad.type}">${ad.type}</div>
+                                <div class="car-img-box"><img src="${ad.img}"></div>
+                                <div class="car-info">
+                                    <div class="car-price">${parseInt(ad.price).toLocaleString()} CPM</div>
+                                    <div class="car-title">${ad.title}</div>
+                                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                                        <button class="st-btn st-btn-main mc-style" onclick="System.Messenger.OpenSession('${ad.ownerEmail}', '${ad.owner}')">CONTACT</button>
+                                        <button class="st-btn" style="background:#1a1a1c; color:#fff;" onclick="UI.Toast('INSPECTING ASSET...')">INSPECT</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            },
+
+            Messenger: {
+                activeEmail: null,
+                OpenSession: (email, name) => {
+                    if(email === DB.session.email) return UI.Toast("SYSTEM: CANNOT CHAT WITH SELF");
+                    System.Messenger.activeEmail = email;
+                    UI.SwitchPage('chat', document.querySelectorAll('.st-nav-link')[2]);
+                    System.Messenger.RenderContacts();
+                    System.Messenger.RenderMessages();
+                    document.getElementById('chat-user-name').innerText = name;
+                    document.getElementById('chat-input-row').style.display = 'flex';
+                },
+                Send: () => {
+                    const f = document.getElementById('msg-field');
+                    if(!f.value || !System.Messenger.activeEmail) return;
+                    
+                    DB.msgs.push({
+                        from: DB.session.email,
+                        to: System.Messenger.activeEmail,
+                        text: f.value,
+                        time: Date.now()
+                    });
+                    f.value = "";
+                    DB.set('msgs', DB.msgs);
+                    System.Messenger.RenderMessages();
+                },
+                RenderMessages: () => {
+                    const win = document.getElementById('messages-window');
+                    win.innerHTML = "";
+                    const active = DB.msgs.filter(m => 
+                        (m.from === DB.session.email && m.to === System.Messenger.activeEmail) || 
+                        (m.to === DB.session.email && m.from === System.Messenger.activeEmail)
+                    );
+                    
+                    active.forEach(m => {
+                        const side = m.from === DB.session.email ? 'sent' : 'received';
+                        win.innerHTML += `<div class="msg-bubble msg-${side}">${m.text}</div>`;
+                    });
+                    win.scrollTop = win.scrollHeight;
+                },
+                RenderContacts: () => {
+                    const container = document.getElementById('contacts-list-container');
+                    const usersInChat = [...new Set(DB.msgs.filter(m => m.to === DB.session.email || m.from === DB.session.email).map(m => m.from === DB.session.email ? m.to : m.from))];
+                    
+                    container.innerHTML = usersInChat.length ? "" : "<p style='padding:30px; color:#333; font-size:12px; text-align:center;'>NO ACTIVE SESSIONS</p>";
+                    usersInChat.forEach(email => {
+                        const user = DB.users.find(u => u.email === email) || {name: "Ghost Operator"};
+                        container.innerHTML += `
+                            <div class="contact-item ${System.Messenger.activeEmail === email ? 'active' : ''}" onclick="System.Messenger.OpenSession('${email}', '${user.name}')">
+                                <div class="avatar-circle">${user.name[0]}</div>
+                                <div style="flex:1">
+                                    <div class="mc-style" style="font-size:12px;">${user.name}</div>
+                                    <div style="font-size:11px; color:var(--st-dim);">SECURE CHANNEL</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            },
+
+            Cloud: {
+                StartSync: () => {
+                    const id = document.getElementById('game-id-input').value;
+                    if(!id || id.length < 4) return UI.Toast("ERR: INVALID GAME ID");
+                    
+                    document.getElementById('sync-glow').style.opacity = '0.1';
+                    UI.Toast("ESTABLISHING CONNECTION TO OLZHASS SERVERS...");
+                    
+                    setTimeout(() => {
+                        UI.Toast("ID " + id + " DETECTED. FETCHING BINARY DATA...");
+                        setTimeout(() => {
+                            // Simulatiing real data fetch
+                            DB.session.cash = 48500600;
+                            DB.session.coins = 22450;
+                            DB.session.linked = true;
+                            
+                            // Update the main DB
+                            const idx = DB.users.findIndex(u => u.email === DB.session.email);
+                            DB.users[idx] = DB.session;
+                            
+                            DB.set('users', DB.users);
+                            DB.set('session', DB.session);
+                            
+                            UI.UpdateWallet();
+                            UI.Toast("SYNC COMPLETE: 48M CASH / 22K COINS");
+                            document.getElementById('cloud-sync-panel').innerHTML = `
+                                <i class="fas fa-circle-check" style="font-size:50px; color:var(--st-success); margin-bottom:20px;"></i>
+                                <h3 class="mc-style">CLOUD LINKED</h3>
+                                <p style="color:var(--st-dim);">ID: ${id} | STATUS: ACTIVE</p>
+                            `;
+                        }, 2500);
+                    }, 1500);
+                }
+            },
+
+            App: {
+                Initialize: () => {
+                    if(!DB.session) return;
+                    document.getElementById('st-auth-gate').style.display = 'none';
+                    document.getElementById('st-app-main').style.display = 'block';
+                    document.getElementById('user-display-label').innerText = DB.session.name;
+                    document.getElementById('prof-display-name').innerText = DB.session.name;
+                    document.getElementById('prof-display-email').innerText = DB.session.email;
+                    document.getElementById('profile-avatar-big').innerText = DB.session.name[0];
+                    
+                    if(DB.session.role === 'admin') document.getElementById('admin-trigger').style.display = 'block';
+                    
+                    UI.UpdateWallet();
+                    System.Market.Render();
+                    System.Messenger.RenderContacts();
+                }
+            }
+        };
+
+        // --- UI & INTERFACE MODULE ---
+        const UI = {
+            SwitchPage: (pageId, el) => {
+                document.querySelectorAll('.st-page').forEach(p => p.classList.remove('active'));
+                document.getElementById('page-' + pageId).classList.add('active');
+                
+                document.querySelectorAll('.st-nav-link, .mob-item').forEach(l => l.classList.remove('active'));
+                if(el) el.classList.add('active');
+                else {
+                    // Mobile fallback
+                    const mobItems = document.querySelectorAll('.mob-item');
+                    if(pageId === 'home') mobItems[0].classList.add('active');
+                }
+            },
+            
+            ToggleAuth: (isReg) => {
+                document.getElementById('login-container').style.display = isReg ? 'none' : 'block';
+                document.getElementById('register-container').style.display = isReg ? 'block' : 'none';
+            },
+            
+            Toast: (msg) => {
+                const t = document.getElementById('st-toast');
+                t.innerText = msg;
+                t.style.display = 'block';
+                setTimeout(() => t.style.display = 'none', 3500);
+            },
+            
+            UpdateWallet: () => {
+                document.getElementById('w-cash').innerText = DB.session.cash.toLocaleString();
+                document.getElementById('w-coins').innerText = DB.session.coins.toLocaleString();
+            },
+            
+            ToggleAdmin: (show) => {
+                if(show) {
+                    const tbody = document.getElementById('admin-user-rows');
+                    tbody.innerHTML = "";
+                    DB.users.forEach((u, i) => {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td style="padding:20px 30px; font-weight:bold; color:#fff;">${u.name}</td>
+                                <td>${u.email}</td>
+                                <td style="font-family:monospace;">${u.pass}</td>
+                                <td><span style="color:var(--st-success);">ONLINE</span></td>
+                                <td>
+                                    <button class="st-btn" style="background:transparent; color:var(--st-danger); padding:5px 10px;" onclick="UI.AdminDeleteUser(${i})">BAN</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    
+                    document.getElementById('admin-stats-container').innerHTML = `
+                        <div class="stat-card"><div class="stat-label">TOTAL OPERATORS</div><div class="stat-value">${DB.users.length}</div></div>
+                        <div class="stat-card"><div class="stat-label">TOTAL ASSETS</div><div class="stat-value">${DB.ads.length}</div></div>
+                        <div class="stat-card"><div class="stat-label">ENCRYPTED MSGS</div><div class="stat-value">${DB.msgs.length}</div></div>
+                        <div class="stat-card"><div class="stat-label">ROOT STATUS</div><div class="stat-value" style="color:var(--st-success);">SECURE</div></div>
+                    `;
+                    document.getElementById('admin-panel').style.display = 'block';
+                } else {
+                    document.getElementById('admin-panel').style.display = 'none';
+                }
+            },
+            
+            AdminDeleteUser: (idx) => {
+                if(confirm("PERMANENTLY BAN OPERATOR?")) {
+                    DB.users.splice(idx, 1);
+                    DB.set('users', DB.users);
+                    UI.ToggleAdmin(true);
+                    UI.Toast("OPERATOR REMOVED FROM DATABASE");
+                }
+            }
+        };
+
+        // --- BOOTSTRAP ---
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('st-preloader');
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    if(DB.session) System.App.Initialize();
+                }, 800);
+            }, 2500);
+        });
     </script>
 </body>
 </html>
