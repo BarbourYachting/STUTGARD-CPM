@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUTGARD CPM | الموثق الرسمي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark: #0a0a0a;
+            --card-bg: #141414;
+            --border: #2a2a2a;
+            --meta-blue: #0095f6;
+            --error: #ff4d4d;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark);
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* شاشات الدخول والتسجيل */
+        .auth-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-box {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            width: 400px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: none; /* يتم التحكم به عبر JS */
+        }
+
+        .auth-box.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .auth-box h2 { color: var(--gold); text-align: center; margin-bottom: 25px; font-size: 28px; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #888; font-size: 14px; }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid var(--border);
+            color: white;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+        .form-group input:focus { border-color: var(--gold); }
+
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .auth-btn:hover { background: #b8962d; transform: scale(1.02); }
+
+        .switch-auth { text-align: center; margin-top: 20px; font-size: 14px; color: #666; }
+        .switch-auth span { color: var(--gold); cursor: pointer; text-decoration: underline; }
+
+        /* شريط اللغات العلوي */
+        .top-bar {
+            background: #000;
+            padding: 10px 5%;
+            display: flex;
+            justify-content: flex-start;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+        .lang-switcher span { cursor: pointer; transition: 0.3s; }
+        .lang-switcher span:hover { color: var(--gold); }
+
+        /* الهيدر والملاحة */
+        header {
+            padding: 20px 5%;
+            background: var(--dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-size: 30px; font-weight: 900; letter-spacing: -1px; }
+        .logo span { color: var(--gold); }
+        .verified-badge { color: var(--meta-blue); font-size: 20px; margin-right: 5px; }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #111;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--gold);
+        }
+
+        .nav-link {
+            padding: 20px 40px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            color: #ccc;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: #1a1a1a;
+            color: var(--gold);
+            border-bottom: 3px solid var(--gold);
+        }
+
+        /* لوحة تحكم مصطفى (STUTGARD) */
+        #admin-panel {
+            display: none;
+            background: #1a0202;
+            margin: 30px 5%;
+            padding: 30px;
+            border: 2px solid #ff0000;
+            border-radius: 15px;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .admin-table th, .admin-table td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid #333;
+        }
+        .admin-table th { color: var(--gold); background: #000; }
+        .ban-btn { background: red; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+
+        /* شبكة السيارات والمنشورات */
+        .container { padding: 40px 5%; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .car-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: 0.4s;
+            position: relative;
+        }
+        .car-card:hover { transform: translateY(-10px); border-color: var(--gold); }
+
+        .car-image {
+            width: 100%;
+            height: 200px;
+            background: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #333;
+        }
+
+        .car-details { padding: 20px; }
+        .car-details h3 { margin: 0 0 10px 0; font-size: 20px; }
+        .car-details .price { color: var(--gold); font-size: 22px; font-weight: bold; }
+        
+        .post-btn {
+            position: absolute;
+            top: 15px; left: 15px;
+            background: var(--gold);
+            color: #000;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 20px; cursor: pointer; font-weight: bold;
+        }
+
+        /* الدردشة */
+        #chat-trigger {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--gold); color: black;
+            padding: 15px 25px; border-radius: 50px;
+            font-weight: bold; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .chat-window {
+            position: fixed; bottom: 100px; right: 30px;
+            width: 350px; height: 450px; background: #fff;
+            border-radius: 15px; color: black; display: none;
+            flex-direction: column; z-index: 999;
+        }
+
+        /* فوتر */
+        footer {
+            background: #000;
+            padding: 80px 5% 40px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: 100px;
+        }
+        .footer-logo { font-size: 24px; color: var(--gold); font-weight: bold; margin-bottom: 20px; }
+        .signature { letter-spacing: 10px; text-transform: uppercase; font-size: 12px; color: #444; margin-top: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="lang-switcher">
+            <span>العربية</span> | <span>English</span> | <span>Deutsch</span> | <span>Pусский</span> | <span>Türkçe</span> | <span>Italiano</span> | <span>Español</span>
+        </div>
+    </div>
+
+    <div id="auth-screen" class="auth-container">
+        <div id="login-box" class="auth-box active">
+            <h2>تسجيل الدخول</h2>
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="login-email" placeholder="example@mail.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة السر</label>
+                <input type="password" id="login-pass" placeholder="••••••••">
+            </div>
+            <button class="auth-btn" onclick="attemptLogin()">دخول الآن</button>
+            <div class="switch-auth">ليس لديك حساب؟ <span onclick="toggleAuth('signup')">إنشاء حساب جديد</span></div>
+        </div>
+
+        <div id="signup-box" class="auth-box">
+            <h2>إنشاء حساب جديد</h2>
+            <div class="form-group">
+                <label>اسم المستخدم</label>
+                <input type="text" id="reg-name" placeholder="User123">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="reg-email" placeholder="example@mail.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة السر</label>
+                <input type="password" id="reg-pass" placeholder="••••••••">
+            </div>
+            <button class="auth-btn" onclick="attemptSignup()">إنشاء حساب</button>
+            <div class="switch-auth">لديك حساب بالفعل؟ <span onclick="toggleAuth('login')">تسجيل الدخول</span></div>
+        </div>
+    </div>
+
+    <div id="main-site" style="display:none;">
+        <header>
+            <div class="logo">STUTGARD <span>CPM</span> <i class="fas fa-check-circle verified-badge"></i></div>
+            <div id="user-display" style="color:var(--gold); font-weight:bold;"></div>
+            <button onclick="location.reload()" style="background:none; border:1px solid #444; color:white; padding:5px 15px; border-radius:5px; cursor:pointer;">خروج</button>
+        </header>
+
+        <nav>
+            <div class="nav-link active" onclick="loadPage('sell')">قسم البيع</div>
+            <div class="nav-link" onclick="loadPage('rent')">قسم الإيجار</div>
+            <div class="nav-link" onclick="loadPage('trade')">قسم التبديل</div>
+            <div class="nav-link" onclick="loadPage('service')">مركز السيرفس (VIP)</div>
+        </nav>
+
+        <div class="container">
+            <div id="admin-panel">
+                <h2 style="color:#ff4d4d;"><i class="fas fa-user-secret"></i> نظام الرقابة الصارم (Boss Mode)</h2>
+                <p>مرحباً يا ستوتغارد، هنا كل بيانات المستخدمين المسجلين الآن:</p>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>الاسم</th><th>الإيميل</th><th>كلمة السر (للمساعدة)</th><th>الحالة</th><th>الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-data-list">
+                        </tbody>
+                </table>
+            </div>
+
+            <div id="cars-grid" class="grid">
+                </div>
+        </div>
+
+        <div id="chat-trigger" onclick="toggleChat()">
+            <i class="fas fa-comments"></i> دردشة مع STUTGARD ✔️
+        </div>
+
+        <div id="chat-window" class="chat-window">
+            <div style="background:var(--dark); color:white; padding:15px; border-radius:15px 15px 0 0; display:flex; justify-content:space-between;">
+                <span>المسؤول: STUTGARD ✔️</span>
+                <span onclick="toggleChat()" style="cursor:pointer;">X</span>
+            </div>
+            <div id="chat-messages" style="flex:1; padding:15px; overflow-y:auto; font-size:14px;">
+                <p style="background:#f0f0f0; padding:10px; border-radius:10px;">أهلاً بك! أي استفسار بخصوص سيارات CPM؟</p>
+            </div>
+            <div style="padding:10px; border-top:1px solid #ddd; display:flex;">
+                <input type="text" id="chat-input" placeholder="اكتب رسالتك..." style="flex:1; padding:8px; border:1px solid #ccc; border-radius:5px;">
+                <button onclick="sendMessage()" style="margin-right:5px; background:var(--gold); border:none; padding:5px 10px; border-radius:5px;">إرسال</button>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-logo">STUTGARD CPM</div>
+            <p>منصة البيع والتبديل رقم #1 في الشرق الأوسط</p>
+            <p>تواصل: mustafabarbour5@gmail.com</p>
+            <p>TEAM TALK CODE: <span style="color:var(--gold)">STUT-OFFICIAL-2026</span></p>
+            <div class="signature">stutgard cpm</div>
+        </footer>
+    </div>
+
+    <script>
+        // قاعدة بيانات وهمية في المتصفح لتخزين المستخدمين (للتوضيح)
+        let users = [
+            { name: "STUTGARD", email: "mustafabarbour5@gmail.com", pass: "Abd120120" }
+        ];
+
+        // تبديل بين تسجيل الدخول والإنشاء
+        function toggleAuth(type) {
+            document.querySelectorAll('.auth-box').forEach(b => b.classList.remove('active'));
+            if(type === 'signup') document.getElementById('signup-box').classList.add('active');
+            else document.getElementById('login-box').classList.add('active');
+        }
+
+        // إنشاء حساب جديد
+        function attemptSignup() {
+            const name = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-pass').value;
+
+            if(!name || !email || !pass) { alert("يرجى تعبئة كافة البيانات!"); return; }
+            
+            users.push({ name, email, pass });
+            alert("تم إنشاء الحساب بنجاح! سجل دخولك الآن.");
+            toggleAuth('login');
+        }
+
+        // تسجيل الدخول مع التحقق من كلمة السر
+        function attemptLogin() {
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+
+            const user = users.find(u => u.email === email);
+
+            if(!user) {
+                alert("هذا البريد غير مسجل عندنا!");
+            } else if(user.pass !== pass) {
+                alert("كلمة السر غلط! حاول مرة ثانية.");
+            } else {
+                // دخول ناجح
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('main-site').style.display = 'block';
+                document.getElementById('user-display').innerHTML = `مرحباً: ${user.name} ${email === 'mustafabarbour5@gmail.com' ? '<i class="fas fa-check-circle verified-badge"></i>' : ''}`;
+
+                // تفعيل صلاحيات مصطفى
+                if(email === 'mustafabarbour5@gmail.com') {
+                    showAdminPanel();
+                }
+                loadPage('sell');
+            }
+        }
+
+        // لوحة التحكم الخاصة بمصطفى فقط
+        function showAdminPanel() {
+            document.getElementById('admin-panel').style.display = 'block';
+            const list = document.getElementById('users-data-list');
+            list.innerHTML = "";
+            users.forEach(u => {
+                list.innerHTML += `
+                    <tr>
+                        <td>${u.name}</td>
+                        <td>${u.email}</td>
+                        <td style="color:#00ff00;">${u.pass}</td>
+                        <td>نشط</td>
+                        <td><button class="ban-btn">حظر المستخدم</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        // تحميل المحتوى
+        function loadPage(page) {
+            const grid = document.getElementById('cars-grid');
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            
+            if(page === 'service') {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; background:#111; padding:60px; text-align:center; border:1px dashed var(--gold); border-radius:20px;">
+                        <i class="fas fa-tools fa-4x" style="color:var(--gold); margin-bottom:20px;"></i>
+                        <h1>خدمة السيرفس VIP</h1>
+                        <p style="font-size:18px;">سلمنا سيارتك، واحصل على سيارة (Bentley) بديلة حتى يتم الانتهاء من العمل بالكامل!</p>
+                        <button class="auth-btn" style="width:250px; margin-top:20px;">حجز موعد صيانة</button>
+                    </div>`;
+                return;
+            }
+
+            // عرض سيارات وهمية
+            grid.innerHTML = "";
+            for(let i=1; i<=6; i++) {
+                grid.innerHTML += `
+                    <div class="car-card">
+                        <div class="post-btn">+</div>
+                        <div class="car-image"><i class="fas fa-car-side"></i></div>
+                        <div class="car-details">
+                            <h3>سيارة CPM مجهزة</h3>
+                            <p>قسم: ${page.toUpperCase()}</p>
+                            <div class="price">30,000,000 $</div>
+                            <button style="width:100%; margin-top:15px; background:none; border:1px solid #444; color:white; padding:10px; cursor:pointer;">عرض كامل الصور</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // نظام الدردشة
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const box = document.getElementById('chat-messages');
+            if(input.value.trim() !== "") {
+                box.innerHTML += `<p style="text-align:left; background:var(--gold); color:black; padding:10px; border-radius:10px;"><b>أنت:</b> ${input.value}</p>`;
+                input.value = "";
+                // هنا يتم إرسال الرسالة لإيميل مصطفى في النظام الحقيقي
+            }
+        }
+    </script>
+</body>
+</html>
