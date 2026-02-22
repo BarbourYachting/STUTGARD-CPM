@@ -85,26 +85,37 @@
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Grid & Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        /* Modified Sticky Service Section */
+        .service-header-sticky {
+            position: sticky;
+            top: 80px;
+            background: var(--st-bg);
+            z-index: 998;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--st-border);
+            margin-bottom: 20px;
+        }
+
+        /* Adjusted Grid & Cards - Smaller View */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
         .card {
-            background: var(--st-card); border-radius: 30px; border: 1px solid var(--st-border);
+            background: var(--st-card); border-radius: 18px; border: 1px solid var(--st-border);
             overflow: hidden; position: relative; transition: 0.3s; cursor: pointer;
         }
-        .card:hover { transform: translateY(-8px); border-color: var(--st-cyan); }
-        .img-area { width: 100%; height: 220px; background: #000; overflow: hidden; position: relative; }
+        .card:hover { transform: translateY(-4px); border-color: var(--st-cyan); }
+        .img-area { width: 100%; height: 110px; background: #000; overflow: hidden; position: relative; }
         .img-area img { width: 100%; height: 100%; object-fit: cover; }
         
         .badge {
-            position: absolute; top: 15px; right: 15px; padding: 8px 12px;
-            border-radius: 8px; font-size: 9px; font-weight: bold; z-index: 5;
+            position: absolute; top: 8px; right: 8px; padding: 4px 8px;
+            border-radius: 4px; font-size: 7px; font-weight: bold; z-index: 5;
         }
         .badge-sale { background: var(--st-cyan); color: #000; }
         .badge-mod { background: var(--st-gold); color: #000; }
 
-        .card-body { padding: 25px; }
-        .price-text { font-family: var(--mc-font); font-size: 22px; color: var(--st-cyan); }
-        .title-text { font-size: 18px; font-weight: bold; margin: 8px 0; color: #fff; }
+        .card-body { padding: 12px; }
+        .price-text { font-family: var(--mc-font); font-size: 13px; color: var(--st-cyan); }
+        .title-text { font-size: 12px; font-weight: bold; margin: 4px 0; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* Overlay System (Details & Chat) */
         .st-overlay {
@@ -271,8 +282,10 @@
             </section>
 
             <section id="page-services" class="page">
-                <h2 class="mc-style" style="margin-bottom:5px; color:var(--st-gold);">OFFICIAL SERVICES</h2>
-                <p style="color:var(--st-dim); font-size:12px; margin-bottom:25px;">VERIFIED TUNING BY STUTGARD ADMIN</p>
+                <div class="service-header-sticky">
+                    <h2 class="mc-style" style="color:var(--st-gold); font-size: 18px;">OFFICIAL SERVICES</h2>
+                    <p style="color:var(--st-dim); font-size:10px;">VERIFIED TUNING BY STUTGARD ADMIN</p>
+                </div>
                 <div class="grid" id="services-grid"></div>
             </section>
 
@@ -391,7 +404,7 @@
                             <div class="card-body">
                                 <div class="price-text">${parseInt(m.price).toLocaleString()} CPM</div>
                                 <div class="title-text">${m.title}</div>
-                                <div style="font-size:11px; color:var(--st-dim);"><i class="fas fa-user"></i> ${m.owner}</div>
+                                <div style="font-size:9px; color:var(--st-dim);"><i class="fas fa-user"></i> ${m.owner}</div>
                             </div>
                         </div>`).join('');
                 }
@@ -451,9 +464,9 @@
                             <div class="img-area"><img src="${s.img}"></div>
                             <div class="card-body">
                                 <div class="title-text" style="color:var(--st-gold)">${s.title}</div>
-                                <div style="font-size:13px; color:var(--st-dim);">${s.desc}</div>
-                                <button class="btn-main mc-style" onclick="UI.OpenModOrder('${s.title}')" style="height:45px; font-size:10px; margin-top:15px; background:var(--st-gold);">
-                                   <i class="fas fa-calendar-check"></i> BOOK NOW
+                                <div style="font-size:11px; color:var(--st-dim);">${s.desc}</div>
+                                <button class="btn-main mc-style" onclick="UI.OpenModOrder('${s.title}')" style="height:35px; font-size:8px; margin-top:10px; background:var(--st-gold);">
+                                   <i class="fas fa-calendar-check"></i> BOOK
                                 </button>
                             </div>
                         </div>`).join('');
@@ -516,9 +529,7 @@
                 document.getElementById('det-img').src = m.img; document.getElementById('det-title').innerText = m.title; document.getElementById('det-price').innerText = parseInt(m.price).toLocaleString() + " CPM";
                 document.getElementById('det-status').innerText = m.status; document.getElementById('det-km').innerText = m.km + " KM"; document.getElementById('det-year').innerText = m.year; document.getElementById('det-hp').innerText = m.hp + " HP"; document.getElementById('det-owner').innerText = m.owner;
                 
-                // تعديل الصلاحية لزر الحذف
                 const delBtn = document.getElementById('delete-asset-btn'); 
-                // إذا كنت الأدمن أو كنت صاحب المنشور، يطلع لك زر الحذف
                 if(State.session.email === m.ownerEmail || State.session.email === State.rootEmail) {
                     delBtn.style.display = 'block';
                 } else {
