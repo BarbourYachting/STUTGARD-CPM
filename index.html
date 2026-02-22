@@ -37,7 +37,7 @@
         }
 
         /* Typography */
-        .mc-style, .st-logo, .nav-item span, .badge, .btn-main, .btn-booking { 
+        .mc-style, .st-logo, .nav-item span, .badge, .btn-main, .btn-book-sticky { 
             font-family: var(--mc-font) !important; text-transform: uppercase; 
         }
 
@@ -79,8 +79,8 @@
         .st-logo { font-size: 18px; display: flex; align-items: center; gap: 10px; }
         .st-logo i { color: var(--st-cyan); font-size: 24px; }
 
-        /* 1. زر الحجز الأصفر الثابت */
-        .booking-sticky-container {
+        /* 1. Yellow Sticky Booking Button */
+        .sticky-booking-bar {
             position: sticky;
             top: 80px;
             z-index: 999;
@@ -89,24 +89,24 @@
             padding: 10px 6%;
             border-bottom: 1px solid var(--st-border);
         }
-        .btn-booking {
+        .btn-book-sticky {
             width: 100%;
             background: var(--st-gold);
             color: #000;
             border: none;
             padding: 15px;
             border-radius: 12px;
-            font-weight: bold;
-            font-size: 11px;
+            font-weight: 900;
+            font-size: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
             transition: 0.3s;
         }
-        .btn-booking:active { transform: scale(0.98); }
+        .btn-book-sticky:active { transform: scale(0.98); }
 
         /* Main Content */
         .content-body { padding: 20px 6% 120px 6%; }
@@ -114,31 +114,52 @@
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Adjusted Grid & Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
+        /* Grid & Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
         .card {
             background: var(--st-card); border-radius: 18px; border: 1px solid var(--st-border);
             overflow: hidden; position: relative; transition: 0.3s; cursor: pointer;
         }
         .card:hover { transform: translateY(-4px); border-color: var(--st-cyan); }
         
-        /* 4. زر الحذف السريع X */
-        .quick-del {
-            position: absolute; top: 8px; right: 8px; width: 24px; height: 24px;
-            background: var(--st-danger); color: #fff; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 12px; z-index: 20; border: none; cursor: pointer;
+        /* 4. Quick Delete Button (X) */
+        .quick-delete {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 26px;
+            height: 26px;
+            background: var(--st-danger);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            z-index: 20;
+            border: none;
+            cursor: pointer;
             box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            transition: 0.2s;
         }
+        .quick-delete:hover { transform: scale(1.1); background: #ff0000; }
 
         .img-area { width: 100%; height: 110px; background: #000; overflow: hidden; position: relative; }
         .img-area img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* 2. عداد الصور المرفوعة */
-        .img-count {
-            position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7);
-            color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 8px;
-            font-weight: bold; border: 1px solid rgba(255,255,255,0.2);
+        /* 2. Image Counter Badge */
+        .img-counter {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 5;
         }
 
         .badge {
@@ -152,19 +173,51 @@
         .price-text { font-family: var(--mc-font); font-size: 13px; color: var(--st-cyan); }
         .title-text { font-size: 12px; font-weight: bold; margin: 4px 0; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* 3. سلايدر الصور في التفاصيل */
-        .slider-container { width: 100%; height: 300px; background: #000; position: relative; overflow: hidden; }
-        .slider-track { display: flex; width: 100%; height: 100%; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .slider-img { min-width: 100%; height: 100%; object-fit: cover; }
+        /* 3. Slider System in Details */
+        .slider-container {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+        .slider-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slider-slide {
+            min-width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         .slider-nav {
-            position: absolute; top: 50%; width: 100%; display: flex;
-            justify-content: space-between; padding: 0 15px; transform: translateY(-50%);
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px;
+            transform: translateY(-50%);
             pointer-events: none;
         }
-        .slider-btn { 
-            background: rgba(0,0,0,0.5); color: #fff; border: none; width: 40px; height: 40px; 
-            border-radius: 50%; cursor: pointer; pointer-events: auto; backdrop-filter: blur(5px);
+        .slider-btn {
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: 0.3s;
         }
+        .slider-btn:hover { background: var(--st-cyan); color: #000; }
 
         /* Overlay System */
         .st-overlay {
@@ -208,7 +261,6 @@
         .bubble { padding: 15px 20px; border-radius: 18px; max-width: 80%; font-size: 14px; line-height: 1.5; }
         .bubble-ai { background: #1a1a1c; align-self: flex-start; border-left: 4px solid var(--st-cyan); }
         .bubble-user { background: var(--st-blue); align-self: flex-end; }
-        .bubble-msg-recv { background: #222; align-self: flex-start; }
 
         /* Buttons */
         .btn-main {
@@ -242,7 +294,7 @@
         <div class="mc-style" style="margin-top: 20px; letter-spacing: 3px;">STUTGARD</div>
     </div>
 
-    <!-- Overlay: Booking Order -->
+    <!-- 7. Service Booking with Images -->
     <div id="mod-order-overlay" class="st-overlay">
         <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
             <i class="fas fa-times" onclick="UI.CloseModOrder()" style="cursor:pointer;"></i>
@@ -253,23 +305,24 @@
             <p style="color:var(--st-dim); margin-bottom:25px;">Please provide details for Mustafa Barbour.</p>
             <input type="text" id="order-car-name" class="st-field" placeholder="VEHICLE NAME">
             <input type="text" id="order-game-id" class="st-field" placeholder="YOUR GAME ID">
+            <p class="mc-style" style="font-size:10px; color:var(--st-dim); margin-bottom:5px;">ATTACH VEHICLE PHOTOS (OPTIONAL)</p>
+            <input type="file" id="order-imgs" class="st-field" accept="image/*" multiple>
             <button class="btn-main mc-style" onclick="Data.Admin.SubmitOrder()">SUBMIT ORDER</button>
         </div>
     </div>
 
-    <!-- Overlay: Car Details with Slider -->
+    <!-- 3. Car Detail Overlay with Slider -->
     <div id="car-detail-overlay" class="st-overlay">
-        <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
+        <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px; background:var(--st-bg); position:sticky; top:0; z-index:100;">
             <i class="fas fa-arrow-left" onclick="UI.CloseDetail()" style="cursor:pointer; font-size:20px;"></i>
             <span class="mc-style">VEHICLE SPECS</span>
         </div>
         
-        <!-- 3. Slideshow Container -->
         <div class="slider-container">
             <div class="slider-track" id="detail-slider-track"></div>
             <div class="slider-nav">
-                <button class="slider-btn" onclick="UI.SliderMove(-1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-btn" onclick="UI.SliderMove(1)"><i class="fas fa-chevron-right"></i></button>
+                <button class="slider-btn" onclick="UI.MoveSlider(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="slider-btn" onclick="UI.MoveSlider(1)"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
 
@@ -288,13 +341,9 @@
             <button class="btn-main mc-style" style="margin-top:25px;" id="contact-seller-btn">
                 <i class="fas fa-comment"></i> CONTACT SELLER
             </button>
-            <button class="btn-main mc-style" style="margin-top:10px; background:var(--st-danger); display:none;" id="delete-asset-btn">
-                <i class="fas fa-trash"></i> DELETE POST
-            </button>
         </div>
     </div>
 
-    <!-- Overlay: Chat -->
     <div id="chat-overlay" class="st-overlay">
         <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
             <i class="fas fa-times" onclick="UI.CloseChat()" style="cursor:pointer;"></i>
@@ -307,7 +356,6 @@
         </div>
     </div>
 
-    <!-- Auth Gate -->
     <div id="auth-gate" class="auth-overlay">
         <div class="auth-box" id="login-form">
             <h1 class="mc-style" style="color:var(--st-cyan); margin-bottom:30px;">AUTHORIZE</h1>
@@ -326,7 +374,6 @@
         </div>
     </div>
 
-    <!-- App Root -->
     <div id="app-root" style="display:none">
         <header>
             <div class="st-logo mc-style">
@@ -337,9 +384,9 @@
             </div>
         </header>
 
-        <!-- 1. زر الحجز الأصفر الثابت -->
-        <div class="booking-sticky-container">
-            <button class="btn-booking mc-style" onclick="UI.Page('services')">
+        <!-- 1. Yellow Sticky Booking Button -->
+        <div class="sticky-booking-bar">
+            <button class="btn-book-sticky" onclick="UI.Page('services')">
                 <i class="fas fa-calendar-check"></i> BOOK OFFICIAL SERVICE
             </button>
         </div>
@@ -352,7 +399,7 @@
             </section>
 
             <section id="page-services" class="page">
-                <div class="service-header-sticky">
+                <div class="service-header-sticky" style="top:140px;">
                     <h2 class="mc-style" style="color:var(--st-gold); font-size: 18px;">OFFICIAL SERVICES</h2>
                     <p style="color:var(--st-dim); font-size:10px;">VERIFIED TUNING BY STUTGARD ADMIN</p>
                 </div>
@@ -378,8 +425,8 @@
                         <input type="text" id="post-hp" class="st-field" placeholder="ENGINE HP">
                     </div>
 
-                    <!-- 2. نظام الصور المتعددة -->
-                    <p style="font-size:10px; color:var(--st-dim); text-align:left; margin-bottom:5px;" class="mc-style">SELECT MULTIPLE PHOTOS</p>
+                    <!-- 2. Multiple Image Upload -->
+                    <p class="mc-style" style="font-size:10px; color:var(--st-dim); margin-bottom:5px; text-align:left;">SELECT MULTIPLE PHOTOS</p>
                     <input type="file" id="post-imgs" class="st-field" accept="image/*" multiple>
                     
                     <button class="btn-main mc-style" onclick="Data.Market.Add()">POST TO GRID</button>
@@ -387,10 +434,10 @@
             </section>
 
             <section id="page-ai" class="page">
-                <h2 class="mc-style" style="margin-bottom:20px;">STUTGARD AI</h2>
+                <h2 class="mc-style" style="margin-bottom:20px;">STUTGARD AI (GEMINI)</h2>
                 <div class="chat-container">
                     <div id="chat-box" class="chat-stream">
-                        <div class="bubble bubble-ai">Systems online. Ask me anything about CPM mechanics or trading.</div>
+                        <div class="bubble bubble-ai">Systems online. I am powered by Gemini. Ask me anything about CPM mechanics or trading.</div>
                     </div>
                     <div style="padding:15px; background:#0d0d0f; display:flex; gap:10px;">
                         <input type="text" id="ai-input" class="st-field" style="margin:0;" placeholder="Type a message...">
@@ -436,8 +483,20 @@
         </nav>
     </div>
 
-    <script>
-        const State = {
+    <!-- 5. Gemini Integration -->
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/genai": "https://esm.sh/@google/genai"
+          }
+        }
+    </script>
+
+    <script type="module">
+        import { GoogleGenAI } from "@google/genai";
+
+        // Global State
+        window.State = {
             users: JSON.parse(localStorage.getItem('st_u')) || [{ name: "Mustafa", email: "mustafabarbour5@gmail.com", pass: "Abd120120", role: "admin", status: "active" }],
             market: JSON.parse(localStorage.getItem('st_m')) || [],
             services: JSON.parse(localStorage.getItem('st_s')) || [],
@@ -445,30 +504,31 @@
             chats: JSON.parse(localStorage.getItem('st_c')) || [],
             session: null,
             rootEmail: "mustafabarbour5@gmail.com",
-            currentSliderIdx: 0
+            currentSliderIdx: 0,
+            activeCarImages: []
         };
 
-        const Storage = {
+        window.Storage = {
             save: () => {
-                localStorage.setItem('st_u', JSON.stringify(State.users));
-                localStorage.setItem('st_m', JSON.stringify(State.market));
-                localStorage.setItem('st_s', JSON.stringify(State.services));
-                localStorage.setItem('st_o', JSON.stringify(State.orders));
-                localStorage.setItem('st_c', JSON.stringify(State.chats));
+                localStorage.setItem('st_u', JSON.stringify(window.State.users));
+                localStorage.setItem('st_m', JSON.stringify(window.State.market));
+                localStorage.setItem('st_s', JSON.stringify(window.State.services));
+                localStorage.setItem('st_o', JSON.stringify(window.State.orders));
+                localStorage.setItem('st_c', JSON.stringify(window.State.chats));
             }
         };
 
-        const Data = {
+        window.Data = {
             Market: {
                 Add: async () => {
                     const t = document.getElementById('post-title').value, 
                           p = document.getElementById('post-price').value, 
                           files = document.getElementById('post-imgs').files;
-
+                    
                     if(!t || !p || files.length === 0) return UI.Toast("MISSING ASSET DATA");
-
+                    
                     const images = [];
-                    for(let file of files) {
+                    for (let file of files) {
                         const base64 = await new Promise(resolve => {
                             const reader = new FileReader();
                             reader.onload = (e) => resolve(e.target.result);
@@ -477,7 +537,7 @@
                         images.push(base64);
                     }
 
-                    State.market.unshift({ 
+                    window.State.market.unshift({ 
                         id: Date.now(), 
                         title: t, 
                         price: p, 
@@ -485,9 +545,9 @@
                         year: document.getElementById('post-year').value || "2024", 
                         km: document.getElementById('post-km').value || "0", 
                         hp: document.getElementById('post-hp').value || "1695", 
-                        imgs: images, // مصفوفة الصور
-                        owner: State.session.name, 
-                        ownerEmail: State.session.email 
+                        imgs: images, 
+                        owner: window.State.session.name, 
+                        ownerEmail: window.State.session.email 
                     });
                     
                     Storage.save(); 
@@ -495,27 +555,24 @@
                     UI.Page('home'); 
                     Data.Market.Render();
                 },
+                // 4. Quick Delete Logic
                 Delete: (e, id) => {
                     e.stopPropagation();
-                    if(confirm("DELETE THIS ASSET PERMANENTLY?")) {
-                        State.market = State.market.filter(m => m.id !== id);
+                    if(confirm("DELETE THIS POST PERMANENTLY?")) {
+                        window.State.market = window.State.market.filter(m => m.id !== id);
                         Storage.save();
                         Data.Market.Render();
-                        UI.Toast("REMOVED FROM MEMORY");
+                        UI.Toast("ASSET REMOVED");
                     }
                 },
                 Render: () => {
-                    document.getElementById('market-grid').innerHTML = State.market.map(m => `
+                    document.getElementById('market-grid').innerHTML = window.State.market.map(m => `
                         <div class="card" onclick="UI.OpenDetail(${m.id})">
-                            <!-- 4. زر الحذف السريع -->
-                            ${(State.session.email === m.ownerEmail || State.session.email === State.rootEmail) ? 
-                                `<button class="quick-del" onclick="Data.Market.Delete(event, ${m.id})"><i class="fas fa-times"></i></button>` : ''}
-                            
+                            <button class="quick-delete" onclick="Data.Market.Delete(event, ${m.id})"><i class="fas fa-times"></i></button>
                             <div class="badge badge-sale">${m.status}</div>
                             <div class="img-area">
                                 <img src="${m.imgs[0]}">
-                                <!-- 2. عداد الصور -->
-                                ${m.imgs.length > 1 ? `<div class="img-count mc-style">+${m.imgs.length - 1} PHOTOS</div>` : ''}
+                                ${m.imgs.length > 1 ? `<div class="img-counter mc-style">+${m.imgs.length - 1} PHOTOS</div>` : ''}
                             </div>
                             <div class="card-body">
                                 <div class="price-text">${parseInt(m.price).toLocaleString()} CPM</div>
@@ -525,41 +582,30 @@
                         </div>`).join('');
                 }
             },
-            Chat: {
-                Open: (toName) => {
-                    if(toName === State.session.name) return UI.Toast("THIS IS YOUR AD");
-                    document.getElementById('chat-with-name').innerText = "CHAT WITH: " + toName;
-                    document.getElementById('chat-overlay').classList.add('active');
-                    Data.Chat.RenderPMs(toName);
-                    document.getElementById('pm-send-btn').onclick = () => Data.Chat.Send(toName);
-                },
-                Send: (toName) => {
-                    const inp = document.getElementById('pm-input');
-                    if(!inp.value.trim()) return;
-                    State.chats.push({ from: State.session.name, to: toName, text: inp.value, time: Date.now() });
-                    Storage.save(); inp.value = ""; Data.Chat.RenderPMs(toName);
-                },
-                RenderPMs: (target) => {
-                    const box = document.getElementById('pm-box');
-                    box.innerHTML = State.chats.filter(c => (c.from === State.session.name && c.to === target) || (c.from === target && c.to === State.session.name)).map(m => `<div class="bubble ${m.from === State.session.name ? 'bubble-user' : 'bubble-msg-recv'}">${m.text}</div>`).join('');
-                    box.scrollTop = box.scrollHeight;
-                },
-                RenderInbox: () => {
-                    const list = document.getElementById('chats-list');
-                    const contacts = [...new Set(State.chats.map(c => c.from === State.session.name ? c.to : c.from))];
-                    list.innerHTML = contacts.map(c => `<div class="user-row" onclick="Data.Chat.Open('${c}')"><span class="mc-style" style="font-size:14px;">${c}</span><i class="fas fa-chevron-right" style="color:var(--st-cyan)"></i></div>`).join('');
-                }
-            },
             AI: {
-                Talk: () => {
-                    const inp = document.getElementById('ai-input'), box = document.getElementById('chat-box'), val = inp.value.trim().toLowerCase();
-                    if(!val) return; box.innerHTML += `<div class="bubble bubble-user">${inp.value}</div>`;
-                    setTimeout(() => {
-                        let reply = "أعتذر، اسألني عن 'الفلوس' أو 'كيفية البيع'.";
-                        const brain = [{ keys: ['فلوس', 'money'], ans: "لتحصيل الفلوس بسرعة، صمم سيارات مميزة وبعها بأسعار عالية." }, { keys: ['بيع', 'sell'], ans: "اضغط على (+) في المنتصف، ارفع صورة سيارتك وحدد السعر والحالة." }, { keys: ['أدمن', 'admin'], ans: "الأدمن والمسؤول هو Mustafa Barbour." }];
-                        for (let item of brain) { if (item.keys.some(k => val.includes(k))) { reply = item.ans; break; } }
-                        box.innerHTML += `<div class="bubble bubble-ai">${reply}</div>`; box.scrollTop = box.scrollHeight; inp.value = "";
-                    }, 600);
+                Talk: async () => {
+                    const inp = document.getElementById('ai-input'), 
+                          box = document.getElementById('chat-box'), 
+                          val = inp.value.trim();
+                    
+                    if(!val) return;
+                    box.innerHTML += `<div class="bubble bubble-user">${val}</div>`;
+                    inp.value = "";
+                    box.scrollTop = box.scrollHeight;
+
+                    try {
+                        const genAI = new GoogleGenAI({ apiKey: "YOUR_API_KEY_HERE" }); // In AI Studio, process.env.GEMINI_API_KEY is used
+                        const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+                        
+                        const result = await model.generateContent(`You are a helpful assistant for STUTGARD CPM Marketplace. User says: ${val}`);
+                        const response = await result.response;
+                        const text = response.text();
+                        
+                        box.innerHTML += `<div class="bubble bubble-ai">${text}</div>`;
+                    } catch (e) {
+                        box.innerHTML += `<div class="bubble bubble-ai">AI System Busy. Please try again later.</div>`;
+                    }
+                    box.scrollTop = box.scrollHeight;
                 }
             },
             Admin: {
@@ -568,13 +614,13 @@
                     if(!t || !f) return UI.Toast("MISSING INFO");
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        State.services.unshift({ id: Date.now(), title: t, desc: d, img: e.target.result });
+                        window.State.services.unshift({ id: Date.now(), title: t, desc: d, img: e.target.result });
                         Storage.save(); UI.Toast("SERVICE PUBLISHED"); Data.Admin.RenderServices();
                     };
                     reader.readAsDataURL(f);
                 },
                 RenderServices: () => {
-                    document.getElementById('services-grid').innerHTML = State.services.map(s => `
+                    document.getElementById('services-grid').innerHTML = window.State.services.map(s => `
                         <div class="card">
                             <div class="badge badge-mod">OFFICIAL</div>
                             <div class="img-area"><img src="${s.img}"></div>
@@ -587,29 +633,57 @@
                             </div>
                         </div>`).join('');
                 },
-                SubmitOrder: () => {
-                    const car = document.getElementById('order-car-name').value, gid = document.getElementById('order-game-id').value;
+                SubmitOrder: async () => {
+                    const car = document.getElementById('order-car-name').value, 
+                          gid = document.getElementById('order-game-id').value,
+                          files = document.getElementById('order-imgs').files;
+                    
                     if(!car || !gid) return UI.Toast("FILL ALL FIELDS");
-                    State.orders.unshift({ id: Date.now(), user: State.session.name, service: State.activeService, car: car, gameID: gid });
-                    Storage.save(); UI.Toast("ORDER SENT"); UI.CloseModOrder(); Data.Admin.RenderOrders();
+                    
+                    const images = [];
+                    for (let file of files) {
+                        const base64 = await new Promise(resolve => {
+                            const reader = new FileReader();
+                            reader.onload = (e) => resolve(e.target.result);
+                            reader.readAsDataURL(file);
+                        });
+                        images.push(base64);
+                    }
+
+                    window.State.orders.unshift({ 
+                        id: Date.now(), 
+                        user: window.State.session.name, 
+                        service: window.State.activeService, 
+                        car: car, 
+                        gameID: gid,
+                        imgs: images
+                    });
+                    
+                    Storage.save(); 
+                    UI.Toast("ORDER SENT"); 
+                    UI.CloseModOrder(); 
+                    Data.Admin.RenderOrders();
                 },
                 RenderOrders: () => {
-                    document.getElementById('mod-orders-list').innerHTML = State.orders.map(o => `
+                    document.getElementById('mod-orders-list').innerHTML = window.State.orders.map(o => `
                         <div class="user-row" style="flex-direction:column; align-items:flex-start;">
                             <div style="color:var(--st-gold); font-size:12px;">${o.service}</div>
                             <div style="font-size:11px;"><b>User:</b> ${o.user} | <b>ID:</b> ${o.gameID}</div>
+                            <div style="display:flex; gap:5px; margin-top:5px;">
+                                ${o.imgs ? o.imgs.map(img => `<img src="${img}" style="width:40px; height:40px; border-radius:5px; object-fit:cover;">`).join('') : ''}
+                            </div>
                             <button onclick="Data.Admin.DelOrder(${o.id})" style="background:red; color:white; border:none; padding:3px 8px; border-radius:5px; margin-top:5px; font-size:10px;">DONE</button>
                         </div>`).join('') || '<p style="color:var(--st-dim)">No orders.</p>';
                 },
-                DelOrder: (id) => { State.orders = State.orders.filter(o => o.id !== id); Storage.save(); Data.Admin.RenderOrders(); },
+                DelOrder: (id) => { window.State.orders = window.State.orders.filter(o => o.id !== id); Storage.save(); Data.Admin.RenderOrders(); },
                 Ban: (email) => {
-                    if(email === State.rootEmail) return UI.Toast("ROOT PROTECTED");
-                    const u = State.users.find(x => x.email === email);
+                    if(email === window.State.rootEmail) return UI.Toast("ROOT PROTECTED");
+                    const u = window.State.users.find(x => x.email === email);
                     u.status = (u.status === 'active') ? 'banned' : 'active';
                     Storage.save(); Data.Admin.RenderUsers();
                 },
                 RenderUsers: () => {
-                    document.getElementById('users-list').innerHTML = State.users.map(u => `
+                    document.getElementById('users-list').innerHTML = window.State.users.map(u => `
                         <div class="user-row">
                             <div><b>${u.name}</b><br><small>${u.email}</small></div>
                             <button onclick="Data.Admin.Ban('${u.email}')" style="background:${u.status==='active'?'red':'green'}; color:#fff; border:none; padding:5px; border-radius:5px; font-size:10px;">${u.status==='active'?'BAN':'UNBAN'}</button>
@@ -618,35 +692,43 @@
             }
         };
 
-        const App = {
+        window.App = {
             Login: () => {
-                const u = State.users.find(x => x.email === document.getElementById('email-in').value && x.pass === document.getElementById('pass-in').value);
-                if(u) { if(u.status === 'banned') return UI.Toast("BANNED"); State.session = u; App.Launch(); } else UI.Toast("AUTH ERROR");
+                const u = window.State.users.find(x => x.email === document.getElementById('email-in').value && x.pass === document.getElementById('pass-in').value);
+                if(u) { if(u.status === 'banned') return UI.Toast("BANNED"); window.State.session = u; App.Launch(); } else UI.Toast("AUTH ERROR");
             },
             Register: () => {
                 const n = document.getElementById('reg-name').value, e = document.getElementById('reg-email').value, p = document.getElementById('reg-pass').value;
-                if(!n || !e || !p) return UI.Toast("FILL ALL"); State.users.push({ name: n, email: e, pass: p, role: "user", status: "active" });
+                if(!n || !e || !p) return UI.Toast("FILL ALL"); window.State.users.push({ name: n, email: e, pass: p, role: "user", status: "active" });
                 Storage.save(); App.ShowReg(false); UI.Toast("CREATED");
             },
             ShowReg: (s) => { document.getElementById('login-form').style.display = s ? 'none' : 'block'; document.getElementById('reg-form').style.display = s ? 'block' : 'none'; },
             Launch: () => {
                 document.getElementById('auth-gate').style.display = 'none'; document.getElementById('app-root').style.display = 'block';
-                if(State.session.email === State.rootEmail) { document.getElementById('admin-tab').style.display = 'flex'; document.getElementById('admin-notif').style.display = 'block'; Data.Admin.RenderUsers(); Data.Admin.RenderOrders(); }
+                if(window.State.session.email === window.State.rootEmail) { document.getElementById('admin-tab').style.display = 'flex'; document.getElementById('admin-notif').style.display = 'block'; Data.Admin.RenderUsers(); Data.Admin.RenderOrders(); }
                 Data.Market.Render(); Data.Admin.RenderServices();
             }
         };
 
-        const UI = {
-            Page: (id, el) => { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-' + id).classList.add('active'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); if(el) el.classList.add('active'); if(id === 'msgs') Data.Chat.RenderInbox(); window.scrollTo(0,0); },
-            OpenModOrder: (t) => { State.activeService = t; document.getElementById('order-service-name').innerText = t; document.getElementById('mod-order-overlay').classList.add('active'); },
+        window.UI = {
+            Page: (id, el) => { 
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
+                document.getElementById('page-' + id).classList.add('active'); 
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); 
+                if(el) el.classList.add('active'); 
+                if(id === 'msgs') Data.Chat.RenderInbox(); 
+                window.scrollTo(0,0); 
+            },
+            OpenModOrder: (t) => { window.State.activeService = t; document.getElementById('order-service-name').innerText = t; document.getElementById('mod-order-overlay').classList.add('active'); },
             CloseModOrder: () => document.getElementById('mod-order-overlay').classList.remove('active'),
             OpenDetail: (id) => {
-                const m = State.market.find(x => x.id === id);
+                const m = window.State.market.find(x => x.id === id);
+                window.State.activeCarImages = m.imgs;
+                window.State.currentSliderIdx = 0;
                 
-                // 3. بناء السلايدر
-                State.currentSliderIdx = 0;
+                // 3. Slider Rendering
                 const track = document.getElementById('detail-slider-track');
-                track.innerHTML = m.imgs.map(img => `<img src="${img}" class="slider-img">`).join('');
+                track.innerHTML = m.imgs.map(img => `<img src="${img}" class="slider-slide">`).join('');
                 track.style.transform = `translateX(0%)`;
 
                 document.getElementById('det-title').innerText = m.title; 
@@ -657,28 +739,15 @@
                 document.getElementById('det-hp').innerText = m.hp + " HP"; 
                 document.getElementById('det-owner').innerText = m.owner;
                 
-                const delBtn = document.getElementById('delete-asset-btn'); 
-                if(State.session.email === m.ownerEmail || State.session.email === State.rootEmail) {
-                    delBtn.style.display = 'block';
-                } else {
-                    delBtn.style.display = 'none';
-                }
-
-                delBtn.onclick = () => { 
-                    if(confirm("DELETE THIS ASSET?")) {
-                        State.market = State.market.filter(x => x.id !== id); 
-                        Storage.save(); UI.CloseDetail(); Data.Market.Render(); UI.Toast("ASSET REMOVED");
-                    }
-                };
                 document.getElementById('car-detail-overlay').classList.add('active'); 
                 document.getElementById('contact-seller-btn').onclick = () => Data.Chat.Open(m.owner);
             },
-            SliderMove: (dir) => {
+            // 3. Slider Navigation
+            MoveSlider: (dir) => {
+                const total = window.State.activeCarImages.length;
+                window.State.currentSliderIdx = (window.State.currentSliderIdx + dir + total) % total;
                 const track = document.getElementById('detail-slider-track');
-                const total = track.children.length;
-                if(total <= 1) return;
-                State.currentSliderIdx = (State.currentSliderIdx + dir + total) % total;
-                track.style.transform = `translateX(-${State.currentSliderIdx * 100}%)`;
+                track.style.transform = `translateX(-${window.State.currentSliderIdx * 100}%)`;
             },
             CloseDetail: () => document.getElementById('car-detail-overlay').classList.remove('active'),
             CloseChat: () => document.getElementById('chat-overlay').classList.remove('active'),
