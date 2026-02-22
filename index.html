@@ -452,7 +452,9 @@
                             <div class="card-body">
                                 <div class="title-text" style="color:var(--st-gold)">${s.title}</div>
                                 <div style="font-size:13px; color:var(--st-dim);">${s.desc}</div>
-                                <button class="btn-main mc-style" onclick="UI.OpenModOrder('${s.title}')" style="height:35px; font-size:9px; margin-top:15px; background:var(--st-gold);">BOOK NOW</button>
+                                <button class="btn-main mc-style" onclick="UI.OpenModOrder('${s.title}')" style="height:45px; font-size:10px; margin-top:15px; background:var(--st-gold);">
+                                   <i class="fas fa-calendar-check"></i> BOOK NOW
+                                </button>
                             </div>
                         </div>`).join('');
                 },
@@ -513,7 +515,22 @@
                 const m = State.market.find(x => x.id === id);
                 document.getElementById('det-img').src = m.img; document.getElementById('det-title').innerText = m.title; document.getElementById('det-price').innerText = parseInt(m.price).toLocaleString() + " CPM";
                 document.getElementById('det-status').innerText = m.status; document.getElementById('det-km').innerText = m.km + " KM"; document.getElementById('det-year').innerText = m.year; document.getElementById('det-hp').innerText = m.hp + " HP"; document.getElementById('det-owner').innerText = m.owner;
-                const delBtn = document.getElementById('delete-asset-btn'); delBtn.style.display = (State.session.email === m.ownerEmail || State.session.email === State.rootEmail) ? 'block' : 'none'; delBtn.onclick = () => { State.market = State.market.filter(x => x.id !== id); Storage.save(); UI.CloseDetail(); Data.Market.Render(); };
+                
+                // تعديل الصلاحية لزر الحذف
+                const delBtn = document.getElementById('delete-asset-btn'); 
+                // إذا كنت الأدمن أو كنت صاحب المنشور، يطلع لك زر الحذف
+                if(State.session.email === m.ownerEmail || State.session.email === State.rootEmail) {
+                    delBtn.style.display = 'block';
+                } else {
+                    delBtn.style.display = 'none';
+                }
+
+                delBtn.onclick = () => { 
+                    if(confirm("DELETE THIS ASSET?")) {
+                        State.market = State.market.filter(x => x.id !== id); 
+                        Storage.save(); UI.CloseDetail(); Data.Market.Render(); UI.Toast("ASSET REMOVED");
+                    }
+                };
                 document.getElementById('car-detail-overlay').classList.add('active'); document.getElementById('contact-seller-btn').onclick = () => Data.Chat.Open(m.owner);
             },
             CloseDetail: () => document.getElementById('car-detail-overlay').classList.remove('active'),
