@@ -3,1226 +3,525 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="description" content="Stutgard CPM - The Absolute Elite Marketplace for Car Parking Multiplayer">
-    <meta name="author" content="Stutgard Dev Team">
-    <meta name="theme-color" content="#030303">
-    <title>STUTGARD CPM | THE ULTRA GLOBAL MARKETPLACE v5.0 PRO FINAL</title>
+    <title>STUTGARD CPM | HYPER MARKETPLACE v6.0</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
 
     <style>
         /* ================================================================
-           1. GLOBAL DESIGN SYSTEM & VARIABLES
-           ================================================================
-        */
+           DESIGN SYSTEM v6.0 - THE ULTIMATE DARK UI
+           ================================================================ */
         :root {
             --st-cyan: #00f2ff;
             --st-blue: #0062ff;
-            --st-bg: #030303;
+            --st-bg: #050505;
             --st-card: #0d0d0f;
-            --st-card-hover: #161619;
-            --st-border: #222224;
+            --st-border: #1f1f22;
             --st-text: #ffffff;
-            --st-dim: #999999;
+            --st-dim: #888888;
             --st-grad: linear-gradient(135deg, #0062ff, #00f2ff);
-            --st-grad-rev: linear-gradient(135deg, #00f2ff, #0062ff);
-            --st-danger: #ff3b3b;
+            --st-danger: #ff3131;
             --st-success: #00ff88;
-            --st-gold: #ffea00;
-            --st-warning: #ff9500;
-            --st-purple: #bf00ff;
+            --st-gold: #ffcc00;
             --mc-font: 'Minecraftia', sans-serif;
             --main-font: 'Rajdhani', sans-serif;
-            --code-font: 'JetBrains Mono', monospace;
-            --header-font: 'Orbitron', sans-serif;
-            --st-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-            --st-glass: rgba(13, 13, 15, 0.98);
-            --st-transition-fast: all 0.2s ease;
-            --st-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ================================================================
-           2. BASE RESET & SCROLLBAR
-           ================================================================
-        */
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-            outline: none; 
-            margin: 0; 
-            padding: 0; 
-            user-select: none;
-        }
-
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--st-bg); }
-        ::-webkit-scrollbar-thumb { background: var(--st-border); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--st-cyan); }
-
+        /* Base Setup */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; outline: none; }
         html, body { 
-            width: 100%; 
-            height: 100%; 
-            background: var(--st-bg); 
-            color: var(--st-text); 
-            font-family: var(--main-font); 
-            overflow-x: hidden; 
-            -webkit-font-smoothing: antialiased;
-            overscroll-behavior-y: contain;
+            width: 100%; height: 100%; background: var(--st-bg); color: var(--st-text); 
+            font-family: var(--main-font); overflow-x: hidden; scroll-behavior: smooth;
         }
 
-        /* ================================================================
-           3. TYPOGRAPHY SYSTEM
-           ================================================================
-        */
-        h1, h2, h3, h4, .st-logo, .mc-style, .st-btn, .admin-service-btn, .st-user-pill, .badge-label, .wallet-item, .stat-label {
-            font-family: var(--mc-font) !important; 
-            text-transform: uppercase; 
-            letter-spacing: 1px;
+        /* Typography */
+        .mc-style, .st-logo, .nav-item span, .badge, .btn-main { 
+            font-family: var(--mc-font) !important; text-transform: uppercase; 
         }
 
-        .code-style { font-family: var(--code-font); }
-        .price-style { font-family: var(--mc-font); font-size: 20px; color: var(--st-cyan); }
-
-        /* ================================================================
-           4. PRELOADER ENGINE
-           ================================================================
-        */
-        #st-preloader { 
-            position: fixed; 
-            inset: 0; 
-            background: #000; 
-            z-index: 100000; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
+        /* Preloader */
+        #st-loader {
+            position: fixed; inset: 0; background: #000; z-index: 99999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-
-        .st-loader-content { text-align: center; }
-        .st-loader-logo { 
-            font-size: 45px; 
-            color: #fff; 
-            margin-bottom: 30px; 
-            animation: logoPulse 2s infinite ease-in-out; 
-            letter-spacing: 5px;
+        .loader-ring {
+            width: 80px; height: 80px; border: 3px solid #111; border-top: 3px solid var(--st-cyan);
+            border-radius: 50%; animation: spin 1s linear infinite;
         }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        @keyframes logoPulse { 
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px var(--st-cyan)); } 
-            50% { transform: scale(1.1); filter: drop-shadow(0 0 30px var(--st-blue)); } 
+        /* Auth Gate */
+        .auth-overlay {
+            position: fixed; inset: 0; background: var(--st-bg); z-index: 50000;
+            display: flex; justify-content: center; align-items: center; padding: 20px;
         }
-
-        .st-progress-container { width: 300px; margin-top: 20px; }
-        .st-progress-bar { 
-            width: 100%; 
-            height: 6px; 
-            background: #111; 
-            border-radius: 20px; 
-            overflow: hidden; 
-            border: 1px solid var(--st-border); 
-            position: relative; 
+        .auth-box {
+            background: var(--st-card); width: 100%; max-width: 420px;
+            padding: 40px; border-radius: 35px; border: 1px solid var(--st-border);
+            text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
-        .st-progress-fill { 
-            width: 0%; 
-            height: 100%; 
-            background: var(--st-grad); 
-            box-shadow: 0 0 20px var(--st-cyan); 
-            transition: width 0.4s ease; 
+        .st-field {
+            width: 100%; background: #000; border: 1px solid var(--st-border);
+            padding: 18px; border-radius: 15px; color: #fff; margin-bottom: 15px;
+            font-family: var(--main-font); font-size: 16px; transition: 0.3s;
         }
+        .st-field:focus { border-color: var(--st-cyan); box-shadow: 0 0 15px rgba(0,242,255,0.1); }
 
-        .loader-status { 
-            font-family: var(--code-font); 
-            font-size: 10px; 
-            color: var(--st-dim); 
-            margin-top: 15px; 
-            text-transform: uppercase;
+        /* Header */
+        header {
+            position: sticky; top: 0; height: 80px; background: rgba(13,13,15,0.9);
+            backdrop-filter: blur(15px); border-bottom: 1px solid var(--st-border);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 6%; z-index: 1000;
         }
+        .st-logo { font-size: 18px; display: flex; align-items: center; gap: 10px; }
+        .st-logo i { color: var(--st-cyan); font-size: 24px; }
 
-        /* ================================================================
-           5. AUTHENTICATION GATEWAY UI
-           ================================================================
-        */
-        .auth-screen { 
-            position: fixed; 
-            inset: 0; 
-            background: #000; 
-            z-index: 50000; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            background-image: radial-gradient(circle at 50% 50%, #0a0a0c 0%, #000 100%); 
+        /* Main Content */
+        .content-body { padding: 30px 6% 120px 6%; }
+        .page { display: none; animation: fadeIn 0.4s ease-out; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Grid & Cards */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .card {
+            background: var(--st-card); border-radius: 30px; border: 1px solid var(--st-border);
+            overflow: hidden; position: relative; transition: 0.3s; cursor: pointer;
         }
-
-        .auth-card { 
-            background: var(--st-card); 
-            padding: 50px; 
-            border-radius: 40px; 
-            border: 1px solid var(--st-border); 
-            width: 90%; 
-            max-width: 480px; 
-            text-align: center; 
-            box-shadow: 0 40px 100px rgba(0,0,0,0.9);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .auth-card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: conic-gradient(transparent, transparent, transparent, var(--st-cyan));
-            animation: rotateBorder 4s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes rotateBorder { 100% { transform: rotate(360deg); } }
-
-        .auth-inner { background: var(--st-card); border-radius: 35px; padding: 20px; }
-
-        .st-input-group { margin-bottom: 25px; text-align: left; }
-        .st-input-label { display: block; color: var(--st-dim); font-size: 11px; margin-bottom: 8px; font-family: var(--mc-font); }
+        .card:hover { transform: translateY(-8px); border-color: var(--st-cyan); }
+        .img-area { width: 100%; height: 220px; background: #000; overflow: hidden; position: relative; }
+        .img-area img { width: 100%; height: 100%; object-fit: cover; }
         
-        .st-input { 
-            width: 100%; 
-            background: #000; 
-            border: 1px solid var(--st-border); 
-            padding: 20px; 
-            border-radius: 18px; 
-            color: #fff; 
-            font-family: var(--main-font); 
-            font-size: 16px; 
-            transition: var(--st-transition);
+        .badge {
+            position: absolute; top: 15px; right: 15px; padding: 8px 12px;
+            border-radius: 8px; font-size: 9px; font-weight: bold; z-index: 5;
+        }
+        .badge-sale { background: var(--st-cyan); color: #000; }
+        .badge-mod { background: var(--st-gold); color: #000; }
+
+        .card-body { padding: 25px; }
+        .price-text { font-family: var(--mc-font); font-size: 22px; color: var(--st-cyan); }
+        .title-text { font-size: 18px; font-weight: bold; margin: 8px 0; color: #fff; }
+
+        /* Overlay System (Details & Chat) */
+        .st-overlay {
+            position: fixed; inset: 0; background: var(--st-bg); z-index: 9000;
+            display: none; flex-direction: column; overflow-y: auto;
+        }
+        .st-overlay.active { display: flex; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        .detail-table { width: 100%; background: #0a0a0c; border-radius: 20px; border: 1px solid var(--st-border); overflow: hidden; margin-top: 15px; }
+        .detail-row { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid var(--st-border); }
+        .detail-label { color: var(--st-dim); font-size: 14px; }
+        .detail-value { color: #fff; font-weight: bold; }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 85px;
+            background: #0d0d0f; border-top: 1px solid var(--st-border);
+            display: flex; justify-content: space-around; align-items: center;
+            padding-bottom: 15px; z-index: 2000;
+        }
+        .nav-item {
+            color: var(--st-dim); display: flex; flex-direction: column;
+            align-items: center; gap: 5px; cursor: pointer; transition: 0.3s;
+        }
+        .nav-item i { font-size: 22px; }
+        .nav-item span { font-size: 8px; }
+        .nav-item.active { color: var(--st-cyan); }
+        .nav-center {
+            width: 60px; height: 60px; background: var(--st-grad);
+            border-radius: 20px; color: #000 !important; justify-content: center;
+            transform: translateY(-15px); box-shadow: 0 10px 20px rgba(0,242,255,0.3);
         }
 
-        .st-input:focus { 
-            border-color: var(--st-cyan); 
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.15); 
-            transform: translateY(-2px);
+        /* AI & Chat Bubbles */
+        .chat-container {
+            background: #0a0a0c; border: 1px solid var(--st-border);
+            border-radius: 25px; height: 500px; display: flex; flex-direction: column; overflow: hidden;
+        }
+        .chat-stream { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .bubble { padding: 15px 20px; border-radius: 18px; max-width: 80%; font-size: 14px; line-height: 1.5; }
+        .bubble-ai { background: #1a1a1c; align-self: flex-start; border-left: 4px solid var(--st-cyan); }
+        .bubble-user { background: var(--st-blue); align-self: flex-end; }
+        .bubble-msg-recv { background: #222; align-self: flex-start; }
+
+        /* Buttons */
+        .btn-main {
+            width: 100%; padding: 18px; border-radius: 15px; border: none;
+            background: var(--st-grad); color: #000; cursor: pointer;
+            font-weight: bold; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-main:active { transform: scale(0.98); }
+
+        #toast {
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+            background: var(--st-cyan); color: #000; padding: 12px 30px;
+            border-radius: 50px; font-weight: bold; z-index: 100000; display: none;
+            font-family: var(--mc-font); font-size: 11px;
         }
 
-        /* ================================================================
-           6. MAIN APP LAYOUT & HEADER
-           ================================================================
-        */
-        .st-header { 
-            background: var(--st-glass); 
-            backdrop-filter: blur(30px); 
-            padding: 0 6%; 
-            height: 90px; 
-            border-bottom: 1px solid var(--st-border); 
-            position: sticky; 
-            top: 0; 
-            z-index: 10000; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-        }
-
-        .st-logo { font-size: 22px; font-weight: 900; color: #fff; cursor: pointer; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-
-        .header-actions { display: flex; align-items: center; gap: 20px; }
-        
-        .admin-notif-btn { 
-            position: relative; 
-            font-size: 24px; 
-            color: var(--st-gold); 
-            cursor: pointer; 
-            display: none; 
-            transition: 0.3s;
-        }
-        .admin-notif-btn:hover { transform: rotate(15deg); }
-
-        .notif-dot { 
-            position: absolute; 
-            top: -2px; 
-            right: -2px; 
-            width: 12px; 
-            height: 12px; 
-            background: var(--st-danger); 
-            border-radius: 50%; 
-            border: 2px solid #000; 
-            display: none; 
-            animation: pulseNotif 1s infinite;
-        }
-
-        @keyframes pulseNotif { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-
-        /* ================================================================
-           7. NAVIGATION SYSTEM (INSTAGRAM STYLE - BOTTOM)
-           ================================================================
-        */
-        .st-bottom-nav {
-            position: fixed; 
-            bottom: 0; 
-            left: 0; 
-            right: 0; 
-            height: 85px;
-            background: rgba(10, 10, 12, 0.98); 
-            backdrop-filter: blur(25px);
-            border-top: 1px solid var(--st-border); 
-            display: flex;
-            justify-content: space-around; 
-            align-items: center; 
-            z-index: 20000;
-            padding-bottom: env(safe-area-inset-bottom);
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
-        }
-
-        .nav-item { 
-            color: var(--st-dim); 
-            font-size: 24px; 
-            cursor: pointer; 
-            transition: var(--st-transition); 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            gap: 6px;
-            width: 20%;
-        }
-
-        .nav-item span { font-size: 9px; font-weight: bold; font-family: var(--mc-font); text-transform: uppercase; }
-        .nav-item.active { color: var(--st-cyan); transform: translateY(-5px); }
-        .nav-item.active i { filter: drop-shadow(0 0 8px var(--st-cyan)); }
-
-        .nav-item-center {
-            background: var(--st-grad);
-            width: 55px; height: 55px;
-            border-radius: 18px;
-            color: #000 !important;
-            justify-content: center;
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 242, 255, 0.3);
-        }
-
-        .nav-item.admin-only { display: none; color: var(--st-danger); }
-
-        /* ================================================================
-           8. CONTENT ENGINE & PAGES
-           ================================================================
-        */
-        .st-content { 
-            padding: 40px 6% 130px 6%; 
-            background: #050505; 
-            min-height: calc(100vh - 90px); 
-        }
-
-        .st-page { display: none; }
-        .st-page.active { display: block; animation: slideIn 0.5s ease forwards; }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* ================================================================
-           9. CAR CARDS & GRID
-           ================================================================
-        */
-        .st-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
-            gap: 30px; 
-        }
-
-        .st-car-card { 
-            background: var(--st-card); 
-            border: 1px solid var(--st-border); 
-            border-radius: 35px; 
-            overflow: hidden; 
-            position: relative; 
-            transition: var(--st-transition);
-        }
-
-        .st-car-card:hover { 
-            transform: translateY(-10px); 
-            border-color: var(--st-cyan); 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6); 
-        }
-
-        .car-img-box { 
-            width: 100%; 
-            height: 240px; 
-            background: #000; 
-            position: relative; 
-            overflow: hidden; 
-        }
-
-        .car-img-box img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: 0.6s;
-        }
-
-        .st-car-card:hover .car-img-box img { transform: scale(1.1); }
-
-        .type-badge { 
-            position: absolute; 
-            top: 25px; 
-            right: 25px; 
-            padding: 10px 20px; 
-            border-radius: 12px; 
-            font-size: 10px; 
-            font-weight: 900; 
-            z-index: 10;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .badge-SALE { background: var(--st-cyan); color: #000; }
-        .badge-RENT { background: var(--st-gold); color: #000; }
-        .badge-TRADE { background: var(--st-purple); color: #fff; }
-
-        .car-info { padding: 30px; }
-        .car-price { font-family: var(--mc-font); font-size: 24px; color: var(--st-cyan); margin-bottom: 8px; }
-        .car-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 15px; }
-        
-        .car-meta { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding-top: 20px; 
-            border-top: 1px solid #1a1a1c; 
-        }
-        .owner-tag { font-size: 11px; color: var(--st-dim); display: flex; align-items: center; gap: 8px; }
-        .owner-tag i { color: var(--st-cyan); }
-
-        /* ================================================================
-           10. TICKET & AI CHAT SYSTEM
-           ================================================================
-        */
-        .ticket-container {
-            background: var(--st-card);
-            border: 1px solid var(--st-border);
-            border-radius: 35px;
-            height: 600px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: var(--st-shadow);
-        }
-
-        .ticket-header {
-            padding: 25px;
-            background: #0a0a0c;
-            border-bottom: 1px solid var(--st-border);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .ai-status-dot { width: 10px; height: 10px; background: var(--st-success); border-radius: 50%; box-shadow: 0 0 10px var(--st-success); }
-
-        .chat-messages { 
-            flex: 1; 
-            padding: 30px; 
-            overflow-y: auto; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px; 
-            background-image: radial-gradient(circle at center, #0d0d0f 0%, #050505 100%);
-        }
-
-        .msg-bubble { 
-            padding: 18px 25px; 
-            border-radius: 25px; 
-            max-width: 80%; 
-            font-size: 15px; 
-            line-height: 1.6; 
-            position: relative;
-            animation: bubblePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes bubblePop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        .msg-ai { 
-            background: #161619; 
-            border-left: 5px solid var(--st-cyan); 
-            align-self: flex-start; 
-            border-bottom-left-radius: 5px;
-        }
-
-        .msg-user { 
-            background: var(--st-blue); 
-            color: #fff; 
-            align-self: flex-end; 
-            border-bottom-right-radius: 5px;
-            box-shadow: 0 10px 20px rgba(0, 98, 255, 0.2);
-        }
-
-        .chat-input-area { 
-            padding: 25px; 
-            background: #0a0a0c; 
-            border-top: 1px solid var(--st-border); 
-            display: flex; 
-            gap: 15px; 
-        }
-
-        /* ================================================================
-           11. ADMIN DASHBOARD & CONTROLS
-           ================================================================
-        */
-        .admin-section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        
-        @media (max-width: 900px) { .admin-section-grid { grid-template-columns: 1fr; } }
-
-        .admin-panel-card {
-            background: var(--st-card);
-            padding: 40px;
-            border-radius: 35px;
+        .user-row {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #000; padding: 15px; border-radius: 15px; margin-bottom: 10px;
             border: 1px solid var(--st-border);
         }
-
-        .user-manage-item {
-            background: #000;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 4px solid var(--st-cyan);
-            transition: 0.3s;
-        }
-
-        .user-manage-item:hover { border-left-color: var(--st-danger); background: #050505; }
-
-        .ban-btn {
-            background: rgba(255, 59, 59, 0.1);
-            color: var(--st-danger);
-            border: 1px solid var(--st-danger);
-            padding: 8px 15px;
-            border-radius: 10px;
-            font-size: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .ban-btn:hover { background: var(--st-danger); color: #fff; }
-
-        /* ================================================================
-           12. TOASTS & BUTTONS
-           ================================================================
-        */
-        .st-toast { 
-            position: fixed; 
-            top: 40px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            background: var(--st-cyan); 
-            color: #000; 
-            padding: 20px 50px; 
-            border-radius: 60px; 
-            font-weight: 900; 
-            z-index: 1000000; 
-            display: none; 
-            box-shadow: 0 20px 40px rgba(0, 242, 255, 0.4); 
-            font-family: var(--mc-font); 
-            font-size: 12px;
-            animation: toastIn 0.5s ease;
-        }
-
-        @keyframes toastIn { from { top: -100px; } to { top: 40px; } }
-
-        .st-btn { 
-            cursor: pointer; 
-            border: none; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px; 
-            transition: var(--st-transition);
-        }
-
-        .st-btn-main { 
-            background: var(--st-grad); 
-            width: 100%; 
-            height: 65px; 
-            border-radius: 20px; 
-            color: #000; 
-            font-size: 16px;
-            box-shadow: 0 10px 20px rgba(0, 242, 255, 0.2);
-        }
-
-        .st-btn-main:active { transform: scale(0.95); }
-
-        /* ================================================================
-           13. PROFILE & WALLET SECTION
-           ================================================================
-        */
-        .profile-header {
-            text-align: center;
-            padding: 40px;
-            background: linear-gradient(to bottom, #111, transparent);
-            border-radius: 40px;
-            margin-bottom: 30px;
-        }
-
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: var(--st-grad);
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: #000;
-            border: 5px solid var(--st-border);
-        }
-
-        .wallet-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .stat-card {
-            background: var(--st-card);
-            padding: 25px;
-            border-radius: 25px;
-            border: 1px solid var(--st-border);
-            text-align: center;
-        }
-
-        .stat-value { font-size: 28px; font-weight: 800; color: var(--st-cyan); margin-top: 10px; }
 
     </style>
 </head>
 <body>
 
-    <div id="st-toast" class="st-toast">NOTIFICATIONS INITIALIZED</div>
+    <div id="toast">SYSTEM NOTIFICATION</div>
 
-    <div id="st-preloader">
-        <div class="st-loader-content">
-            <div class="st-loader-logo mc-style">
-                <i class="fas fa-shield-halved"></i> STUTGARD
-            </div>
-            <div class="st-progress-container">
-                <div class="st-progress-bar">
-                    <div id="st-progress-fill" class="st-progress-fill"></div>
-                </div>
-            </div>
-            <div id="loader-status" class="loader-status">CONNECTING TO CPM SERVERS...</div>
+    <div id="st-loader">
+        <div class="loader-ring"></div>
+        <div class="mc-style" style="margin-top: 20px; letter-spacing: 3px;">STUTGARD</div>
+    </div>
+
+    <div id="mod-order-overlay" class="st-overlay">
+        <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
+            <i class="fas fa-times" onclick="UI.CloseModOrder()" style="cursor:pointer;"></i>
+            <span class="mc-style">BOOK SERVICE SESSION</span>
+        </div>
+        <div style="padding:30px;">
+            <div id="order-service-name" class="mc-style" style="font-size:20px; color:var(--st-gold); margin-bottom:10px;"></div>
+            <p style="color:var(--st-dim); margin-bottom:25px;">Please provide details for Mustafa Barbour.</p>
+            <input type="text" id="order-car-name" class="st-field" placeholder="VEHICLE NAME">
+            <input type="text" id="order-game-id" class="st-field" placeholder="YOUR GAME ID">
+            <button class="btn-main mc-style" onclick="Data.Admin.SubmitOrder()">SUBMIT ORDER</button>
         </div>
     </div>
 
-    <div id="st-auth-gate" class="auth-screen">
-        <div class="auth-card">
-            <div class="auth-inner" id="login-container">
-                <h1 class="mc-style" style="color:var(--st-cyan); margin-bottom: 40px; font-size: 28px;">ACCESS DENIED</h1>
-                <div class="st-input-group">
-                    <label class="st-input-label">OPERATOR EMAIL</label>
-                    <input type="email" id="gate-email" class="st-input" placeholder="name@stutgard.com" value="mustafabarbour5@gmail.com">
-                </div>
-                <div class="st-input-group">
-                    <label class="st-input-label">SECURE PASSWORD</label>
-                    <input type="password" id="gate-pass" class="st-input" placeholder="••••••••" value="Abd120120">
-                </div>
-                <button class="st-btn st-btn-main mc-style" onclick="System.Auth.Login()">
-                    <i class="fas fa-key"></i> AUTHORIZE SESSION
-                </button>
-                <p style="margin-top:30px; font-size:12px; color:var(--st-dim); font-family:var(--mc-font);">
-                    UNREGISTERED? <span onclick="UI.ToggleAuth(true)" style="color:var(--st-cyan); cursor:pointer;">CREATE IDENTITY</span>
-                </p>
+    <div id="car-detail-overlay" class="st-overlay">
+        <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
+            <i class="fas fa-arrow-left" onclick="UI.CloseDetail()" style="cursor:pointer; font-size:20px;"></i>
+            <span class="mc-style">VEHICLE SPECS</span>
+        </div>
+        <img id="det-img" style="width:100%; height:300px; object-fit:cover;">
+        <div style="padding:30px;">
+            <div id="det-price" class="mc-style" style="font-size:30px; color:var(--st-cyan);"></div>
+            <h2 id="det-title" style="margin:10px 0;"></h2>
+            
+            <div class="detail-table">
+                <div class="detail-row"><span class="detail-label">STATUS</span><span id="det-status" class="detail-value"></span></div>
+                <div class="detail-row"><span class="detail-label">KM / MILEAGE</span><span id="det-km" class="detail-value"></span></div>
+                <div class="detail-row"><span class="detail-label">MODEL YEAR</span><span id="det-year" class="detail-value"></span></div>
+                <div class="detail-row"><span class="detail-label">ENGINE</span><span id="det-hp" class="detail-value"></span></div>
+                <div class="detail-row"><span class="detail-label">SELLER</span><span id="det-owner" class="detail-value" style="color:var(--st-cyan)"></span></div>
             </div>
 
-            <div class="auth-inner" id="register-container" style="display:none">
-                <h1 class="mc-style" style="margin-bottom: 40px; font-size: 28px;">NEW IDENTITY</h1>
-                <div class="st-input-group">
-                    <label class="st-input-label">OPERATOR NICKNAME</label>
-                    <input type="text" id="reg-name" class="st-input" placeholder="AGENT_007">
-                </div>
-                <div class="st-input-group">
-                    <label class="st-input-label">EMAIL ADDRESS</label>
-                    <input type="email" id="reg-email" class="st-input" placeholder="email@domain.com">
-                </div>
-                <div class="st-input-group">
-                    <label class="st-input-label">ENCRYPTION PASS</label>
-                    <input type="password" id="reg-pass" class="st-input" placeholder="••••••••">
-                </div>
-                <button class="st-btn st-btn-main mc-style" onclick="System.Auth.Register()">
-                    <i class="fas fa-user-plus"></i> INITIALIZE PROFILE
-                </button>
-                <p style="margin-top:20px; font-size:12px; color:var(--st-dim); font-family:var(--mc-font);">
-                    ALREADY HAVE ACCESS? <span onclick="UI.ToggleAuth(false)" style="color:var(--st-cyan); cursor:pointer;">LOGIN</span>
-                </p>
-            </div>
+            <button class="btn-main mc-style" style="margin-top:25px;" id="contact-seller-btn">
+                <i class="fas fa-comment"></i> CONTACT SELLER
+            </button>
+            <button class="btn-main mc-style" style="margin-top:10px; background:var(--st-danger); display:none;" id="delete-asset-btn">
+                <i class="fas fa-trash"></i> DELETE POST
+            </button>
         </div>
     </div>
 
-    <div id="st-app-main" style="display:none">
-        
-        <header class="st-header">
-            <div class="st-logo mc-style" onclick="UI.SwitchPage('home')">
-                <i class="fas fa-shield-halved" style="color:var(--st-cyan);"></i> STUTGARD <span style="color:var(--st-cyan)">PRO</span>
+    <div id="chat-overlay" class="st-overlay">
+        <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
+            <i class="fas fa-times" onclick="UI.CloseChat()" style="cursor:pointer;"></i>
+            <span id="chat-with-name" class="mc-style">MESSAGES</span>
+        </div>
+        <div id="pm-box" class="chat-stream"></div>
+        <div style="padding:15px; background:#0d0d0f; display:flex; gap:10px;">
+            <input type="text" id="pm-input" class="st-field" style="margin:0;" placeholder="Write a message...">
+            <button class="btn-main" style="width:65px;" id="pm-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <div id="auth-gate" class="auth-overlay">
+        <div class="auth-box" id="login-form">
+            <h1 class="mc-style" style="color:var(--st-cyan); margin-bottom:30px;">AUTHORIZE</h1>
+            <input type="email" id="email-in" class="st-field" placeholder="EMAIL ADDRESS">
+            <input type="password" id="pass-in" class="st-field" placeholder="PASSWORD">
+            <button class="btn-main mc-style" onclick="App.Login()">LOGIN SESSION</button>
+            <p style="margin-top:20px; color:var(--st-dim); font-size:12px;">NEW OPERATOR? <span onclick="App.ShowReg(true)" style="color:var(--st-cyan); cursor:pointer;">REGISTER</span></p>
+        </div>
+        <div class="auth-box" id="reg-form" style="display:none">
+            <h1 class="mc-style" style="margin-bottom:30px;">NEW IDENTITY</h1>
+            <input type="text" id="reg-name" class="st-field" placeholder="NICKNAME">
+            <input type="email" id="reg-email" class="st-field" placeholder="EMAIL ADDRESS">
+            <input type="password" id="reg-pass" class="st-field" placeholder="PASSWORD">
+            <button class="btn-main mc-style" onclick="App.Register()">CREATE ACCOUNT</button>
+            <p style="margin-top:20px; color:var(--st-dim); font-size:12px;">BACK TO <span onclick="App.ShowReg(false)" style="color:var(--st-cyan); cursor:pointer;">LOGIN</span></p>
+        </div>
+    </div>
+
+    <div id="app-root" style="display:none">
+        <header>
+            <div class="st-logo mc-style">
+                <i class="fas fa-shield-halved"></i> STUTGARD <span style="color:var(--st-cyan)">CPM</span>
             </div>
-            <div class="header-actions">
-                <div id="admin-notif-bell" class="admin-notif-btn" onclick="UI.SwitchPage('admin')">
-                    <i class="fas fa-bell"></i>
-                    <div class="notif-dot" id="notif-dot"></div>
-                </div>
-                <div class="st-user-pill mc-style" style="background:#111; padding:10px 20px; border-radius:15px; border:1px solid var(--st-border); font-size:10px;">
-                    <i class="fas fa-circle" style="color:var(--st-success); font-size:8px; margin-right:8px;"></i>
-                    <span id="user-display-label">OPERATOR</span>
-                </div>
+            <div id="admin-notif" style="display:none; color:var(--st-gold); font-size:20px;">
+                <i class="fas fa-crown"></i>
             </div>
         </header>
 
-        <main class="st-content">
+        <main class="content-body">
             
-            <section id="page-home" class="st-page active">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
-                    <div>
-                        <h2 class="mc-style" style="font-size:32px; color:var(--st-cyan);">GLOBAL FEED</h2>
-                        <p style="color:var(--st-dim); font-size:14px;">Real-time asset marketplace for elite drivers.</p>
-                    </div>
-                    <div class="mc-style" style="background:rgba(0,242,255,0.1); padding:15px; border-radius:15px; border:1px solid var(--st-cyan); color:var(--st-cyan);">
-                        LIVE: <span id="market-count">0</span> ASSETS
-                    </div>
-                </div>
-                <div class="st-grid" id="market-feed-container">
-                    </div>
+            <section id="page-home" class="page active">
+                <h2 class="mc-style" style="margin-bottom:25px; color:var(--st-cyan);">GLOBAL MARKET</h2>
+                <div class="grid" id="market-grid"></div>
             </section>
 
-            <section id="page-service" class="st-page">
-                <div style="margin-bottom:40px;">
-                    <h2 class="mc-style" style="font-size:32px; color:var(--st-gold);">EXCLUSIVE MODS</h2>
-                    <p style="color:var(--st-dim); font-size:14px;">Showcasing verified designs and high-end tuning by Admin.</p>
-                </div>
-                <div class="st-grid" id="service-feed-container">
-                    </div>
+            <section id="page-services" class="page">
+                <h2 class="mc-style" style="margin-bottom:5px; color:var(--st-gold);">OFFICIAL SERVICES</h2>
+                <p style="color:var(--st-dim); font-size:12px; margin-bottom:25px;">VERIFIED TUNING BY STUTGARD ADMIN</p>
+                <div class="grid" id="services-grid"></div>
             </section>
 
-            <section id="page-post" class="st-page">
-                <div style="max-width: 800px; margin: auto; background: var(--st-card); padding: 50px; border-radius: 40px; border: 1px solid var(--st-border); box-shadow: var(--st-shadow);">
-                    <h2 class="mc-style" style="margin-bottom:15px; font-size:28px;">ASSET REGISTRATION</h2>
-                    <p style="color:var(--st-dim); margin-bottom:40px; border-bottom:1px solid #222; padding-bottom:20px;">Upload your vehicle to the global grid. Max image size: 5MB.</p>
+            <section id="page-add" class="page">
+                <div class="auth-box" style="max-width:100%; border-radius:30px;">
+                    <h2 class="mc-style" style="margin-bottom:20px;">PUBLISH ASSET</h2>
+                    <input type="text" id="post-title" class="st-field" placeholder="VEHICLE NAME">
+                    <input type="number" id="post-price" class="st-field" placeholder="PRICE (CPM)">
                     
-                    <div class="st-input-group">
-                        <label class="st-input-label">VEHICLE NAME / MODEL</label>
-                        <input type="text" id="p-title" class="st-input" placeholder="e.g. BMW M5 F90 Shark Edition">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <select id="post-status" class="st-field">
+                            <option value="IKINCI EL">IKINCI EL (USED)</option>
+                            <option value="0 KM (ZERO)">0 KM (ZERO)</option>
+                        </select>
+                        <input type="text" id="post-year" class="st-field" placeholder="MODEL YEAR">
                     </div>
-                    
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-                        <div class="st-input-group">
-                            <label class="st-input-label">TRANSACTION TYPE</label>
-                            <select id="p-type" class="st-input">
-                                <option value="SALE">FOR SALE</option>
-                                <option value="TRADE">FOR TRADE</option>
-                                <option value="RENT">FOR RENT</option>
-                            </select>
-                        </div>
-                        <div class="st-input-group">
-                            <label class="st-input-label">PRICE (CPM CURRENCY)</label>
-                            <input type="number" id="p-price" class="st-input" placeholder="50,000,000">
-                        </div>
+
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                        <input type="text" id="post-km" class="st-field" placeholder="MILEAGE (KM)">
+                        <input type="text" id="post-hp" class="st-field" placeholder="ENGINE HP">
                     </div>
-                    
-                    <div class="st-input-group">
-                        <label class="st-input-label">VEHICLE IMAGE (VISUAL DATA)</label>
-                        <input type="file" id="p-image" class="st-input" accept="image/*" style="padding:15px;">
-                    </div>
-                    
-                    <button class="st-btn st-btn-main mc-style" style="margin-top:20px;" onclick="System.Market.Publish()">
-                        <i class="fas fa-upload"></i> EXECUTE UPLOAD
-                    </button>
+
+                    <input type="file" id="post-img" class="st-field" accept="image/*">
+                    <button class="btn-main mc-style" onclick="Data.Market.Add()">POST TO GRID</button>
                 </div>
             </section>
 
-            <section id="page-ticket" class="st-page">
-                <div style="margin-bottom:30px;">
-                    <h2 class="mc-style" style="font-size:32px;">NEURAL SUPPORT</h2>
-                    <p style="color:var(--st-dim);">Ask our AI anything about Car Parking Multiplayer or Stutgard System.</p>
-                </div>
-                
-                <div class="ticket-container">
-                    <div class="ticket-header">
-                        <div class="ai-status-dot"></div>
-                        <div class="mc-style" style="font-size:14px;">STUTGARD_AI_v4.2</div>
+            <section id="page-ai" class="page">
+                <h2 class="mc-style" style="margin-bottom:20px;">STUTGARD AI</h2>
+                <div class="chat-container">
+                    <div id="chat-box" class="chat-stream">
+                        <div class="bubble bubble-ai">Systems online. Ask me anything about CPM mechanics or trading.</div>
                     </div>
-                    <div id="ai-chat-messages" class="chat-messages">
-                        <div class="msg-bubble msg-ai">
-                            System initialized. I am your AI assistant. How can I help you dominate the streets today?
-                        </div>
-                    </div>
-                    <div class="chat-input-area">
-                        <input type="text" id="ai-user-input" class="st-input" style="margin:0;" placeholder="Inquire about trading, rules, or mods...">
-                        <button class="st-btn st-btn-main" style="width:80px; height:60px;" onclick="System.AI.Ask()">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
+                    <div style="padding:15px; background:#0d0d0f; display:flex; gap:10px;">
+                        <input type="text" id="ai-input" class="st-field" style="margin:0;" placeholder="Type a message...">
+                        <button class="btn-main" style="width:60px;" onclick="Data.AI.Talk()"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
             </section>
 
-            <section id="page-profile" class="st-page">
-                <div class="profile-header">
-                    <div class="profile-avatar" id="prof-char">A</div>
-                    <h2 class="mc-style" id="prof-name">OPERATOR NAME</h2>
-                    <p style="color:var(--st-cyan); font-family:var(--code-font); font-size:12px; margin-top:5px;" id="prof-role">RANK: ELITE MEMBER</p>
-                </div>
-
-                <div class="wallet-stats">
-                    <div class="stat-card">
-                        <div class="mc-style stat-label" style="font-size:10px; color:var(--st-dim);">CURRENT BALANCE</div>
-                        <div class="stat-value">50,000,000 <span style="font-size:12px;">CPM</span></div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="mc-style stat-label" style="font-size:10px; color:var(--st-dim);">TOTAL TRADES</div>
-                        <div class="stat-value">24</div>
-                    </div>
-                </div>
-
-                <div class="admin-panel-card" style="margin-top:30px;">
-                    <h3 class="mc-style" style="margin-bottom:20px; font-size:16px;">ACCOUNT SETTINGS</h3>
-                    <button class="st-btn" style="width:100%; background:rgba(255,59,59,0.1); color:var(--st-danger); border:1px solid var(--st-danger); height:60px; border-radius:15px;" onclick="location.reload()">
-                        <i class="fas fa-power-off"></i> LOGOUT FROM SYSTEM
-                    </button>
-                </div>
+            <section id="page-msgs" class="page">
+                <h2 class="mc-style" style="margin-bottom:20px;">INBOX</h2>
+                <div id="chats-list"></div>
             </section>
 
-            <section id="page-admin" class="st-page">
-                <h2 class="mc-style" style="color:var(--st-danger); font-size:32px; margin-bottom:40px;">ADMIN TERMINAL</h2>
-                
-                <div class="admin-section-grid">
-                    <div class="admin-panel-card">
-                        <h3 class="mc-style" style="margin-bottom:25px; color:var(--st-gold);"><i class="fas fa-plus-circle"></i> ADD OFFICIAL SERVICE</h3>
-                        <div class="st-input-group">
-                            <label class="st-input-label">SERVICE TITLE</label>
-                            <input type="text" id="admin-s-title" class="st-input" placeholder="e.g. CHROME PAINT SERVICE">
-                        </div>
-                        <div class="st-input-group">
-                            <label class="st-input-label">SERVICE DESCRIPTION</label>
-                            <textarea id="admin-s-info" class="st-input" style="height:100px; resize:none;" placeholder="Detail exactly what you offer..."></textarea>
-                        </div>
-                        <div class="st-input-group">
-                            <label class="st-input-label">PREVIEW IMAGE</label>
-                            <input type="file" id="admin-s-img" class="st-input">
-                        </div>
-                        <button class="st-btn st-btn-main mc-style" onclick="System.Admin.PostService()">
-                            <i class="fas fa-check"></i> DEPLOY SERVICE
-                        </button>
+            <section id="page-admin" class="page">
+                <h2 class="mc-style" style="color:var(--st-danger); margin-bottom:25px;">ROOT TERMINAL</h2>
+                <div id="root-access-granted" class="grid">
+                    <div class="auth-box" style="max-width:100%; text-align:left; padding:25px;">
+                        <h3 class="mc-style" style="font-size:14px; margin-bottom:15px; color:var(--st-gold);">ADD NEW SERVICE</h3>
+                        <input type="text" id="mod-title" class="st-field" placeholder="SERVICE NAME">
+                        <input type="text" id="mod-desc" class="st-field" placeholder="DESCRIPTION">
+                        <input type="file" id="mod-img" class="st-field">
+                        <button class="btn-main mc-style" onclick="Data.Admin.AddMod()">PUBLISH SERVICE</button>
                     </div>
-
-                    <div class="admin-panel-card">
-                        <h3 class="mc-style" style="margin-bottom:25px; color:var(--st-danger);"><i class="fas fa-users-gear"></i> USER MODERATION</h3>
-                        <div id="admin-users-list" style="max-height:400px; overflow-y:auto; padding-right:10px;">
-                            </div>
+                    <div class="auth-box" style="max-width:100%; text-align:left; padding:25px;">
+                        <h3 class="mc-style" style="font-size:14px; margin-bottom:15px; color:var(--st-cyan);">INCOMING ORDERS</h3>
+                        <div id="mod-orders-list"></div>
+                    </div>
+                    <div class="auth-box" style="max-width:100%; text-align:left; padding:25px;">
+                        <h3 class="mc-style" style="font-size:14px; margin-bottom:15px;">OPERATOR LIST</h3>
+                        <div id="users-list"></div>
                     </div>
                 </div>
             </section>
-
         </main>
 
-        <nav class="st-bottom-nav">
-            <div class="nav-item active" onclick="UI.SwitchPage('home', this)">
-                <i class="fas fa-house"></i>
-                <span>FEED</span>
-            </div>
-            <div class="nav-item" onclick="UI.SwitchPage('service', this)">
-                <i class="fas fa-bolt"></i>
-                <span>MODS</span>
-            </div>
-            <div class="nav-item nav-item-center" onclick="UI.SwitchPage('post', this)">
-                <i class="fas fa-plus"></i>
-            </div>
-            <div class="nav-item" onclick="UI.SwitchPage('ticket', this)">
-                <i class="fas fa-comment-dots"></i>
-                <span>AI</span>
-            </div>
-            <div class="nav-item" onclick="UI.SwitchPage('profile', this)">
-                <i class="fas fa-user-gear"></i>
-                <span>ME</span>
-            </div>
-            <div class="nav-item admin-only" id="admin-nav-item" onclick="UI.SwitchPage('admin', this)">
-                <i class="fas fa- crown"></i>
-                <span>ROOT</span>
-            </div>
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="UI.Page('home', this)"><i class="fas fa-home"></i><span>GRID</span></div>
+            <div class="nav-item" onclick="UI.Page('services', this)"><i class="fas fa-bolt"></i><span>SERVICES</span></div>
+            <div class="nav-item nav-center" onclick="UI.Page('add', this)"><i class="fas fa-plus"></i></div>
+            <div class="nav-item" onclick="UI.Page('ai', this)"><i class="fas fa-robot"></i><span>AI</span></div>
+            <div class="nav-item" onclick="UI.Page('msgs', this)"><i class="fas fa-envelope"></i><span>CHATS</span></div>
+            <div class="nav-item" id="admin-tab" style="display:none;" onclick="UI.Page('admin', this)"><i class="fas fa-crown"></i><span>ROOT</span></div>
         </nav>
-
     </div>
 
     <script>
-        /**
-         * DB: LOCAL STORAGE WRAPPER
-         * Manages users, ads, and services in the browser.
-         */
-        const DB = {
-            users: JSON.parse(localStorage.getItem('stut_v5_users')) || [
-                { id: 1, name: "Mustafa Barbour", email: "mustafabarbour5@gmail.com", pass: "Abd120120", role: "admin", status: "active", wallet: 999999999 }
-            ],
-            ads: JSON.parse(localStorage.getItem('stut_v5_ads')) || [],
-            services: JSON.parse(localStorage.getItem('stut_v5_services')) || [],
+        const State = {
+            users: JSON.parse(localStorage.getItem('st_u')) || [{ name: "Mustafa", email: "mustafabarbour5@gmail.com", pass: "Abd120120", role: "admin", status: "active" }],
+            market: JSON.parse(localStorage.getItem('st_m')) || [],
+            services: JSON.parse(localStorage.getItem('st_s')) || [],
+            orders: JSON.parse(localStorage.getItem('st_o')) || [],
+            chats: JSON.parse(localStorage.getItem('st_c')) || [],
             session: null,
-            
-            save: function() {
-                localStorage.setItem('stut_v5_users', JSON.stringify(this.users));
-                localStorage.setItem('stut_v5_ads', JSON.stringify(this.ads));
-                localStorage.setItem('stut_v5_services', JSON.stringify(this.services));
+            rootEmail: "mustafabarbour5@gmail.com"
+        };
+
+        const Storage = {
+            save: () => {
+                localStorage.setItem('st_u', JSON.stringify(State.users));
+                localStorage.setItem('st_m', JSON.stringify(State.market));
+                localStorage.setItem('st_s', JSON.stringify(State.services));
+                localStorage.setItem('st_o', JSON.stringify(State.orders));
+                localStorage.setItem('st_c', JSON.stringify(State.chats));
             }
         };
 
-        /**
-         * SYSTEM: CORE FUNCTIONALITY
-         */
-        const System = {
-            
-            // AUTHENTICATION LOGIC
-            Auth: {
-                Login: function() {
-                    const email = document.getElementById('gate-email').value;
-                    const pass = document.getElementById('gate-pass').value;
-                    
-                    const user = DB.users.find(u => u.email === email && u.pass === pass);
-                    
-                    if (user) {
-                        if (user.status === 'banned') {
-                            UI.Toast("CRITICAL: ACCOUNT ACCESS REVOKED BY ADMIN");
-                            return;
-                        }
-                        DB.session = user;
-                        UI.Toast("AUTHORIZATION SUCCESSFUL. WELCOME AGENT.");
-                        System.App.Initialize();
-                    } else {
-                        UI.Toast("ERR: INVALID ENCRYPTION KEY");
-                    }
-                },
-                
-                Register: function() {
-                    const name = document.getElementById('reg-name').value;
-                    const email = document.getElementById('reg-email').value;
-                    const pass = document.getElementById('reg-pass').value;
-                    
-                    if (!name || !email || !pass) {
-                        UI.Toast("ERR: ALL FIELDS REQUIRED");
-                        return;
-                    }
-
-                    if (DB.users.find(u => u.email === email)) {
-                        UI.Toast("ERR: IDENTITY ALREADY EXISTS");
-                        return;
-                    }
-
-                    const newUser = {
-                        id: Date.now(),
-                        name: name,
-                        email: email,
-                        pass: pass,
-                        role: "user",
-                        status: "active",
-                        wallet: 25000000 // Welcome bonus
-                    };
-
-                    DB.users.push(newUser);
-                    DB.save();
-                    UI.Toast("IDENTITY INITIALIZED. PLEASE LOGIN.");
-                    UI.ToggleAuth(false);
-                }
-            },
-
-            // MARKETPLACE LOGIC
+        const Data = {
             Market: {
-                Publish: function() {
-                    const title = document.getElementById('p-title').value;
-                    const type = document.getElementById('p-type').value;
-                    const price = document.getElementById('p-price').value;
-                    const imgFile = document.getElementById('p-image').files[0];
-
-                    if (!title || !price || !imgFile) {
-                        UI.Toast("DATA FRAGMENTATION: MISSING VALUES");
-                        return;
-                    }
-
+                Add: () => {
+                    const t = document.getElementById('post-title').value, p = document.getElementById('post-price').value, f = document.getElementById('post-img').files[0];
+                    if(!t || !p || !f) return UI.Toast("MISSING ASSET DATA");
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        const newAd = {
-                            id: Date.now(),
-                            title: title,
-                            type: type,
-                            price: price,
-                            img: e.target.result,
-                            owner: DB.session.name,
-                            ownerId: DB.session.id,
-                            timestamp: new Date().toLocaleDateString()
-                        };
-
-                        DB.ads.unshift(newAd);
-                        DB.save();
-                        
-                        // Set notification for admin
-                        localStorage.setItem('st_new_notif', 'true');
-                        
-                        UI.Toast("ASSET DEPLOYED TO GLOBAL FEED");
-                        UI.SwitchPage('home');
-                        this.Render();
+                        State.market.unshift({ id: Date.now(), title: t, price: p, status: document.getElementById('post-status').value, year: document.getElementById('post-year').value || "2024", km: document.getElementById('post-km').value || "0", hp: document.getElementById('post-hp').value || "1695", img: e.target.result, owner: State.session.name, ownerEmail: State.session.email });
+                        Storage.save(); UI.Toast("ASSET DEPLOYED"); UI.Page('home'); Data.Market.Render();
                     };
-                    reader.readAsDataURL(imgFile);
+                    reader.readAsDataURL(f);
                 },
-
-                Render: function() {
-                    const container = document.getElementById('market-feed-container');
-                    const countEl = document.getElementById('market-count');
-                    
-                    if (DB.ads.length === 0) {
-                        container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:100px; color:var(--st-dim);">NO ASSETS DETECTED IN GRID</div>`;
-                        countEl.innerText = "0";
-                        return;
-                    }
-
-                    countEl.innerText = DB.ads.length;
-                    container.innerHTML = DB.ads.map(ad => `
-                        <div class="st-car-card">
-                            <div class="type-badge badge-${ad.type}">${ad.type}</div>
-                            <div class="car-img-box"><img src="${ad.img}"></div>
-                            <div class="car-info">
-                                <div class="car-price">${parseInt(ad.price).toLocaleString()} <span style="font-size:12px;">CPM</span></div>
-                                <div class="car-title">${ad.title.toUpperCase()}</div>
-                                <div class="car-meta">
-                                    <div class="owner-tag"><i class="fas fa-user-astronaut"></i> ${ad.owner}</div>
-                                    <div style="font-size:10px; color:var(--st-dim);">${ad.timestamp}</div>
-                                </div>
-                                <button class="st-btn st-btn-main mc-style" style="height:45px; margin-top:20px; font-size:10px;" onclick="UI.Toast('CONTACTING OWNER...')">
-                                    INTERESTED
-                                </button>
+                Render: () => {
+                    document.getElementById('market-grid').innerHTML = State.market.map(m => `
+                        <div class="card" onclick="UI.OpenDetail(${m.id})">
+                            <div class="badge badge-sale">${m.status}</div>
+                            <div class="img-area"><img src="${m.img}"></div>
+                            <div class="card-body">
+                                <div class="price-text">${parseInt(m.price).toLocaleString()} CPM</div>
+                                <div class="title-text">${m.title}</div>
+                                <div style="font-size:11px; color:var(--st-dim);"><i class="fas fa-user"></i> ${m.owner}</div>
                             </div>
-                        </div>
-                    `).join('');
+                        </div>`).join('');
                 }
             },
-
-            // AI SUPPORT LOGIC
+            Chat: {
+                Open: (toName) => {
+                    if(toName === State.session.name) return UI.Toast("THIS IS YOUR AD");
+                    document.getElementById('chat-with-name').innerText = "CHAT WITH: " + toName;
+                    document.getElementById('chat-overlay').classList.add('active');
+                    Data.Chat.RenderPMs(toName);
+                    document.getElementById('pm-send-btn').onclick = () => Data.Chat.Send(toName);
+                },
+                Send: (toName) => {
+                    const inp = document.getElementById('pm-input');
+                    if(!inp.value.trim()) return;
+                    State.chats.push({ from: State.session.name, to: toName, text: inp.value, time: Date.now() });
+                    Storage.save(); inp.value = ""; Data.Chat.RenderPMs(toName);
+                },
+                RenderPMs: (target) => {
+                    const box = document.getElementById('pm-box');
+                    box.innerHTML = State.chats.filter(c => (c.from === State.session.name && c.to === target) || (c.from === target && c.to === State.session.name)).map(m => `<div class="bubble ${m.from === State.session.name ? 'bubble-user' : 'bubble-msg-recv'}">${m.text}</div>`).join('');
+                    box.scrollTop = box.scrollHeight;
+                },
+                RenderInbox: () => {
+                    const list = document.getElementById('chats-list');
+                    const contacts = [...new Set(State.chats.map(c => c.from === State.session.name ? c.to : c.from))];
+                    list.innerHTML = contacts.map(c => `<div class="user-row" onclick="Data.Chat.Open('${c}')"><span class="mc-style" style="font-size:14px;">${c}</span><i class="fas fa-chevron-right" style="color:var(--st-cyan)"></i></div>`).join('');
+                }
+            },
             AI: {
-                Ask: function() {
-                    const input = document.getElementById('ai-user-input');
-                    const msgArea = document.getElementById('ai-chat-messages');
-                    const query = input.value.trim();
-
-                    if (!query) return;
-
-                    // User Message
-                    msgArea.innerHTML += `<div class="msg-bubble msg-user">${query}</div>`;
-                    input.value = "";
-                    msgArea.scrollTop = msgArea.scrollHeight;
-
-                    // AI Response Processing
+                Talk: () => {
+                    const inp = document.getElementById('ai-input'), box = document.getElementById('chat-box'), val = inp.value.trim().toLowerCase();
+                    if(!val) return; box.innerHTML += `<div class="bubble bubble-user">${inp.value}</div>`;
                     setTimeout(() => {
-                        let response = "I am scanning the CPM mainframe for an answer... No direct data found, but typically you should check the market pricing.";
-                        
-                        const q = query.toLowerCase();
-                        if (q.includes("money") || q.includes("rich") || q.includes("cpm")) {
-                            response = "To accumulate CPM currency, focus on creating high-quality 'Chrome' or 'Design' cars. Exclusive wraps sell for 50M instantly in the Stutgard feed.";
-                        } else if (q.includes("admin") || q.includes("mustafa")) {
-                            response = "Admin Mustafa Barbour is the Root Authority. For business inquiries, use the official Discord or Instagram links.";
-                        } else if (q.includes("sell") || q.includes("post")) {
-                            response = "Click the (+) button in the center of your navigation bar to register a new vehicle for sale.";
-                        } else if (q.includes("hack") || q.includes("mod")) {
-                            response = "Stutgard maintains a fair play policy. We do not provide hacks, only verified trading and tuning services.";
-                        } else if (q.includes("hello") || q.includes("hi")) {
-                            response = "Greetings, Operator. How can I assist with your CPM career today?";
-                        }
-
-                        msgArea.innerHTML += `<div class="msg-bubble msg-ai">${response}</div>`;
-                        msgArea.scrollTop = msgArea.scrollHeight;
-                        
-                        // Play a small sound or haptic feedback if possible
-                        if (window.navigator.vibrate) window.navigator.vibrate(10);
-                    }, 1000);
+                        let reply = "أعتذر، اسألني عن 'الفلوس' أو 'كيفية البيع'.";
+                        const brain = [{ keys: ['فلوس', 'money'], ans: "لتحصيل الفلوس بسرعة، صمم سيارات مميزة وبعها بأسعار عالية." }, { keys: ['بيع', 'sell'], ans: "اضغط على (+) في المنتصف، ارفع صورة سيارتك وحدد السعر والحالة." }, { keys: ['أدمن', 'admin'], ans: "الأدمن والمسؤول هو Mustafa Barbour." }];
+                        for (let item of brain) { if (item.keys.some(k => val.includes(k))) { reply = item.ans; break; } }
+                        box.innerHTML += `<div class="bubble bubble-ai">${reply}</div>`; box.scrollTop = box.scrollHeight; inp.value = "";
+                    }, 600);
                 }
             },
-
-            // ADMIN TERMINAL LOGIC
             Admin: {
-                PostService: function() {
-                    const title = document.getElementById('admin-s-title').value;
-                    const info = document.getElementById('admin-s-info').value;
-                    const imgFile = document.getElementById('admin-s-img').files[0];
-
-                    if (!title || !info || !imgFile) {
-                        UI.Toast("ADMIN ERR: DATA INCOMPLETE");
-                        return;
-                    }
-
+                AddMod: () => {
+                    const t = document.getElementById('mod-title').value, d = document.getElementById('mod-desc').value, f = document.getElementById('mod-img').files[0];
+                    if(!t || !f) return UI.Toast("MISSING INFO");
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        const newService = {
-                            id: Date.now(),
-                            title: title,
-                            info: info,
-                            img: e.target.result
-                        };
-
-                        DB.services.unshift(newService);
-                        DB.save();
-                        UI.Toast("OFFICIAL SERVICE DEPLOYED");
-                        this.RenderServices();
-                        UI.SwitchPage('service');
+                        State.services.unshift({ id: Date.now(), title: t, desc: d, img: e.target.result });
+                        Storage.save(); UI.Toast("SERVICE PUBLISHED"); Data.Admin.RenderServices();
                     };
-                    reader.readAsDataURL(imgFile);
+                    reader.readAsDataURL(f);
                 },
-
-                RenderServices: function() {
-                    const container = document.getElementById('service-feed-container');
-                    if (DB.services.length === 0) {
-                        container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:100px; color:var(--st-dim);">NO OFFICIAL SERVICES ACTIVE</div>`;
-                        return;
-                    }
-
-                    container.innerHTML = DB.services.map(s => `
-                        <div class="st-car-card">
-                            <div class="car-img-box"><img src="${s.img}"></div>
-                            <div class="car-info">
-                                <div style="color:var(--st-gold); font-family:var(--mc-font); font-size:20px; margin-bottom:10px;">${s.title}</div>
-                                <div style="font-size:14px; color:var(--st-dim); line-height:1.4;">${s.info}</div>
-                                <div style="margin-top:20px; color:var(--st-success); font-size:11px; display:flex; align-items:center; gap:8px;">
-                                    <i class="fas fa-certificate"></i> VERIFIED STUTGARD ELITE SERVICE
-                                </div>
-                                <button class="st-btn st-btn-main mc-style" style="height:45px; margin-top:20px; background:var(--st-gold); color:#000;" onclick="UI.Toast('OPENING SECURE CHAT...')">
-                                    ORDER MOD
-                                </button>
+                RenderServices: () => {
+                    document.getElementById('services-grid').innerHTML = State.services.map(s => `
+                        <div class="card">
+                            <div class="badge badge-mod">OFFICIAL</div>
+                            <div class="img-area"><img src="${s.img}"></div>
+                            <div class="card-body">
+                                <div class="title-text" style="color:var(--st-gold)">${s.title}</div>
+                                <div style="font-size:13px; color:var(--st-dim);">${s.desc}</div>
+                                <button class="btn-main mc-style" onclick="UI.OpenModOrder('${s.title}')" style="height:35px; font-size:9px; margin-top:15px; background:var(--st-gold);">BOOK NOW</button>
                             </div>
-                        </div>
-                    `).join('');
+                        </div>`).join('');
                 },
-
-                BanUser: function(id) {
-                    const user = DB.users.find(u => u.id === id);
-                    if (user.email === "mustafabarbour5@gmail.com") {
-                        UI.Toast("ERR: ROOT AUTHORITY CANNOT BE BANNED");
-                        return;
-                    }
-                    user.status = user.status === 'active' ? 'banned' : 'active';
-                    DB.save();
-                    this.RenderUsers();
-                    UI.Toast(`USER STATUS UPDATED TO: ${user.status.toUpperCase()}`);
+                SubmitOrder: () => {
+                    const car = document.getElementById('order-car-name').value, gid = document.getElementById('order-game-id').value;
+                    if(!car || !gid) return UI.Toast("FILL ALL FIELDS");
+                    State.orders.unshift({ id: Date.now(), user: State.session.name, service: State.activeService, car: car, gameID: gid });
+                    Storage.save(); UI.Toast("ORDER SENT"); UI.CloseModOrder(); Data.Admin.RenderOrders();
                 },
-
-                RenderUsers: function() {
-                    const container = document.getElementById('admin-users-list');
-                    container.innerHTML = DB.users.map(u => `
-                        <div class="user-manage-item">
-                            <div>
-                                <div style="font-weight:bold; font-size:16px;">${u.name}</div>
-                                <div style="font-size:11px; color:var(--st-dim);">${u.email}</div>
-                                <div style="font-size:9px; margin-top:5px; color:${u.status === 'active' ? 'var(--st-success)' : 'var(--st-danger)'}">${u.status.toUpperCase()}</div>
-                            </div>
-                            <button class="ban-btn" onclick="System.Admin.BanUser(${u.id})">
-                                ${u.status === 'active' ? 'BAN' : 'UNBAN'}
-                            </button>
-                        </div>
-                    `).join('');
-                }
-            },
-
-            // APP INITIALIZER
-            App: {
-                Initialize: function() {
-                    // Hide Gate, Show App
-                    document.getElementById('st-auth-gate').style.display = 'none';
-                    document.getElementById('st-app-main').style.display = 'block';
-                    
-                    // Update UI Labels
-                    document.getElementById('user-display-label').innerText = DB.session.name.split(' ')[0].toUpperCase();
-                    document.getElementById('prof-name').innerText = DB.session.name.toUpperCase();
-                    document.getElementById('prof-char').innerText = DB.session.name.charAt(0).toUpperCase();
-                    document.getElementById('prof-role').innerText = `RANK: ${DB.session.role === 'admin' ? 'ROOT AUTHORITY' : 'ELITE OPERATOR'}`;
-
-                    // Check Admin Privileges
-                    if (DB.session.role === 'admin') {
-                        document.getElementById('admin-nav-item').style.display = 'flex';
-                        document.getElementById('admin-notif-bell').style.display = 'block';
-                        System.Admin.RenderUsers();
-                    }
-
-                    // Render Data
-                    System.Market.Render();
-                    System.Admin.RenderServices();
-
-                    // Start Notification Engine
-                    this.StartNotifEngine();
+                RenderOrders: () => {
+                    document.getElementById('mod-orders-list').innerHTML = State.orders.map(o => `
+                        <div class="user-row" style="flex-direction:column; align-items:flex-start;">
+                            <div style="color:var(--st-gold); font-size:12px;">${o.service}</div>
+                            <div style="font-size:11px;"><b>User:</b> ${o.user} | <b>ID:</b> ${o.gameID}</div>
+                            <button onclick="Data.Admin.DelOrder(${o.id})" style="background:red; color:white; border:none; padding:3px 8px; border-radius:5px; margin-top:5px; font-size:10px;">DONE</button>
+                        </div>`).join('') || '<p style="color:var(--st-dim)">No orders.</p>';
                 },
-
-                StartNotifEngine: function() {
-                    setInterval(() => {
-                        if (localStorage.getItem('st_new_notif') === 'true' && DB.session.role === 'admin') {
-                            document.getElementById('notif-dot').style.display = 'block';
-                        }
-                    }, 3000);
+                DelOrder: (id) => { State.orders = State.orders.filter(o => o.id !== id); Storage.save(); Data.Admin.RenderOrders(); },
+                Ban: (email) => {
+                    if(email === State.rootEmail) return UI.Toast("ROOT PROTECTED");
+                    const u = State.users.find(x => x.email === email);
+                    u.status = (u.status === 'active') ? 'banned' : 'active';
+                    Storage.save(); Data.Admin.RenderUsers();
+                },
+                RenderUsers: () => {
+                    document.getElementById('users-list').innerHTML = State.users.map(u => `
+                        <div class="user-row">
+                            <div><b>${u.name}</b><br><small>${u.email}</small></div>
+                            <button onclick="Data.Admin.Ban('${u.email}')" style="background:${u.status==='active'?'red':'green'}; color:#fff; border:none; padding:5px; border-radius:5px; font-size:10px;">${u.status==='active'?'BAN':'UNBAN'}</button>
+                        </div>`).join('');
                 }
             }
         };
 
-        /**
-         * UI: INTERFACE CONTROLLER
-         */
+        const App = {
+            Login: () => {
+                const u = State.users.find(x => x.email === document.getElementById('email-in').value && x.pass === document.getElementById('pass-in').value);
+                if(u) { if(u.status === 'banned') return UI.Toast("BANNED"); State.session = u; App.Launch(); } else UI.Toast("AUTH ERROR");
+            },
+            Register: () => {
+                const n = document.getElementById('reg-name').value, e = document.getElementById('reg-email').value, p = document.getElementById('reg-pass').value;
+                if(!n || !e || !p) return UI.Toast("FILL ALL"); State.users.push({ name: n, email: e, pass: p, role: "user", status: "active" });
+                Storage.save(); App.ShowReg(false); UI.Toast("CREATED");
+            },
+            ShowReg: (s) => { document.getElementById('login-form').style.display = s ? 'none' : 'block'; document.getElementById('reg-form').style.display = s ? 'block' : 'none'; },
+            Launch: () => {
+                document.getElementById('auth-gate').style.display = 'none'; document.getElementById('app-root').style.display = 'block';
+                if(State.session.email === State.rootEmail) { document.getElementById('admin-tab').style.display = 'flex'; document.getElementById('admin-notif').style.display = 'block'; Data.Admin.RenderUsers(); Data.Admin.RenderOrders(); }
+                Data.Market.Render(); Data.Admin.RenderServices();
+            }
+        };
+
         const UI = {
-            SwitchPage: function(id, navEl) {
-                // Page Transition
-                document.querySelectorAll('.st-page').forEach(p => p.classList.remove('active'));
-                const target = document.getElementById('page-' + id);
-                if (target) target.classList.add('active');
-
-                // Nav Styling
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                if (navEl) navEl.classList.add('active');
-
-                // Auto-clear Admin Notifs
-                if (id === 'admin') {
-                    localStorage.setItem('st_new_notif', 'false');
-                    document.getElementById('notif-dot').style.display = 'none';
-                }
-
-                // Scroll to top
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+            Page: (id, el) => { document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-' + id).classList.add('active'); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); if(el) el.classList.add('active'); if(id === 'msgs') Data.Chat.RenderInbox(); window.scrollTo(0,0); },
+            OpenModOrder: (t) => { State.activeService = t; document.getElementById('order-service-name').innerText = t; document.getElementById('mod-order-overlay').classList.add('active'); },
+            CloseModOrder: () => document.getElementById('mod-order-overlay').classList.remove('active'),
+            OpenDetail: (id) => {
+                const m = State.market.find(x => x.id === id);
+                document.getElementById('det-img').src = m.img; document.getElementById('det-title').innerText = m.title; document.getElementById('det-price').innerText = parseInt(m.price).toLocaleString() + " CPM";
+                document.getElementById('det-status').innerText = m.status; document.getElementById('det-km').innerText = m.km + " KM"; document.getElementById('det-year').innerText = m.year; document.getElementById('det-hp').innerText = m.hp + " HP"; document.getElementById('det-owner').innerText = m.owner;
+                const delBtn = document.getElementById('delete-asset-btn'); delBtn.style.display = (State.session.email === m.ownerEmail || State.session.email === State.rootEmail) ? 'block' : 'none'; delBtn.onclick = () => { State.market = State.market.filter(x => x.id !== id); Storage.save(); UI.CloseDetail(); Data.Market.Render(); };
+                document.getElementById('car-detail-overlay').classList.add('active'); document.getElementById('contact-seller-btn').onclick = () => Data.Chat.Open(m.owner);
             },
-
-            ToggleAuth: function(isRegister) {
-                document.getElementById('login-container').style.display = isRegister ? 'none' : 'block';
-                document.getElementById('register-container').style.display = isRegister ? 'block' : 'none';
-            },
-
-            Toast: function(msg) {
-                const toast = document.getElementById('st-toast');
-                toast.innerText = msg;
-                toast.style.display = 'block';
-                setTimeout(() => { toast.style.display = 'none'; }, 3000);
-            }
+            CloseDetail: () => document.getElementById('car-detail-overlay').classList.remove('active'),
+            CloseChat: () => document.getElementById('chat-overlay').classList.remove('active'),
+            Toast: (m) => { const t = document.getElementById('toast'); t.innerText = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000); }
         };
 
-        /**
-         * BOOTSTRAP: SYSTEM STARTUP
-         */
-        window.onload = () => {
-            let progress = 0;
-            const fill = document.getElementById('st-progress-fill');
-            const status = document.getElementById('loader-status');
-            
-            const tasks = [
-                "Initializing Kernel...",
-                "Loading Market Data...",
-                "Syncing Profiles...",
-                "Connecting AI Neural Link...",
-                "Finalizing Interface..."
-            ];
-
-            const interval = setInterval(() => {
-                progress += Math.random() * 15;
-                if (progress > 100) progress = 100;
-                
-                fill.style.width = progress + "%";
-                status.innerText = tasks[Math.floor(progress / 25)] || "SYSTEM READY";
-
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        const preloader = document.getElementById('st-preloader');
-                        preloader.style.opacity = '0';
-                        preloader.style.transition = '0.8s';
-                        setTimeout(() => preloader.style.display = 'none', 800);
-                    }, 500);
-                }
-            }, 150);
-        };
-
+        window.onload = () => setTimeout(() => document.getElementById('st-loader').style.display = 'none', 1000);
     </script>
 </body>
 </html>
