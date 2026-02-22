@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>STUTGARD CPM | HYPER MARKETPLACE v9.0 | 1OF1 EDITION</title>
+    <title>STUTGARD CPM | THE ULTIMATE HYPER MARKETPLACE v9.0</title>
     
     <!-- External Assets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
         /* 
            ================================================================
            STUTGARD DESIGN SYSTEM v9.0
-           THE ULTIMATE DARK UI ARCHITECTURE
+           THE MOST ADVANCED DARK UI FOR CPM TRADING
            ================================================================ 
         */
         :root {
+            /* Core Palette */
             --st-cyan: #00f2ff;
             --st-blue: #0062ff;
             --st-bg: #050505;
@@ -30,21 +31,38 @@
             --st-success: #00ff88;
             --st-gold: #ffcc00;
             --st-gold-glow: rgba(255, 204, 0, 0.3);
+            
+            /* Typography */
             --mc-font: 'Minecraftia', sans-serif;
             --main-font: 'Rajdhani', sans-serif;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --mono-font: 'JetBrains Mono', monospace;
+
+            /* Shadows & Blurs */
+            --st-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            --st-blur: blur(15px);
         }
 
-        /* Base Reset & Smoothness */
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; outline: none; }
+        /* 
+           ================================================================
+           BASE RESET & GLOBAL STYLES
+           ================================================================ 
+        */
+        * { 
+            box-sizing: border-box; 
+            -webkit-tap-highlight-color: transparent; 
+            margin: 0; 
+            padding: 0; 
+            outline: none; 
+        }
+
         html, body { 
-            width: 100%; height: 100%; background: var(--st-bg); color: var(--st-text); 
-            font-family: var(--main-font); overflow-x: hidden; scroll-behavior: smooth;
-        }
-
-        /* Typography Utilities */
-        .mc-style, .st-logo, .nav-item span, .badge, .btn-main, .btn-booking, .section-title { 
-            font-family: var(--mc-font) !important; text-transform: uppercase; 
+            width: 100%; 
+            height: 100%; 
+            background: var(--st-bg); 
+            color: var(--st-text); 
+            font-family: var(--main-font); 
+            overflow-x: hidden; 
+            scroll-behavior: smooth;
         }
 
         /* Custom Scrollbar */
@@ -52,556 +70,587 @@
         ::-webkit-scrollbar-track { background: var(--st-bg); }
         ::-webkit-scrollbar-thumb { background: var(--st-border); border-radius: 10px; }
 
-        /* Preloader Animation */
+        /* Typography Utilities */
+        .mc-style { font-family: var(--mc-font) !important; text-transform: uppercase; letter-spacing: 1px; }
+        .mono-style { font-family: var(--mono-font); }
+        .text-cyan { color: var(--st-cyan); }
+        .text-gold { color: var(--st-gold); }
+        .text-dim { color: var(--st-dim); }
+
+        /* 
+           ================================================================
+           ANIMATIONS
+           ================================================================ 
+        */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes glow { 0% { box-shadow: 0 0 5px var(--st-gold-glow); } 50% { box-shadow: 0 0 25px var(--st-gold-glow); } 100% { box-shadow: 0 0 5px var(--st-gold-glow); } }
+
+        /* 
+           ================================================================
+           PRELOADER
+           ================================================================ 
+        */
         #st-loader {
             position: fixed; inset: 0; background: #000; z-index: 99999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
         .loader-ring {
-            width: 80px; height: 80px; border: 3px solid #111; border-top: 3px solid var(--st-cyan);
+            width: 90px; height: 90px; border: 4px solid #111; border-top: 4px solid var(--st-cyan);
             border-radius: 50%; animation: spin 1s linear infinite;
         }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* 1. زر الحجز الأصفر الثابت (Sticky Booking Button) */
-        .service-booking-sticky {
-            position: sticky;
-            top: 80px;
-            z-index: 998;
-            background: rgba(5, 5, 5, 0.85);
-            backdrop-filter: blur(15px);
-            padding: 15px 6%;
-            border-bottom: 1px solid var(--st-border);
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .btn-booking {
-            width: 100%;
-            max-width: 500px;
-            background: var(--st-gold);
-            color: #000;
-            border: none;
-            padding: 18px;
-            border-radius: 16px;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            box-shadow: 0 0 30px var(--st-gold-glow);
-            transition: var(--transition);
-        }
-        .btn-booking:hover { transform: scale(1.02); box-shadow: 0 0 40px var(--st-gold-glow); }
-        .btn-booking:active { transform: scale(0.97); }
-        .btn-booking i { font-size: 20px; }
-
-        /* Auth System Styling */
-        .auth-overlay {
-            position: fixed; inset: 0; background: var(--st-bg); z-index: 50000;
-            display: flex; justify-content: center; align-items: center; padding: 20px;
-        }
-        .auth-box {
-            background: var(--st-card); width: 100%; max-width: 420px;
-            padding: 40px; border-radius: 35px; border: 1px solid var(--st-border);
-            text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-        .st-field {
-            width: 100%; background: #000; border: 1px solid var(--st-border);
-            padding: 18px; border-radius: 15px; color: #fff; margin-bottom: 15px;
-            font-family: var(--main-font); font-size: 16px; transition: 0.3s;
-        }
-        .st-field:focus { border-color: var(--st-cyan); box-shadow: 0 0 15px rgba(0,242,255,0.1); }
-
-        /* Header Architecture */
+        /* 
+           ================================================================
+           HEADER & NAVIGATION
+           ================================================================ 
+        */
         header {
-            position: sticky; top: 0; height: 80px; background: rgba(13,13,15,0.9);
-            backdrop-filter: blur(15px); border-bottom: 1px solid var(--st-border);
+            position: sticky; top: 0; height: 85px; background: rgba(13,13,15,0.9);
+            backdrop-filter: var(--st-blur); border-bottom: 1px solid var(--st-border);
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 6%; z-index: 1000;
         }
-        .st-logo { font-size: 18px; display: flex; align-items: center; gap: 10px; }
-        .st-logo i { color: var(--st-cyan); font-size: 24px; }
+        .st-logo { font-size: 20px; display: flex; align-items: center; gap: 12px; }
+        .st-logo i { color: var(--st-cyan); font-size: 28px; filter: drop-shadow(0 0 8px var(--st-cyan)); }
 
-        /* Main Content Layout */
-        .content-body { padding: 20px 6% 120px 6%; }
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 90px;
+            background: #0d0d0f; border-top: 1px solid var(--st-border);
+            display: flex; justify-content: space-around; align-items: center;
+            padding-bottom: 15px; z-index: 2000; box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+        }
+        .nav-item {
+            color: var(--st-dim); display: flex; flex-direction: column;
+            align-items: center; gap: 6px; cursor: pointer; transition: 0.3s;
+        }
+        .nav-item i { font-size: 24px; }
+        .nav-item span { font-size: 9px; font-weight: 600; }
+        .nav-item.active { color: var(--st-cyan); }
+        .nav-center {
+            width: 65px; height: 65px; background: var(--st-grad);
+            border-radius: 22px; color: #000 !important; justify-content: center;
+            transform: translateY(-18px); box-shadow: 0 12px 25px rgba(0,242,255,0.4);
+        }
+
+        /* 
+           ================================================================
+           STICKY BOOKING BUTTON (YELLOW)
+           ================================================================ 
+        */
+        .service-booking-sticky {
+            position: sticky; top: 0; z-index: 900;
+            background: var(--st-bg); padding: 18px 0;
+            border-bottom: 1px solid var(--st-border); margin-bottom: 25px;
+            display: flex; justify-content: center;
+        }
+        .btn-booking-yellow {
+            width: 100%; max-width: 500px; background: var(--st-gold); color: #000;
+            border: none; padding: 20px; border-radius: 18px;
+            font-weight: 900; font-size: 15px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 14px;
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.35);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: glow 3s infinite;
+        }
+        .btn-booking-yellow:active { transform: scale(0.95); }
+        .btn-booking-yellow i { font-size: 20px; }
+
+        /* 
+           ================================================================
+           GRID & CARDS SYSTEM
+           ================================================================ 
+        */
+        .content-body { padding: 25px 6% 130px 6%; }
         .page { display: none; animation: fadeIn 0.5s ease-out; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Grid & Card Architecture */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-        .card {
-            background: var(--st-card); border-radius: 22px; border: 1px solid var(--st-border);
-            overflow: hidden; position: relative; transition: var(--transition); cursor: pointer;
-        }
-        .card:hover { transform: translateY(-8px); border-color: var(--st-cyan); box-shadow: 0 15px 30px rgba(0,242,255,0.1); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
         
-        /* 4. زر الحذف السريع (Quick Delete X) */
-        .quick-del {
-            position: absolute; top: 12px; right: 12px; width: 30px; height: 30px;
+        .card {
+            background: var(--st-card); border-radius: 24px; border: 1px solid var(--st-border);
+            overflow: hidden; position: relative; transition: 0.4s; cursor: pointer;
+            box-shadow: var(--st-shadow);
+        }
+        .card:hover { transform: translateY(-8px); border-color: var(--st-cyan); box-shadow: 0 20px 40px rgba(0,242,255,0.1); }
+        
+        /* Quick Delete Button (X) */
+        .quick-del-btn {
+            position: absolute; top: 12px; right: 12px; width: 32px; height: 32px;
             background: var(--st-danger); color: #fff; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 14px; z-index: 50; border: 2px solid rgba(0,0,0,0.3);
-            cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            font-size: 16px; z-index: 60; border: 3px solid rgba(0,0,0,0.4);
+            cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
-        .quick-del:hover { transform: scale(1.2) rotate(90deg); background: #ff0000; }
+        .quick-del-btn:hover { transform: scale(1.2) rotate(90deg); background: #ff0000; }
 
         .img-area { width: 100%; height: 130px; background: #000; overflow: hidden; position: relative; }
-        .img-area img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .img-area img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
         .card:hover .img-area img { transform: scale(1.1); }
         
-        /* Image Counter Badge */
-        .img-count-badge {
+        /* Multiple Image Counter */
+        .img-counter {
             position: absolute; bottom: 12px; right: 12px; background: rgba(0,0,0,0.8);
             color: #fff; padding: 5px 10px; border-radius: 8px; font-size: 10px;
-            font-weight: bold; border: 1px solid rgba(255,255,255,0.15);
+            font-weight: 800; border: 1px solid rgba(255,255,255,0.2);
             backdrop-filter: blur(5px); z-index: 10;
         }
 
         .badge {
             position: absolute; top: 12px; left: 12px; padding: 6px 12px;
             border-radius: 8px; font-size: 9px; font-weight: bold; z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
         .badge-sale { background: var(--st-cyan); color: #000; }
         .badge-mod { background: var(--st-gold); color: #000; }
 
         .card-body { padding: 16px; }
-        .price-text { font-family: var(--mc-font); font-size: 15px; color: var(--st-cyan); }
-        .title-text { font-size: 14px; font-weight: bold; margin: 6px 0; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .price-text { font-family: var(--mc-font); font-size: 15px; color: var(--st-cyan); margin-bottom: 4px; }
+        .title-text { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .owner-tag { font-size: 10px; color: var(--st-dim); display: flex; align-items: center; gap: 6px; }
 
-        /* 3. سلايدر الصور (Image Slider System) */
-        .slider-wrapper {
+        /* 
+           ================================================================
+           1OF1 SECTION STYLING
+           ================================================================ 
+        */
+        .one-of-one-hero {
+            background: linear-gradient(to bottom, #111, #000);
+            border: 2px solid var(--st-gold); border-radius: 35px;
+            padding: 40px; margin-bottom: 30px; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .one-of-one-hero::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,204,0,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .one-of-one-title { font-size: 32px; color: var(--st-gold); margin-bottom: 15px; }
+        .one-of-one-desc { color: var(--st-dim); font-size: 15px; line-height: 1.8; max-width: 700px; margin: 0 auto 30px auto; }
+        
+        .design-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+        .showcase-item {
+            background: var(--st-card); border: 1px solid var(--st-border);
+            border-radius: 25px; padding: 20px; text-align: left;
+        }
+        .showcase-img { width: 100%; height: 180px; border-radius: 18px; object-fit: cover; margin-bottom: 15px; border: 1px solid #333; }
+        .showcase-h3 { color: var(--st-gold); margin-bottom: 10px; font-size: 18px; }
+
+        /* 
+           ================================================================
+           SLIDER SYSTEM (DETAIL PAGE)
+           ================================================================ 
+        */
+        .slider-container {
             width: 100%; height: 350px; background: #000; position: relative;
             overflow: hidden; border-bottom: 1px solid var(--st-border);
         }
         .slider-track {
             display: flex; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .slider-item { min-width: 100%; height: 100%; }
-        .slider-item img { width: 100%; height: 100%; object-fit: cover; }
-        .slider-controls {
+        .slider-slide { min-width: 100%; height: 100%; }
+        .slider-slide img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .slider-nav {
             position: absolute; top: 50%; width: 100%; display: flex;
             justify-content: space-between; padding: 0 25px; transform: translateY(-50%);
             pointer-events: none;
         }
-        .slider-btn {
+        .slider-arrow {
             width: 50px; height: 50px; background: rgba(0,0,0,0.7); color: #fff;
             border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; pointer-events: auto; transition: 0.3s;
         }
-        .slider-btn:hover { background: var(--st-cyan); color: #000; }
+        .slider-arrow:hover { background: var(--st-cyan); color: #000; }
+        
         .slider-dots {
             position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
             display: flex; gap: 10px;
         }
-        .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 50%; transition: 0.3s; }
-        .dot.active { background: var(--st-cyan); width: 25px; border-radius: 12px; }
+        .slider-dot { width: 10px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 50%; transition: 0.3s; }
+        .slider-dot.active { background: var(--st-cyan); width: 25px; border-radius: 12px; }
 
-        /* Overlay System Architecture */
+        /* 
+           ================================================================
+           OVERLAYS & MODALS
+           ================================================================ 
+        */
         .st-overlay {
             position: fixed; inset: 0; background: var(--st-bg); z-index: 9000;
             display: none; flex-direction: column; overflow-y: auto;
         }
-        .st-overlay.active { display: flex; animation: slideUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .st-overlay.active { display: flex; animation: slideUp 0.45s cubic-bezier(0.165, 0.84, 0.44, 1); }
+
+        .overlay-header {
+            padding: 25px; border-bottom: 1px solid var(--st-border);
+            display: flex; align-items: center; gap: 20px;
+            background: rgba(5,5,5,0.85); backdrop-filter: var(--st-blur);
+            position: sticky; top: 0; z-index: 100;
+        }
 
         .detail-table { width: 100%; background: #0a0a0c; border-radius: 30px; border: 1px solid var(--st-border); overflow: hidden; margin-top: 25px; }
         .detail-row { display: flex; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--st-border); }
-        .detail-label { color: var(--st-dim); font-size: 15px; }
-        .detail-value { color: #fff; font-weight: bold; }
+        .detail-label { color: var(--st-dim); font-size: 15px; font-weight: 500; }
+        .detail-value { color: #fff; font-weight: 700; }
 
-        /* 1OF1 Section Styling */
-        .one-of-one-hero {
-            background: linear-gradient(to bottom, rgba(255,204,0,0.1), transparent);
-            border: 1px solid var(--st-gold); border-radius: 30px;
-            padding: 40px; margin-bottom: 30px; text-align: center;
+        /* 
+           ================================================================
+           AUTH & FORMS
+           ================================================================ 
+        */
+        .auth-overlay {
+            position: fixed; inset: 0; background: var(--st-bg); z-index: 50000;
+            display: flex; justify-content: center; align-items: center; padding: 25px;
         }
-        .one-of-one-card {
-            background: var(--st-card); border: 1px solid var(--st-border);
-            border-radius: 25px; padding: 25px; margin-bottom: 20px;
-            transition: var(--transition);
+        .auth-box {
+            background: var(--st-card); width: 100%; max-width: 450px;
+            padding: 45px; border-radius: 40px; border: 1px solid var(--st-border);
+            text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.6);
         }
-        .one-of-one-card:hover { border-color: var(--st-gold); transform: scale(1.02); }
-        .one-of-one-img {
-            width: 100%; height: 220px; border-radius: 18px; object-fit: cover;
-            margin-bottom: 20px; border: 1px solid #333;
+        .st-field {
+            width: 100%; background: #000; border: 1px solid var(--st-border);
+            padding: 20px; border-radius: 18px; color: #fff; margin-bottom: 18px;
+            font-family: var(--main-font); font-size: 17px; transition: 0.3s;
         }
+        .st-field:focus { border-color: var(--st-cyan); box-shadow: 0 0 20px rgba(0,242,255,0.15); }
 
-        /* Bottom Navigation Architecture */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; height: 85px;
-            background: #0d0d0f; border-top: 1px solid var(--st-border);
-            display: flex; justify-content: space-around; align-items: center;
-            padding-bottom: 15px; z-index: 2000;
+        .btn-main {
+            width: 100%; padding: 20px; border-radius: 18px; border: none;
+            background: var(--st-grad); color: #000; cursor: pointer;
+            font-weight: 800; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 12px;
         }
-        .nav-item {
-            color: var(--st-dim); display: flex; flex-direction: column;
-            align-items: center; gap: 5px; cursor: pointer; transition: 0.3s;
-        }
-        .nav-item i { font-size: 22px; }
-        .nav-item span { font-size: 8px; }
-        .nav-item.active { color: var(--st-cyan); }
-        .nav-center {
-            width: 60px; height: 60px; background: var(--st-grad);
-            border-radius: 20px; color: #000 !important; justify-content: center;
-            transform: translateY(-15px); box-shadow: 0 10px 25px rgba(0,242,255,0.4);
-        }
+        .btn-main:active { transform: scale(0.97); }
 
-        /* AI & Chat Bubbles */
+        /* 
+           ================================================================
+           AI CHAT SYSTEM
+           ================================================================ 
+        */
         .chat-container {
             background: #0a0a0c; border: 1px solid var(--st-border);
-            border-radius: 35px; height: 550px; display: flex; flex-direction: column; overflow: hidden;
+            border-radius: 35px; height: 600px; display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: var(--st-shadow);
         }
         .chat-stream { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; }
         .bubble { padding: 18px 24px; border-radius: 22px; max-width: 85%; font-size: 15px; line-height: 1.6; position: relative; }
         .bubble-ai { background: #1a1a1c; align-self: flex-start; border-left: 5px solid var(--st-cyan); color: #eee; }
         .bubble-user { background: var(--st-blue); align-self: flex-end; color: #fff; border-bottom-right-radius: 5px; }
 
-        /* Buttons & Inputs */
-        .btn-main {
-            width: 100%; padding: 20px; border-radius: 18px; border: none;
-            background: var(--st-grad); color: #000; cursor: pointer;
-            font-weight: bold; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 12px;
-        }
-        .btn-main:active { transform: scale(0.98); }
-
+        /* 
+           ================================================================
+           TOAST NOTIFICATIONS
+           ================================================================ 
+        */
         #toast {
             position: fixed; top: 35px; left: 50%; transform: translateX(-50%);
             background: var(--st-cyan); color: #000; padding: 14px 35px;
-            border-radius: 50px; font-weight: bold; z-index: 100000; display: none;
-            font-family: var(--mc-font); font-size: 12px; box-shadow: 0 15px 35px rgba(0,242,255,0.4);
+            border-radius: 60px; font-weight: 900; z-index: 100000; display: none;
+            font-family: var(--mc-font); font-size: 12px; box-shadow: 0 15px 40px rgba(0,242,255,0.4);
         }
 
-        /* Multiple Image Preview Grid */
-        .upload-preview-grid {
+        /* 
+           ================================================================
+           UPLOAD PREVIEW
+           ================================================================ 
+        */
+        .preview-grid {
             display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;
         }
-        .preview-box { width: 100%; aspect-ratio: 1; background: #111; border-radius: 12px; overflow: hidden; border: 1px solid var(--st-border); }
-        .preview-box img { width: 100%; height: 100%; object-fit: cover; }
+        .preview-item { width: 100%; aspect-ratio: 1; background: #111; border-radius: 12px; overflow: hidden; border: 1px solid var(--st-border); }
+        .preview-item img { width: 100%; height: 100%; object-fit: cover; }
 
     </style>
 </head>
 <body>
 
-    <!-- System Toast -->
+    <!-- Toast Component -->
     <div id="toast">SYSTEM NOTIFICATION</div>
 
-    <!-- Preloader Overlay -->
+    <!-- Preloader -->
     <div id="st-loader">
         <div class="loader-ring"></div>
-        <div class="mc-style" style="margin-top: 25px; letter-spacing: 5px; font-size: 20px;">STUTGARD</div>
-        <p style="color: var(--st-dim); font-size: 10px; margin-top: 10px;" class="mc-style">Initializing Neural Network...</p>
+        <div class="mc-style" style="margin-top: 25px; letter-spacing: 5px; font-size: 18px;">STUTGARD</div>
+        <div class="text-dim" style="margin-top: 10px; font-size: 12px; font-weight: 600;">INITIALIZING SYSTEMS...</div>
     </div>
 
-    <!-- 2. نموذج الحجز المطور (Advanced Booking Modal) -->
-    <div id="mod-order-overlay" class="st-overlay">
-        <div style="padding:25px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px; background: rgba(5,5,5,0.9); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;">
-            <i class="fas fa-times" onclick="UI.CloseModOrder()" style="cursor:pointer; font-size:24px;"></i>
-            <span class="mc-style">BOOK SERVICE NOW!</span>
+    <!-- Booking Modal (Universal for Services & 1OF1) -->
+    <div id="booking-modal" class="st-overlay">
+        <div class="overlay-header">
+            <i class="fas fa-times" onclick="UI.CloseModal('booking-modal')" style="cursor:pointer; font-size:24px;"></i>
+            <span class="mc-style" id="booking-modal-title">BOOK SERVICE NOW!</span>
         </div>
         <div style="padding:35px;">
-            <div id="order-service-name" class="mc-style" style="font-size:24px; color:var(--st-gold); margin-bottom:15px;"></div>
-            <p style="color:var(--st-dim); margin-bottom:30px; font-size: 15px; line-height: 1.5;">
-                Welcome to the Stutgard Tuning Lab. Please provide your vehicle details for Mustafa Barbour to review.
-            </p>
-            
-            <label class="mc-style" style="font-size: 10px; color: var(--st-cyan); display: block; margin-bottom: 8px;">Vehicle Name</label>
-            <input type="text" id="order-car-name" class="st-field" placeholder="e.g. Mercedes-AMG G63">
-            
-            <label class="mc-style" style="font-size: 10px; color: var(--st-cyan); display: block; margin-bottom: 8px;">Your Game ID</label>
-            <input type="text" id="order-game-id" class="st-field" placeholder="Enter your CPM ID">
-            
-            <label class="mc-style" style="font-size: 10px; color: var(--st-cyan); display: block; margin-bottom: 8px;">Service Description</label>
-            <textarea id="order-desc" class="st-field" style="height:140px; resize:none; padding: 20px;" placeholder="Describe what you want to do (e.g. Full Brabus conversion, custom wrap, engine max tuning)"></textarea>
-            
-            <label class="mc-style" style="font-size: 10px; color: var(--st-gold); display: block; margin-bottom: 8px;">Upload Vehicle Photo</label>
-            <input type="file" id="order-car-img" class="st-field" accept="image/*" onchange="UI.PreviewSingleImage(this, 'order-img-preview')">
-            <div id="order-img-preview" class="preview-box" style="width: 100px; height: 100px; margin-bottom: 25px; display: none;"></div>
+            <div class="one-of-one-hero" style="padding: 20px; margin-bottom: 25px; border-radius: 20px;">
+                <h3 class="mc-style text-gold" style="font-size: 18px;">Appointment Details</h3>
+                <p class="text-dim" style="font-size: 13px;">Please provide accurate info for Mustafa Barbour.</p>
+            </div>
 
-            <button class="btn-main mc-style" onclick="Data.Admin.SubmitOrder()" style="background: var(--st-gold); color: #000;">
-                <i class="fas fa-paper-plane"></i> SEND BOOKING REQUEST
+            <input type="text" id="book-car-name" class="st-field" placeholder="VEHICLE NAME (e.g. Mercedes G63)">
+            <input type="text" id="book-game-id" class="st-field" placeholder="YOUR GAME ID">
+            
+            <p style="font-size:11px; color:var(--st-dim); margin-bottom:10px;" class="mc-style">UPLOAD VEHICLE PHOTO</p>
+            <input type="file" id="book-car-img" class="st-field" accept="image/*">
+            
+            <textarea id="book-desc" class="st-field" style="height:150px; resize:none;" placeholder="DESCRIPTION: WHAT DO YOU WANT TO DESIGN? (e.g. Full Mansory Carbon Kit, Custom Brabus Interior, Engine Tuning)"></textarea>
+
+            <button class="btn-main mc-style" onclick="Data.Orders.Submit()">
+                <i class="fas fa-check-circle"></i> CONFIRM BOOKING
             </button>
         </div>
     </div>
 
-    <!-- 3. واجهة عرض الصور (Professional Slider Overlay) -->
+    <!-- Car Detail Overlay with Slider -->
     <div id="car-detail-overlay" class="st-overlay">
-        <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px; background: rgba(5,5,5,0.85); backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 100;">
-            <i class="fas fa-arrow-left" onclick="UI.CloseDetail()" style="cursor:pointer; font-size:24px;"></i>
-            <span class="mc-style">VEHICLE SPECS</span>
+        <div class="overlay-header">
+            <i class="fas fa-arrow-left" onclick="UI.CloseModal('car-detail-overlay')" style="cursor:pointer; font-size:24px;"></i>
+            <span class="mc-style">VEHICLE SPECIFICATIONS</span>
         </div>
         
-        <!-- Image Slider Component -->
-        <div class="slider-wrapper">
+        <!-- Professional Slider -->
+        <div class="slider-container">
             <div class="slider-track" id="detail-slider-track"></div>
-            <div class="slider-controls">
-                <div class="slider-btn" onclick="UI.SliderMove(-1)"><i class="fas fa-chevron-left"></i></div>
-                <div class="slider-btn" onclick="UI.SliderMove(1)"><i class="fas fa-chevron-right"></i></div>
+            <div class="slider-nav">
+                <div class="slider-arrow" onclick="UI.SliderMove(-1)"><i class="fas fa-chevron-left"></i></div>
+                <div class="slider-arrow" onclick="UI.SliderMove(1)"><i class="fas fa-chevron-right"></i></div>
             </div>
-            <div class="slider-dots" id="slider-dots"></div>
+            <div class="slider-dots" id="detail-slider-dots"></div>
         </div>
 
         <div style="padding:35px;">
-            <div id="det-price" class="mc-style" style="font-size:36px; color:var(--st-cyan);"></div>
+            <div id="det-price" class="mc-style" style="font-size:36px; color:var(--st-cyan); filter: drop-shadow(0 0 10px rgba(0,242,255,0.3));"></div>
             <h2 id="det-title" style="margin:15px 0; font-size: 28px; letter-spacing: 1px;"></h2>
             
             <div class="detail-table">
                 <div class="detail-row"><span class="detail-label">STATUS</span><span id="det-status" class="detail-value"></span></div>
                 <div class="detail-row"><span class="detail-label">KM / MILEAGE</span><span id="det-km" class="detail-value"></span></div>
                 <div class="detail-row"><span class="detail-label">MODEL YEAR</span><span id="det-year" class="detail-value"></span></div>
-                <div class="detail-row"><span class="detail-label">ENGINE</span><span id="det-hp" class="detail-value"></span></div>
-                <div class="detail-row"><span class="detail-label">SELLER</span><span id="det-owner" class="detail-value" style="color:var(--st-cyan)"></span></div>
+                <div class="detail-row"><span class="detail-label">ENGINE HP</span><span id="det-hp" class="detail-value"></span></div>
+                <div class="detail-row"><span class="detail-label">VERIFIED SELLER</span><span id="det-owner" class="detail-value text-cyan"></span></div>
             </div>
 
             <button class="btn-main mc-style" style="margin-top:35px;" id="contact-seller-btn">
                 <i class="fas fa-comment-dots"></i> CONTACT SELLER
             </button>
             <button class="btn-main mc-style" style="margin-top:15px; background:var(--st-danger); display:none;" id="delete-asset-btn">
-                <i class="fas fa-trash-alt"></i> DELETE POST
+                <i class="fas fa-trash-alt"></i> DELETE POST PERMANENTLY
             </button>
         </div>
     </div>
 
-    <!-- Chat Interface -->
-    <div id="chat-overlay" class="st-overlay">
-        <div style="padding:25px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
-            <i class="fas fa-times" onclick="UI.CloseChat()" style="cursor:pointer; font-size: 24px;"></i>
-            <span id="chat-with-name" class="mc-style">ENCRYPTED MESSAGES</span>
-        </div>
-        <div id="pm-box" class="chat-stream"></div>
-        <div style="padding:20px; background:#0d0d0f; display:flex; gap:12px;">
-            <input type="text" id="pm-input" class="st-field" style="margin:0;" placeholder="Write a secure message...">
-            <button class="btn-main" style="width:70px;" id="pm-send-btn"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-
-    <!-- Auth Gate Interface -->
+    <!-- Auth Gate -->
     <div id="auth-gate" class="auth-overlay">
         <div class="auth-box" id="login-form">
-            <h1 class="mc-style" style="color:var(--st-cyan); margin-bottom:35px; font-size: 24px;">AUTHORIZE</h1>
+            <h1 class="mc-style text-cyan" style="margin-bottom:35px; font-size: 26px;">AUTHORIZE</h1>
             <input type="email" id="email-in" class="st-field" placeholder="EMAIL ADDRESS">
             <input type="password" id="pass-in" class="st-field" placeholder="PASSWORD">
-            <button class="btn-main mc-style" onclick="App.Login()">LOGIN SESSION</button>
-            <p style="margin-top:25px; color:var(--st-dim); font-size:13px;" class="mc-style">NEW OPERATOR? <span onclick="App.ShowReg(true)" style="color:var(--st-cyan); cursor:pointer;">REGISTER</span></p>
+            <button class="btn-main mc-style" onclick="App.Login()">
+                <i class="fas fa-sign-in-alt"></i> LOGIN SESSION
+            </button>
+            <p style="margin-top:25px; color:var(--st-dim); font-size:13px; font-weight: 600;">NEW OPERATOR? <span onclick="App.ShowReg(true)" style="color:var(--st-cyan); cursor:pointer;">REGISTER IDENTITY</span></p>
         </div>
         <div class="auth-box" id="reg-form" style="display:none">
-            <h1 class="mc-style" style="margin-bottom:35px; font-size: 24px;">NEW IDENTITY</h1>
+            <h1 class="mc-style" style="margin-bottom:35px; font-size: 26px;">NEW IDENTITY</h1>
             <input type="text" id="reg-name" class="st-field" placeholder="NICKNAME">
             <input type="email" id="reg-email" class="st-field" placeholder="EMAIL ADDRESS">
             <input type="password" id="reg-pass" class="st-field" placeholder="PASSWORD">
-            <button class="btn-main mc-style" onclick="App.Register()">CREATE ACCOUNT</button>
-            <p style="margin-top:25px; color:var(--st-dim); font-size:13px;" class="mc-style">BACK TO <span onclick="App.ShowReg(false)" style="color:var(--st-cyan); cursor:pointer;">LOGIN</span></p>
+            <button class="btn-main mc-style" onclick="App.Register()">
+                <i class="fas fa-user-plus"></i> CREATE ACCOUNT
+            </button>
+            <p style="margin-top:25px; color:var(--st-dim); font-size:13px; font-weight: 600;">BACK TO <span onclick="App.ShowReg(false)" style="color:var(--st-cyan); cursor:pointer;">LOGIN</span></p>
         </div>
     </div>
 
-    <!-- Main Application Root -->
+    <!-- Main App Root -->
     <div id="app-root" style="display:none">
         <header>
             <div class="st-logo mc-style">
-                <i class="fas fa-shield-halved"></i> STUTGARD <span style="color:var(--st-cyan)">CPM</span>
+                <i class="fas fa-shield-halved"></i> STUTGARD <span class="text-cyan">CPM</span>
             </div>
-            <div id="admin-notif" style="display:none; color:var(--st-gold); font-size:22px;">
+            <div id="admin-notif" style="display:none; color:var(--st-gold); font-size:24px;">
                 <i class="fas fa-crown"></i>
             </div>
         </header>
 
         <main class="content-body">
             
-            <!-- Home Page: Market Grid -->
+            <!-- HOME PAGE -->
             <section id="page-home" class="page active">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                    <h2 class="mc-style" style="color:var(--st-cyan); font-size: 20px;">GLOBAL MARKET</h2>
-                    <div style="font-size: 10px; color: var(--st-dim);" class="mc-style">Live Feed <i class="fas fa-circle" style="color: var(--st-success); font-size: 6px;"></i></div>
-                </div>
+                <h2 class="mc-style text-cyan" style="margin-bottom:30px;">GLOBAL MARKET GRID</h2>
                 <div class="grid" id="market-grid"></div>
             </section>
 
-            <!-- Services Page: Official Tuning -->
+            <!-- SERVICES PAGE -->
             <section id="page-services" class="page">
                 <!-- 1. زر الحجز الأصفر الجديد (Sticky) -->
                 <div class="service-booking-sticky">
-                    <button class="btn-booking mc-style" onclick="UI.OpenModOrder('CUSTOM PROJECT')">
+                    <button class="btn-booking-yellow mc-style" onclick="UI.OpenBooking('OFFICIAL SERVICE')">
                         <i class="fas fa-calendar-check"></i> BOOK SERVICE NOW!
                     </button>
                 </div>
                 
-                <div style="margin-bottom: 25px;">
-                    <h2 class="mc-style" style="color:var(--st-gold); font-size: 20px;">OFFICIAL SERVICES</h2>
-                    <p style="color:var(--st-dim); font-size:11px; margin-top: 5px;" class="mc-style">Verified Tuning by Stutgard Engineering</p>
-                </div>
+                <h2 class="mc-style text-gold" style="font-size: 20px; margin-bottom: 25px;">OFFICIAL TUNING SERVICES</h2>
                 <div class="grid" id="services-grid"></div>
             </section>
 
-            <!-- 4. قسم 1OF1 الجديد (Exclusive Designs) -->
+            <!-- 1OF1 SECTION -->
             <section id="page-1of1" class="page">
                 <div class="one-of-one-hero">
-                    <h2 class="mc-style" style="color:var(--st-gold); font-size: 24px; margin-bottom: 10px;">1OF1 EXCLUSIVE</h2>
-                    <p style="color: var(--st-dim); font-size: 13px; line-height: 1.6;">
-                        We design bespoke automotive masterpieces. From full Brabus conversions to Mansory carbon widebody kits, we redefine luxury in CPM.
+                    <h2 class="mc-style one-of-one-title">1OF1 EXCLUSIVE DESIGNS</h2>
+                    <p class="one-of-one-desc">
+                        We design everything you need. From custom widebody kits to unique interior textures. 
+                        Our team specializes in creating shapes and designs that don't exist in the standard game. 
+                        If you can imagine it, we can build it.
                     </p>
+                    <button class="btn-booking-yellow mc-style" style="max-width: 300px; margin: 0 auto;" onclick="UI.OpenBooking('1OF1 DESIGN')">
+                        <i class="fas fa-gem"></i> BOOK 1OF1 DESIGN
+                    </button>
                 </div>
 
-                <div class="one-of-one-card">
-                    <img src="https://picsum.photos/seed/brabus-g/800/450" class="one-of-one-img" alt="Brabus">
-                    <h3 class="mc-style" style="color:var(--st-gold); font-size: 16px;">BRABUS MASTERPIECE</h3>
-                    <p style="color:var(--st-dim); font-size:14px; line-height:1.6; margin-top: 12px;">
-                        Full Brabus conversion including custom widebody kits, signature interior re-upholstery, and high-performance engine tuning.
-                    </p>
-                </div>
-
-                <div class="one-of-one-card">
-                    <img src="https://picsum.photos/seed/mansory-l/800/450" class="one-of-one-img" alt="Mansory">
-                    <h3 class="mc-style" style="color:var(--st-cyan); font-size: 16px;">MANSORY CARBON EDITION</h3>
-                    <p style="color:var(--st-dim); font-size:14px; line-height:1.6; margin-top: 12px;">
-                        Extreme carbon fiber aerodynamics for supercars. Our 1of1 Mansory designs are the peak of automotive luxury and aggression.
-                    </p>
-                </div>
-
-                <div class="one-of-one-card">
-                    <img src="https://picsum.photos/seed/stutgard-s/800/450" class="one-of-one-img" alt="Signature">
-                    <h3 class="mc-style" style="font-size: 16px;">STUTGARD SIGNATURE</h3>
-                    <p style="color:var(--st-dim); font-size:14px; line-height:1.6; margin-top: 12px;">
-                        Unique vinyl wraps, custom liveries, and one-off color schemes designed personally by Mustafa Barbour.
-                    </p>
+                <div class="design-showcase">
+                    <div class="showcase-item">
+                        <img src="https://picsum.photos/seed/design1/600/400" class="showcase-img">
+                        <h3 class="mc-style showcase-h3">CUSTOM BODY SHAPES</h3>
+                        <p class="text-dim" style="font-size: 13px;">Aerodynamic modifications and custom panels designed for maximum visual impact.</p>
+                    </div>
+                    <div class="showcase-item">
+                        <img src="https://picsum.photos/seed/design2/600/400" class="showcase-img">
+                        <h3 class="mc-style showcase-h3">UNIQUE TEXTURES</h3>
+                        <p class="text-dim" style="font-size: 13px;">Exclusive carbon fiber weaves and matte finishes that set your car apart from the crowd.</p>
+                    </div>
                 </div>
             </section>
 
-            <!-- Add Post Page -->
+            <!-- ADD POST PAGE -->
             <section id="page-add" class="page">
-                <div class="auth-box" style="max-width:100%; border-radius:35px; text-align: left; padding: 40px;">
-                    <h2 class="mc-style" style="margin-bottom:30px; text-align: center; font-size: 22px;">PUBLISH ASSET</h2>
-                    
-                    <label class="mc-style" style="font-size: 10px; color: var(--st-cyan); display: block; margin-bottom: 8px;">Vehicle Name</label>
-                    <input type="text" id="post-title" class="st-field" placeholder="e.g. Porsche 911 GT3 RS">
-                    
-                    <label class="mc-style" style="font-size: 10px; color: var(--st-cyan); display: block; margin-bottom: 8px;">Price (CPM)</label>
-                    <input type="number" id="post-price" class="st-field" placeholder="Enter amount">
+                <div class="auth-box" style="max-width:100%; border-radius:35px; text-align: left;">
+                    <h2 class="mc-style" style="margin-bottom:30px; text-align: center;">PUBLISH NEW ASSET</h2>
+                    <input type="text" id="post-title" class="st-field" placeholder="VEHICLE NAME (e.g. Nissan GTR)">
+                    <input type="number" id="post-price" class="st-field" placeholder="PRICE (CPM)">
                     
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-                        <div>
-                            <label class="mc-style" style="font-size: 10px; color: var(--st-cyan); display: block; margin-bottom: 8px;">Condition</label>
-                            <select id="post-status" class="st-field">
-                                <option value="IKINCI EL">IKINCI EL (USED)</option>
-                                <option value="0 KM (ZERO)">0 KM (ZERO)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="mc-style" style="font-size: 10px; color: var(--st-cyan); display: block; margin-bottom: 8px;">Model Year</label>
-                            <input type="text" id="post-year" class="st-field" placeholder="2024">
-                        </div>
+                        <select id="post-status" class="st-field">
+                            <option value="IKINCI EL">IKINCI EL (USED)</option>
+                            <option value="0 KM (ZERO)">0 KM (ZERO)</option>
+                        </select>
+                        <input type="text" id="post-year" class="st-field" placeholder="MODEL YEAR">
                     </div>
 
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
-                        <div>
-                            <label class="mc-style" style="font-size: 10px; color: var(--st-cyan); display: block; margin-bottom: 8px;">Mileage (KM)</label>
-                            <input type="text" id="post-km" class="st-field" placeholder="0">
-                        </div>
-                        <div>
-                            <label class="mc-style" style="font-size: 10px; color: var(--st-cyan); display: block; margin-bottom: 8px;">Engine HP</label>
-                            <input type="text" id="post-hp" class="st-field" placeholder="1695">
-                        </div>
+                        <input type="text" id="post-km" class="st-field" placeholder="MILEAGE (KM)">
+                        <input type="text" id="post-hp" class="st-field" placeholder="ENGINE HP">
                     </div>
 
-                    <!-- 2. نظام الصور المتعددة (Multiple Upload) -->
-                    <label class="mc-style" style="font-size:10px; color:var(--st-gold); display: block; margin-bottom:10px;">Select Multiple Photos (Max 8)</label>
-                    <input type="file" id="post-imgs" class="st-field" accept="image/*" multiple onchange="UI.PreviewImages(this)">
-                    <div id="upload-preview" class="upload-preview-grid"></div>
+                    <!-- Multiple Image Upload -->
+                    <p style="font-size:11px; color:var(--st-dim); margin-bottom:10px;" class="mc-style">SELECT MULTIPLE PHOTOS</p>
+                    <input type="file" id="post-imgs" class="st-field" accept="image/*" multiple onchange="UI.PreviewUpload(this)">
+                    <div id="upload-preview-grid" class="preview-grid"></div>
 
-                    <button class="btn-main mc-style" onclick="Data.Market.Add()" style="margin-top: 10px;">
-                        <i class="fas fa-cloud-upload-alt"></i> DEPLOY TO MARKET
+                    <button class="btn-main mc-style" onclick="Data.Market.Add()">
+                        <i class="fas fa-cloud-upload-alt"></i> DEPLOY TO GRID
                     </button>
                 </div>
             </section>
 
-            <!-- AI Assistant Page -->
+            <!-- AI SECTION -->
             <section id="page-ai" class="page">
-                <h2 class="mc-style" style="margin-bottom:25px; color:var(--st-cyan);">STUTGARD NEURAL AI</h2>
+                <h2 class="mc-style text-cyan" style="margin-bottom:25px;">STUTGARD GEMINI AI</h2>
                 <div class="chat-container">
                     <div id="chat-box" class="chat-stream">
-                        <div class="bubble bubble-ai">Systems online. I am the Stutgard AI Core. Ask me anything about CPM mechanics, trading strategies, or our 1OF1 design services.</div>
+                        <div class="bubble bubble-ai">
+                            Systems online. I am STUTGARD GEMINI, your AI assistant. 
+                            Ask me about CPM mechanics, trading tips, or our custom 1OF1 designs.
+                        </div>
                     </div>
                     <div style="padding:20px; background:#0d0d0f; display:flex; gap:12px;">
-                        <input type="text" id="ai-input" class="st-field" style="margin:0;" placeholder="Query the AI...">
-                        <button class="btn-main" style="width:70px;" onclick="Data.AI.Talk()"><i class="fas fa-robot"></i></button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Admin Terminal Page -->
-            <section id="page-admin" class="page">
-                <h2 class="mc-style" style="color:var(--st-danger); margin-bottom:30px;">ROOT COMMAND CENTER</h2>
-                
-                <div id="root-access-granted" class="grid" style="grid-template-columns: 1fr;">
-                    <!-- Add Service Tool -->
-                    <div class="auth-box" style="max-width:100%; text-align:left; padding:30px; margin-bottom: 20px;">
-                        <h3 class="mc-style" style="font-size:16px; margin-bottom:20px; color:var(--st-gold);">PUBLISH NEW SERVICE</h3>
-                        <input type="text" id="mod-title" class="st-field" placeholder="SERVICE NAME">
-                        <input type="text" id="mod-desc" class="st-field" placeholder="DESCRIPTION">
-                        <input type="file" id="mod-img" class="st-field">
-                        <button class="btn-main mc-style" onclick="Data.Admin.AddMod()">
-                            <i class="fas fa-plus-circle"></i> ADD TO SERVICES
+                        <input type="text" id="ai-input" class="st-field" style="margin:0;" placeholder="Ask Gemini AI something...">
+                        <button class="btn-main" style="width:70px;" onclick="Data.AI.Talk()">
+                            <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
-                    
-                    <!-- Orders List -->
-                    <div class="auth-box" style="max-width:100%; text-align:left; padding:30px; margin-bottom: 20px;">
-                        <h3 class="mc-style" style="font-size:16px; margin-bottom:20px; color:var(--st-cyan);">PENDING BOOKINGS</h3>
-                        <div id="mod-orders-list"></div>
+                </div>
+            </section>
+
+            <!-- ADMIN PANEL -->
+            <section id="page-admin" class="page">
+                <h2 class="mc-style text-danger" style="margin-bottom:30px;">ROOT TERMINAL ACCESS</h2>
+                
+                <div class="grid" style="grid-template-columns: 1fr;">
+                    <!-- Add Service -->
+                    <div class="auth-box" style="max-width:100%; text-align:left; padding:30px; margin-bottom: 25px;">
+                        <h3 class="mc-style text-gold" style="font-size:16px; margin-bottom:20px;">PUBLISH NEW SERVICE</h3>
+                        <input type="text" id="admin-srv-title" class="st-field" placeholder="SERVICE NAME">
+                        <input type="text" id="admin-srv-desc" class="st-field" placeholder="SHORT DESCRIPTION">
+                        <input type="file" id="admin-srv-img" class="st-field">
+                        <button class="btn-main mc-style" onclick="Data.Admin.AddService()">
+                            <i class="fas fa-plus-circle"></i> PUBLISH SERVICE
+                        </button>
                     </div>
-                    
-                    <!-- User Management -->
+
+                    <!-- Orders List -->
                     <div class="auth-box" style="max-width:100%; text-align:left; padding:30px;">
-                        <h3 class="mc-style" style="font-size:16px; margin-bottom:20px;">OPERATOR DATABASE</h3>
-                        <div id="users-list"></div>
+                        <h3 class="mc-style text-cyan" style="font-size:16px; margin-bottom:20px;">INCOMING BOOKINGS</h3>
+                        <div id="admin-orders-list"></div>
                     </div>
                 </div>
             </section>
+
         </main>
 
-        <!-- Navigation Bar -->
+        <!-- BOTTOM NAVIGATION -->
         <nav class="bottom-nav">
             <div class="nav-item active" onclick="UI.Page('home', this)"><i class="fas fa-home"></i><span>GRID</span></div>
             <div class="nav-item" onclick="UI.Page('services', this)"><i class="fas fa-bolt"></i><span>SERVICES</span></div>
             <div class="nav-item nav-center" onclick="UI.Page('add', this)"><i class="fas fa-plus"></i></div>
-            <!-- 4. أيقونة 1OF1 في الشريط السفلي -->
             <div class="nav-item" onclick="UI.Page('1of1', this)"><i class="fas fa-gem"></i><span>1OF1</span></div>
-            <div class="nav-item" onclick="UI.Page('ai', this)"><i class="fas fa-microchip"></i><span>AI</span></div>
+            <div class="nav-item" onclick="UI.Page('ai', this)"><i class="fas fa-robot"></i><span>AI</span></div>
             <div class="nav-item" id="admin-tab" style="display:none;" onclick="UI.Page('admin', this)"><i class="fas fa-crown"></i><span>ROOT</span></div>
         </nav>
     </div>
 
+    <!-- 
+       ================================================================
+       JAVASCRIPT ENGINE v9.0
+       ================================================================ 
+    -->
     <script>
         /* 
-           ================================================================
-           STUTGARD CORE LOGIC v9.0
-           ================================================================ 
+           STATE MANAGEMENT
         */
         const State = {
-            users: JSON.parse(localStorage.getItem('st_u')) || [{ name: "Mustafa", email: "mustafabarbour5@gmail.com", pass: "Abd120120", role: "admin", status: "active" }],
+            users: JSON.parse(localStorage.getItem('st_u')) || [
+                { name: "Mustafa", email: "mustafabarbour5@gmail.com", pass: "Abd120120", role: "admin", status: "active" }
+            ],
             market: JSON.parse(localStorage.getItem('st_m')) || [],
-            services: JSON.parse(localStorage.getItem('st_s')) || [],
+            services: JSON.parse(localStorage.getItem('st_s')) || [
+                { id: 1, title: "ENGINE OVERHAUL", desc: "Max performance tuning for any engine.", img: "https://picsum.photos/seed/engine/600/400" },
+                { id: 2, title: "VINYL WRAPPING", desc: "Professional custom liveries and wraps.", img: "https://picsum.photos/seed/wrap/600/400" }
+            ],
             orders: JSON.parse(localStorage.getItem('st_o')) || [],
-            chats: JSON.parse(localStorage.getItem('st_c')) || [],
             session: null,
             rootEmail: "mustafabarbour5@gmail.com",
             currentSliderIdx: 0,
             activeCar: null
         };
 
+        /* 
+           STORAGE HANDLER
+        */
         const Storage = {
             save: () => {
                 localStorage.setItem('st_u', JSON.stringify(State.users));
                 localStorage.setItem('st_m', JSON.stringify(State.market));
                 localStorage.setItem('st_s', JSON.stringify(State.services));
                 localStorage.setItem('st_o', JSON.stringify(State.orders));
-                localStorage.setItem('st_c', JSON.stringify(State.chats));
             }
         };
 
+        /* 
+           DATA LOGIC
+        */
         const Data = {
             Market: {
                 Add: async () => {
@@ -611,7 +660,6 @@
 
                     if(!t || !p || files.length === 0) return UI.Toast("MISSING ASSET DATA");
 
-                    UI.Toast("PROCESSING IMAGES...");
                     const images = [];
                     for(let file of files) {
                         const base64 = await new Promise(resolve => {
@@ -622,7 +670,7 @@
                         images.push(base64);
                     }
 
-                    State.market.unshift({ 
+                    const newPost = { 
                         id: Date.now(), 
                         title: t, 
                         price: p, 
@@ -633,65 +681,119 @@
                         images: images, 
                         owner: State.session.name, 
                         ownerEmail: State.session.email 
-                    });
+                    };
 
+                    State.market.unshift(newPost);
                     Storage.save(); 
                     UI.Toast("ASSET DEPLOYED SUCCESSFULLY"); 
                     UI.Page('home'); 
                     Data.Market.Render();
-                    document.getElementById('upload-preview').innerHTML = "";
+                    
+                    // Reset Form
+                    document.getElementById('post-title').value = "";
+                    document.getElementById('post-price').value = "";
                     document.getElementById('post-imgs').value = "";
+                    document.getElementById('upload-preview-grid').innerHTML = "";
                 },
                 Delete: (e, id) => {
                     e.stopPropagation();
-                    if(confirm("DELETE THIS POST PERMANENTLY?")) {
+                    if(confirm("ARE YOU SURE? THIS WILL REMOVE THE POST FROM THE GRID AND MEMORY.")) {
                         State.market = State.market.filter(m => m.id !== id);
                         Storage.save();
                         Data.Market.Render();
-                        UI.Toast("POST REMOVED FROM MEMORY");
+                        UI.Toast("POST REMOVED");
                     }
                 },
                 Render: () => {
-                    document.getElementById('market-grid').innerHTML = State.market.map(m => `
+                    const grid = document.getElementById('market-grid');
+                    grid.innerHTML = State.market.map(m => `
                         <div class="card" onclick="UI.OpenDetail(${m.id})">
                             ${(State.session.email === m.ownerEmail || State.session.email === State.rootEmail) ? 
-                                `<button class="quick-del" onclick="Data.Market.Delete(event, ${m.id})"><i class="fas fa-times"></i></button>` : ''}
+                                `<button class="quick-del-btn" onclick="Data.Market.Delete(event, ${m.id})"><i class="fas fa-times"></i></button>` : ''}
                             
-                            <div class="badge badge-sale">${m.status}</div>
+                            <div class="badge badge-sale mc-style">${m.status}</div>
                             <div class="img-area">
                                 <img src="${m.images[0]}">
-                                ${m.images.length > 1 ? `<div class="img-count-badge mc-style">+${m.images.length - 1} PHOTOS</div>` : ''}
+                                ${m.images.length > 1 ? `<div class="img-counter mc-style">+${m.images.length - 1} PHOTOS</div>` : ''}
                             </div>
                             <div class="card-body">
                                 <div class="price-text">${parseInt(m.price).toLocaleString()} CPM</div>
                                 <div class="title-text">${m.title}</div>
-                                <div style="font-size:10px; color:var(--st-dim); margin-top: 5px;"><i class="fas fa-user-circle"></i> ${m.owner}</div>
+                                <div class="owner-tag"><i class="fas fa-user-check"></i> ${m.owner}</div>
                             </div>
                         </div>`).join('');
                 }
             },
+            Orders: {
+                Submit: async () => {
+                    const car = document.getElementById('book-car-name').value, 
+                          gid = document.getElementById('book-game-id').value, 
+                          desc = document.getElementById('book-desc').value,
+                          file = document.getElementById('book-car-img').files[0];
+
+                    if(!car || !gid || !desc) return UI.Toast("PLEASE FILL ALL FIELDS");
+
+                    let img = "";
+                    if(file) {
+                        img = await new Promise(r => { const rd = new FileReader(); rd.onload = (e) => r(e.target.result); rd.readAsDataURL(file); });
+                    }
+
+                    const order = {
+                        id: Date.now(),
+                        type: State.activeBookingType,
+                        user: State.session.name,
+                        car,
+                        gameID: gid,
+                        desc,
+                        img,
+                        status: 'pending'
+                    };
+
+                    State.orders.unshift(order);
+                    Storage.save();
+                    UI.Toast("BOOKING REQUEST SENT!");
+                    UI.CloseModal('booking-modal');
+                    
+                    // Reset
+                    document.getElementById('book-car-name').value = "";
+                    document.getElementById('book-game-id').value = "";
+                    document.getElementById('book-desc').value = "";
+                    document.getElementById('book-car-img').value = "";
+                }
+            },
             Admin: {
-                AddMod: () => {
-                    const t = document.getElementById('mod-title').value, d = document.getElementById('mod-desc').value, f = document.getElementById('mod-img').files[0];
-                    if(!t || !f) return UI.Toast("MISSING INFO");
+                AddService: () => {
+                    const t = document.getElementById('admin-srv-title').value, 
+                          d = document.getElementById('admin-srv-desc').value, 
+                          f = document.getElementById('admin-srv-img').files[0];
+
+                    if(!t || !f) return UI.Toast("MISSING SERVICE INFO");
+
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         State.services.unshift({ id: Date.now(), title: t, desc: d, img: e.target.result });
-                        Storage.save(); UI.Toast("SERVICE PUBLISHED"); Data.Admin.RenderServices();
+                        Storage.save();
+                        UI.Toast("SERVICE PUBLISHED");
+                        Data.Admin.RenderServices();
+                        
+                        document.getElementById('admin-srv-title').value = "";
+                        document.getElementById('admin-srv-desc').value = "";
+                        document.getElementById('admin-srv-img').value = "";
                     };
                     reader.readAsDataURL(f);
                 },
                 RenderServices: () => {
-                    document.getElementById('services-grid').innerHTML = State.services.map(s => `
+                    const grid = document.getElementById('services-grid');
+                    grid.innerHTML = State.services.map(s => `
                         <div class="card">
-                            ${State.session.email === State.rootEmail ? `<button class="quick-del" onclick="Data.Admin.DelService(event, ${s.id})"><i class="fas fa-times"></i></button>` : ''}
-                            <div class="badge badge-mod">OFFICIAL</div>
+                            ${State.session.email === State.rootEmail ? `<button class="quick-del-btn" onclick="Data.Admin.DelService(event, ${s.id})"><i class="fas fa-times"></i></button>` : ''}
+                            <div class="badge badge-mod mc-style">OFFICIAL</div>
                             <div class="img-area"><img src="${s.img}"></div>
                             <div class="card-body">
-                                <div class="title-text" style="color:var(--st-gold)">${s.title}</div>
-                                <div style="font-size:11px; color:var(--st-dim); line-height: 1.4;">${s.desc}</div>
-                                <button class="btn-main mc-style" onclick="UI.OpenModOrder('${s.title}')" style="height:40px; font-size:9px; margin-top:12px; background:var(--st-gold);">
-                                   <i class="fas fa-calendar-check"></i> BOOK NOW
+                                <div class="title-text text-gold mc-style">${s.title}</div>
+                                <div class="text-dim" style="font-size:12px; margin-bottom: 15px;">${s.desc}</div>
+                                <button class="btn-main mc-style" style="height: 40px; font-size: 10px; background: var(--st-gold);" onclick="UI.OpenBooking('${s.title}')">
+                                    <i class="fas fa-calendar-alt"></i> BOOK SESSION
                                 </button>
                             </div>
                         </div>`).join('');
@@ -705,197 +807,161 @@
                         UI.Toast("SERVICE REMOVED");
                     }
                 },
-                SubmitOrder: async () => {
-                    const car = document.getElementById('order-car-name').value, 
-                          desc = document.getElementById('order-desc').value, 
-                          gid = document.getElementById('order-game-id').value,
-                          f = document.getElementById('order-car-img').files[0];
-
-                    if(!car || !desc || !gid) return UI.Toast("FILL ALL FIELDS");
-                    
-                    let img = "";
-                    if(f) {
-                        img = await new Promise(resolve => {
-                            const reader = new FileReader();
-                            reader.onload = (e) => resolve(e.target.result);
-                            reader.readAsDataURL(f);
-                        });
-                    }
-
-                    State.orders.unshift({ 
-                        id: Date.now(), 
-                        user: State.session.name, 
-                        service: State.activeService, 
-                        car: car, 
-                        desc: desc,
-                        gameID: gid,
-                        img: img
-                    });
-
-                    Storage.save(); 
-                    UI.Toast("BOOKING REQUEST SENT!"); 
-                    UI.CloseModOrder(); 
-                    Data.Admin.RenderOrders();
-                },
                 RenderOrders: () => {
-                    document.getElementById('mod-orders-list').innerHTML = State.orders.map(o => `
-                        <div class="user-row" style="flex-direction:column; align-items:flex-start; padding: 20px;">
-                            <div style="color:var(--st-gold); font-size:14px;" class="mc-style">${o.service}</div>
-                            <div style="font-size:12px; margin: 8px 0;"><b>User:</b> ${o.user} | <b>ID:</b> ${o.gameID}</div>
-                            <div style="font-size:11px; color:var(--st-dim); margin-bottom: 10px;"><b>Project:</b> ${o.car}</div>
-                            <div style="font-size:11px; color:var(--st-dim); margin-bottom: 15px;"><b>Details:</b> ${o.desc}</div>
-                            ${o.img ? `<img src="${o.img}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 15px; border: 1px solid #333;">` : ''}
-                            <button onclick="Data.Admin.DelOrder(${o.id})" style="background:var(--st-success); color:#000; border:none; padding:8px 15px; border-radius:8px; font-size:11px; font-weight:bold; width: 100%;">MARK AS COMPLETED</button>
-                        </div>`).join('') || '<p style="color:var(--st-dim); text-align: center;">No pending projects.</p>';
+                    const list = document.getElementById('admin-orders-list');
+                    list.innerHTML = State.orders.map(o => `
+                        <div class="user-row" style="flex-direction: column; align-items: flex-start;">
+                            <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px;">
+                                <span class="mc-style text-gold">${o.type}</span>
+                                <span class="mono-style text-dim">#${o.id}</span>
+                            </div>
+                            <div style="font-size: 14px; margin-bottom: 5px;"><b>User:</b> ${o.user} | <b>Game ID:</b> ${o.gameID}</div>
+                            <div style="font-size: 14px; margin-bottom: 10px;"><b>Vehicle:</b> ${o.car}</div>
+                            <div style="background: #111; padding: 10px; border-radius: 10px; font-size: 12px; color: #ccc; width: 100%; margin-bottom: 10px;">
+                                ${o.desc}
+                            </div>
+                            ${o.img ? `<img src="${o.img}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 10px;">` : ''}
+                            <button class="btn-main mc-style" style="height: 35px; font-size: 10px; background: var(--st-success); color: #000;" onclick="Data.Admin.MarkDone(${o.id})">
+                                MARK AS COMPLETED
+                            </button>
+                        </div>`).join('') || '<p class="text-dim">No pending bookings.</p>';
                 },
-                DelOrder: (id) => { State.orders = State.orders.filter(o => o.id !== id); Storage.save(); Data.Admin.RenderOrders(); UI.Toast("ORDER CLEARED"); },
-                Ban: (email) => {
-                    if(email === State.rootEmail) return UI.Toast("ROOT PROTECTED");
-                    const u = State.users.find(x => x.email === email);
-                    u.status = (u.status === 'active') ? 'banned' : 'active';
-                    Storage.save(); Data.Admin.RenderUsers();
-                },
-                RenderUsers: () => {
-                    document.getElementById('users-list').innerHTML = State.users.map(u => `
-                        <div class="user-row">
-                            <div><b>${u.name}</b><br><small style="color: var(--st-dim)">${u.email}</small></div>
-                            <button onclick="Data.Admin.Ban('${u.email}')" style="background:${u.status==='active'?'var(--st-danger)':'var(--st-success)'}; color:#fff; border:none; padding:8px 12px; border-radius:8px; font-size:10px; font-weight: bold;">${u.status==='active'?'BAN':'UNBAN'}</button>
-                        </div>`).join('');
+                MarkDone: (id) => {
+                    State.orders = State.orders.filter(o => o.id !== id);
+                    Storage.save();
+                    Data.Admin.RenderOrders();
+                    UI.Toast("ORDER COMPLETED");
                 }
             },
             AI: {
                 Talk: () => {
                     const inp = document.getElementById('ai-input'), box = document.getElementById('chat-box'), val = inp.value.trim().toLowerCase();
-                    if(!val) return; 
+                    if(!val) return;
+                    
                     box.innerHTML += `<div class="bubble bubble-user">${inp.value}</div>`;
                     inp.value = "";
                     box.scrollTop = box.scrollHeight;
 
                     setTimeout(() => {
-                        let reply = "I am STUTGARD AI. For custom Brabus or Mansory kits, check our 1OF1 section! How can I help you today?";
+                        let reply = "I am STUTGARD GEMINI AI. For custom 1OF1 designs, check our dedicated section in the menu!";
                         const brain = [
-                            { keys: ['money', 'فلوس', 'cpm'], ans: "To earn CPM fast, design high-quality cars in the 1OF1 lab and sell them at premium prices in the market." },
-                            { keys: ['sell', 'بيع', 'publish'], ans: "Use the (+) button in the nav bar to upload your car photos and set your price." },
-                            { keys: ['admin', 'أدمن', 'mustafa'], ans: "The Head of Stutgard is Mustafa Barbour. He handles all official 1OF1 projects." },
-                            { keys: ['1of1', 'brabus', 'mansory'], ans: "Our 1OF1 section features the world's most exclusive CPM designs. We can build one for you!" }
+                            { keys: ['money', 'cpm', 'rich'], ans: "To get rich in CPM, focus on high-quality 1OF1 designs. Players pay millions for unique cars!" },
+                            { keys: ['sell', 'market', 'post'], ans: "Click the (+) button in the center to upload your car. Make sure to upload multiple photos for better sales." },
+                            { keys: ['admin', 'mustafa', 'owner'], ans: "The Head Admin and Developer is Mustafa Barbour. He handles all official 1OF1 design requests." },
+                            { keys: ['1of1', 'design', 'custom'], ans: "Our 1OF1 section offers designs that are impossible to find elsewhere. We build your dream car from scratch." }
                         ];
                         for (let item of brain) { if (item.keys.some(k => val.includes(k))) { reply = item.ans; break; } }
-                        box.innerHTML += `<div class="bubble bubble-ai">${reply}</div>`; 
+                        
+                        box.innerHTML += `<div class="bubble bubble-ai">${reply}</div>`;
                         box.scrollTop = box.scrollHeight;
                     }, 800);
                 }
             }
         };
 
-        const App = {
-            Login: () => {
-                const u = State.users.find(x => x.email === document.getElementById('email-in').value && x.pass === document.getElementById('pass-in').value);
-                if(u) { if(u.status === 'banned') return UI.Toast("ACCESS DENIED: BANNED"); State.session = u; App.Launch(); } else UI.Toast("AUTHENTICATION FAILED");
-            },
-            Register: () => {
-                const n = document.getElementById('reg-name').value, e = document.getElementById('reg-email').value, p = document.getElementById('reg-pass').value;
-                if(!n || !e || !p) return UI.Toast("PLEASE FILL ALL FIELDS"); 
-                if(State.users.find(x => x.email === e)) return UI.Toast("EMAIL ALREADY REGISTERED");
-                State.users.push({ name: n, email: e, pass: p, role: "user", status: "active" });
-                Storage.save(); App.ShowReg(false); UI.Toast("IDENTITY CREATED");
-            },
-            ShowReg: (s) => { document.getElementById('login-form').style.display = s ? 'none' : 'block'; document.getElementById('reg-form').style.display = s ? 'block' : 'none'; },
-            Launch: () => {
-                document.getElementById('auth-gate').style.display = 'none'; document.getElementById('app-root').style.display = 'block';
-                if(State.session.email === State.rootEmail) { document.getElementById('admin-tab').style.display = 'flex'; document.getElementById('admin-notif').style.display = 'block'; Data.Admin.RenderUsers(); Data.Admin.RenderOrders(); }
-                Data.Market.Render(); Data.Admin.RenderServices();
-            }
-        };
-
+        /* 
+           UI ENGINE
+        */
         const UI = {
-            Page: (id, el) => { 
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
-                document.getElementById('page-' + id).classList.add('active'); 
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); 
-                if(el) el.classList.add('active'); 
-                window.scrollTo(0,0); 
+            Page: (id, el) => {
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('page-' + id).classList.add('active');
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                if(el) el.classList.add('active');
+                window.scrollTo(0,0);
             },
-            PreviewImages: (input) => {
-                const preview = document.getElementById('upload-preview');
-                preview.innerHTML = "";
-                if (input.files) {
-                    Array.from(input.files).forEach(file => {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            preview.innerHTML += `<div class="preview-box"><img src="${e.target.result}"></div>`;
-                        }
-                        reader.readAsDataURL(file);
+            OpenModal: (id) => document.getElementById(id).classList.add('active'),
+            CloseModal: (id) => document.getElementById(id).classList.remove('active'),
+            OpenBooking: (type) => {
+                State.activeBookingType = type;
+                document.getElementById('booking-modal-title').innerText = "BOOK " + type;
+                UI.OpenModal('booking-modal');
+            },
+            PreviewUpload: (input) => {
+                const grid = document.getElementById('upload-preview-grid');
+                grid.innerHTML = "";
+                if(input.files) {
+                    Array.from(input.files).forEach(f => {
+                        const r = new FileReader();
+                        r.onload = (e) => grid.innerHTML += `<div class="preview-item"><img src="${e.target.result}"></div>`;
+                        r.readAsDataURL(f);
                     });
                 }
-            },
-            PreviewSingleImage: (input, targetId) => {
-                const target = document.getElementById(targetId);
-                if (input.files && input.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        target.innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover; border-radius:10px;">`;
-                        target.style.display = "block";
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                }
-            },
-            OpenModOrder: (t) => { State.activeService = t; document.getElementById('order-service-name').innerText = t; document.getElementById('mod-order-overlay').classList.add('active'); },
-            CloseModOrder: () => {
-                document.getElementById('mod-order-overlay').classList.remove('active');
-                document.getElementById('order-img-preview').style.display = "none";
-                document.getElementById('order-car-img').value = "";
             },
             OpenDetail: (id) => {
                 const m = State.market.find(x => x.id === id);
                 State.activeCar = m;
                 State.currentSliderIdx = 0;
 
+                // Build Slider
                 const track = document.getElementById('detail-slider-track');
-                const dots = document.getElementById('slider-dots');
-                track.innerHTML = m.images.map(img => `<div class="slider-item"><img src="${img}"></div>`).join('');
-                dots.innerHTML = m.images.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
+                const dots = document.getElementById('detail-slider-dots');
+                track.innerHTML = m.images.map(img => `<div class="slider-slide"><img src="${img}"></div>`).join('');
+                dots.innerHTML = m.images.map((_, i) => `<div class="slider-dot ${i===0?'active':''}"></div>`).join('');
                 track.style.transform = `translateX(0%)`;
 
-                document.getElementById('det-title').innerText = m.title; 
+                document.getElementById('det-title').innerText = m.title;
                 document.getElementById('det-price').innerText = parseInt(m.price).toLocaleString() + " CPM";
-                document.getElementById('det-status').innerText = m.status; 
-                document.getElementById('det-km').innerText = m.km + " KM"; 
-                document.getElementById('det-year').innerText = m.year; 
-                document.getElementById('det-hp').innerText = m.hp + " HP"; 
+                document.getElementById('det-status').innerText = m.status;
+                document.getElementById('det-km').innerText = m.km + " KM";
+                document.getElementById('det-year').innerText = m.year;
+                document.getElementById('det-hp').innerText = m.hp + " HP";
                 document.getElementById('det-owner').innerText = m.owner;
-                
-                const delBtn = document.getElementById('delete-asset-btn'); 
-                if(State.session.email === m.ownerEmail || State.session.email === State.rootEmail) {
-                    delBtn.style.display = 'block';
-                } else {
-                    delBtn.style.display = 'none';
-                }
 
-                delBtn.onclick = () => { 
-                    if(confirm("DELETE THIS ASSET?")) {
-                        State.market = State.market.filter(x => x.id !== id); 
-                        Storage.save(); UI.CloseDetail(); Data.Market.Render(); UI.Toast("ASSET REMOVED");
-                    }
-                };
-                document.getElementById('car-detail-overlay').classList.add('active'); 
+                const delBtn = document.getElementById('delete-asset-btn');
+                delBtn.style.display = (State.session.email === m.ownerEmail || State.session.email === State.rootEmail) ? 'block' : 'none';
+                delBtn.onclick = () => Data.Market.Delete({ stopPropagation: () => {} }, m.id);
+
+                UI.OpenModal('car-detail-overlay');
             },
             SliderMove: (dir) => {
                 const track = document.getElementById('detail-slider-track');
-                const dots = document.querySelectorAll('.dot');
+                const dots = document.querySelectorAll('.slider-dot');
                 const total = State.activeCar.images.length;
                 State.currentSliderIdx = (State.currentSliderIdx + dir + total) % total;
                 track.style.transform = `translateX(-${State.currentSliderIdx * 100}%)`;
                 dots.forEach((d, i) => d.classList.toggle('active', i === State.currentSliderIdx));
             },
-            CloseDetail: () => document.getElementById('car-detail-overlay').classList.remove('active'),
-            Toast: (m) => { const t = document.getElementById('toast'); t.innerText = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000); }
+            Toast: (m) => {
+                const t = document.getElementById('toast');
+                t.innerText = m; t.style.display = 'block';
+                setTimeout(() => t.style.display = 'none', 3500);
+            }
         };
 
-        // Initialize Application
+        /* 
+           APP CORE
+        */
+        const App = {
+            Login: () => {
+                const e = document.getElementById('email-in').value, p = document.getElementById('pass-in').value;
+                const u = State.users.find(x => x.email === e && x.pass === p);
+                if(u) { State.session = u; App.Launch(); } else UI.Toast("AUTH ERROR: INVALID CREDENTIALS");
+            },
+            Register: () => {
+                const n = document.getElementById('reg-name').value, e = document.getElementById('reg-email').value, p = document.getElementById('reg-pass').value;
+                if(!n || !e || !p) return UI.Toast("FILL ALL FIELDS");
+                State.users.push({ name: n, email: e, pass: p, role: "user", status: "active" });
+                Storage.save(); App.ShowReg(false); UI.Toast("IDENTITY CREATED");
+            },
+            ShowReg: (s) => { document.getElementById('login-form').style.display = s ? 'none' : 'block'; document.getElementById('reg-form').style.display = s ? 'block' : 'none'; },
+            Launch: () => {
+                document.getElementById('auth-gate').style.display = 'none';
+                document.getElementById('app-root').style.display = 'block';
+                if(State.session.email === State.rootEmail) {
+                    document.getElementById('admin-tab').style.display = 'flex';
+                    document.getElementById('admin-notif').style.display = 'block';
+                    Data.Admin.RenderOrders();
+                }
+                Data.Market.Render();
+                Data.Admin.RenderServices();
+                UI.Toast("WELCOME BACK, " + State.session.name);
+            }
+        };
+
+        // Initialize
         window.onload = () => {
-            setTimeout(() => {
-                document.getElementById('st-loader').style.display = 'none';
-            }, 1500);
+            setTimeout(() => document.getElementById('st-loader').style.display = 'none', 1500);
         };
     </script>
 </body>
