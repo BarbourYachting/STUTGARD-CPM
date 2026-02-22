@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>STUTGARD CPM | HYPER MARKETPLACE v6.0</title>
+    <title>STUTGARD CPM | HYPER MARKETPLACE v7.0</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
@@ -11,7 +11,7 @@
 
     <style>
         /* ================================================================
-           DESIGN SYSTEM v6.0 - THE ULTIMATE DARK UI
+           DESIGN SYSTEM v7.0 - THE ULTIMATE DARK UI
            ================================================================ */
         :root {
             --st-cyan: #00f2ff;
@@ -37,7 +37,7 @@
         }
 
         /* Typography */
-        .mc-style, .st-logo, .nav-item span, .badge, .btn-main, .btn-book-sticky { 
+        .mc-style, .st-logo, .nav-item span, .badge, .btn-main, .btn-booking { 
             font-family: var(--mc-font) !important; text-transform: uppercase; 
         }
 
@@ -51,6 +51,39 @@
             border-radius: 50%; animation: spin 1s linear infinite;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* 1. زر الحجز الأصفر الثابت (Sticky Booking Button) */
+        .booking-sticky-container {
+            position: sticky;
+            top: 80px;
+            z-index: 999;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 12px 6%;
+            border-bottom: 1px solid var(--st-border);
+            display: flex;
+            justify-content: center;
+        }
+        .btn-booking {
+            width: 100%;
+            max-width: 600px;
+            background: var(--st-gold);
+            color: #000;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.25);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .btn-booking:active { transform: scale(0.96); }
+        .btn-booking i { font-size: 18px; }
 
         /* Auth Gate */
         .auth-overlay {
@@ -79,35 +112,6 @@
         .st-logo { font-size: 18px; display: flex; align-items: center; gap: 10px; }
         .st-logo i { color: var(--st-cyan); font-size: 24px; }
 
-        /* 1. Yellow Sticky Booking Button */
-        .sticky-booking-bar {
-            position: sticky;
-            top: 80px;
-            z-index: 999;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 10px 6%;
-            border-bottom: 1px solid var(--st-border);
-        }
-        .btn-book-sticky {
-            width: 100%;
-            background: var(--st-gold);
-            color: #000;
-            border: none;
-            padding: 15px;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
-            transition: 0.3s;
-        }
-        .btn-book-sticky:active { transform: scale(0.98); }
-
         /* Main Content */
         .content-body { padding: 20px 6% 120px 6%; }
         .page { display: none; animation: fadeIn 0.4s ease-out; }
@@ -115,120 +119,84 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Grid & Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
         .card {
-            background: var(--st-card); border-radius: 18px; border: 1px solid var(--st-border);
+            background: var(--st-card); border-radius: 20px; border: 1px solid var(--st-border);
             overflow: hidden; position: relative; transition: 0.3s; cursor: pointer;
         }
-        .card:hover { transform: translateY(-4px); border-color: var(--st-cyan); }
+        .card:hover { transform: translateY(-5px); border-color: var(--st-cyan); }
         
-        /* 4. Quick Delete Button (X) */
-        .quick-delete {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 26px;
-            height: 26px;
-            background: var(--st-danger);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            z-index: 20;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            transition: 0.2s;
+        /* 4. زر الحذف السريع (Quick Delete X) */
+        .quick-del {
+            position: absolute; top: 10px; right: 10px; width: 28px; height: 28px;
+            background: var(--st-danger); color: #fff; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; z-index: 50; border: 2px solid rgba(0,0,0,0.3);
+            cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.4);
         }
-        .quick-delete:hover { transform: scale(1.1); background: #ff0000; }
+        .quick-del:hover { transform: scale(1.15) rotate(90deg); background: #ff0000; }
 
-        .img-area { width: 100%; height: 110px; background: #000; overflow: hidden; position: relative; }
+        .img-area { width: 100%; height: 120px; background: #000; overflow: hidden; position: relative; }
         .img-area img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* 2. Image Counter Badge */
-        .img-counter {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 9px;
-            font-weight: bold;
-            border: 1px solid rgba(255,255,255,0.2);
-            z-index: 5;
+        /* عداد الصور (Image Counter) */
+        .img-count-badge {
+            position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.75);
+            color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 9px;
+            font-weight: bold; border: 1px solid rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px); z-index: 10;
         }
 
         .badge {
-            position: absolute; top: 8px; left: 8px; padding: 4px 8px;
-            border-radius: 4px; font-size: 7px; font-weight: bold; z-index: 5;
+            position: absolute; top: 10px; left: 10px; padding: 5px 10px;
+            border-radius: 6px; font-size: 8px; font-weight: bold; z-index: 5;
         }
         .badge-sale { background: var(--st-cyan); color: #000; }
         .badge-mod { background: var(--st-gold); color: #000; }
 
-        .card-body { padding: 12px; }
-        .price-text { font-family: var(--mc-font); font-size: 13px; color: var(--st-cyan); }
-        .title-text { font-size: 12px; font-weight: bold; margin: 4px 0; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-body { padding: 14px; }
+        .price-text { font-family: var(--mc-font); font-size: 14px; color: var(--st-cyan); }
+        .title-text { font-size: 13px; font-weight: bold; margin: 5px 0; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* 3. Slider System in Details */
-        .slider-container {
-            width: 100%;
-            height: 300px;
-            background: #000;
-            position: relative;
-            overflow: hidden;
+        /* 3. سلايدر الصور (Image Slider System) */
+        .slider-wrapper {
+            width: 100%; height: 320px; background: #000; position: relative;
+            overflow: hidden; border-bottom: 1px solid var(--st-border);
         }
         .slider-track {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; width: 100%; height: 100%; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .slider-slide {
-            min-width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .slider-nav {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 15px;
-            transform: translateY(-50%);
+        .slider-item { min-width: 100%; height: 100%; }
+        .slider-item img { width: 100%; height: 100%; object-fit: cover; }
+        .slider-controls {
+            position: absolute; top: 50%; width: 100%; display: flex;
+            justify-content: space-between; padding: 0 20px; transform: translateY(-50%);
             pointer-events: none;
         }
         .slider-btn {
-            width: 40px;
-            height: 40px;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            pointer-events: auto;
-            transition: 0.3s;
+            width: 45px; height: 45px; background: rgba(0,0,0,0.6); color: #fff;
+            border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; pointer-events: auto; transition: 0.3s;
         }
         .slider-btn:hover { background: var(--st-cyan); color: #000; }
+        .slider-dots {
+            position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px;
+        }
+        .dot { width: 8px; height: 8px; background: rgba(255,255,255,0.3); border-radius: 50%; transition: 0.3s; }
+        .dot.active { background: var(--st-cyan); width: 20px; border-radius: 10px; }
 
         /* Overlay System */
         .st-overlay {
             position: fixed; inset: 0; background: var(--st-bg); z-index: 9000;
             display: none; flex-direction: column; overflow-y: auto;
         }
-        .st-overlay.active { display: flex; animation: slideUp 0.3s ease; }
+        .st-overlay.active { display: flex; animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        .detail-table { width: 100%; background: #0a0a0c; border-radius: 20px; border: 1px solid var(--st-border); overflow: hidden; margin-top: 15px; }
-        .detail-row { display: flex; justify-content: space-between; padding: 15px; border-bottom: 1px solid var(--st-border); }
+        .detail-table { width: 100%; background: #0a0a0c; border-radius: 25px; border: 1px solid var(--st-border); overflow: hidden; margin-top: 20px; }
+        .detail-row { display: flex; justify-content: space-between; padding: 18px; border-bottom: 1px solid var(--st-border); }
         .detail-label { color: var(--st-dim); font-size: 14px; }
         .detail-value { color: #fff; font-weight: bold; }
 
@@ -255,12 +223,12 @@
         /* AI & Chat Bubbles */
         .chat-container {
             background: #0a0a0c; border: 1px solid var(--st-border);
-            border-radius: 25px; height: 500px; display: flex; flex-direction: column; overflow: hidden;
+            border-radius: 30px; height: 550px; display: flex; flex-direction: column; overflow: hidden;
         }
         .chat-stream { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .bubble { padding: 15px 20px; border-radius: 18px; max-width: 80%; font-size: 14px; line-height: 1.5; }
-        .bubble-ai { background: #1a1a1c; align-self: flex-start; border-left: 4px solid var(--st-cyan); }
-        .bubble-user { background: var(--st-blue); align-self: flex-end; }
+        .bubble { padding: 15px 20px; border-radius: 20px; max-width: 85%; font-size: 14px; line-height: 1.6; position: relative; }
+        .bubble-ai { background: #1a1a1c; align-self: flex-start; border-left: 4px solid var(--st-cyan); color: #eee; }
+        .bubble-user { background: var(--st-blue); align-self: flex-end; color: #fff; border-bottom-right-radius: 4px; }
 
         /* Buttons */
         .btn-main {
@@ -274,7 +242,7 @@
             position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
             background: var(--st-cyan); color: #000; padding: 12px 30px;
             border-radius: 50px; font-weight: bold; z-index: 100000; display: none;
-            font-family: var(--mc-font); font-size: 11px;
+            font-family: var(--mc-font); font-size: 11px; box-shadow: 0 10px 30px rgba(0,242,255,0.3);
         }
 
         .user-row {
@@ -282,6 +250,13 @@
             background: #000; padding: 15px; border-radius: 15px; margin-bottom: 10px;
             border: 1px solid var(--st-border);
         }
+
+        /* Multiple Image Preview in Upload */
+        .upload-preview-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 15px;
+        }
+        .preview-box { width: 100%; aspect-ratio: 1; background: #111; border-radius: 8px; overflow: hidden; border: 1px solid var(--st-border); }
+        .preview-box img { width: 100%; height: 100%; object-fit: cover; }
 
     </style>
 </head>
@@ -294,41 +269,45 @@
         <div class="mc-style" style="margin-top: 20px; letter-spacing: 3px;">STUTGARD</div>
     </div>
 
-    <!-- 7. Service Booking with Images -->
+    <!-- Booking Modal -->
     <div id="mod-order-overlay" class="st-overlay">
         <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
-            <i class="fas fa-times" onclick="UI.CloseModOrder()" style="cursor:pointer;"></i>
+            <i class="fas fa-times" onclick="UI.CloseModOrder()" style="cursor:pointer; font-size:22px;"></i>
             <span class="mc-style">BOOK SERVICE SESSION</span>
         </div>
         <div style="padding:30px;">
-            <div id="order-service-name" class="mc-style" style="font-size:20px; color:var(--st-gold); margin-bottom:10px;"></div>
-            <p style="color:var(--st-dim); margin-bottom:25px;">Please provide details for Mustafa Barbour.</p>
+            <div id="order-service-name" class="mc-style" style="font-size:22px; color:var(--st-gold); margin-bottom:12px;"></div>
+            <p style="color:var(--st-dim); margin-bottom:25px; font-size: 14px;">Official Tuning Appointment with Mustafa Barbour.</p>
             <input type="text" id="order-car-name" class="st-field" placeholder="VEHICLE NAME">
             <input type="text" id="order-game-id" class="st-field" placeholder="YOUR GAME ID">
-            <p class="mc-style" style="font-size:10px; color:var(--st-dim); margin-bottom:5px;">ATTACH VEHICLE PHOTOS (OPTIONAL)</p>
-            <input type="file" id="order-imgs" class="st-field" accept="image/*" multiple>
-            <button class="btn-main mc-style" onclick="Data.Admin.SubmitOrder()">SUBMIT ORDER</button>
+            
+            <p style="font-size:10px; color:var(--st-dim); margin-bottom:8px;" class="mc-style">UPLOAD VEHICLE PHOTOS (OPTIONAL)</p>
+            <input type="file" id="order-imgs" class="st-field" multiple accept="image/*">
+
+            <button class="btn-main mc-style" onclick="Data.Admin.SubmitOrder()">CONFIRM BOOKING</button>
         </div>
     </div>
 
     <!-- 3. Car Detail Overlay with Slider -->
     <div id="car-detail-overlay" class="st-overlay">
-        <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px; background:var(--st-bg); position:sticky; top:0; z-index:100;">
-            <i class="fas fa-arrow-left" onclick="UI.CloseDetail()" style="cursor:pointer; font-size:20px;"></i>
+        <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px; background: rgba(5,5,5,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;">
+            <i class="fas fa-arrow-left" onclick="UI.CloseDetail()" style="cursor:pointer; font-size:22px;"></i>
             <span class="mc-style">VEHICLE SPECS</span>
         </div>
         
-        <div class="slider-container">
+        <!-- Slider Section -->
+        <div class="slider-wrapper">
             <div class="slider-track" id="detail-slider-track"></div>
-            <div class="slider-nav">
-                <button class="slider-btn" onclick="UI.MoveSlider(-1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="slider-btn" onclick="UI.MoveSlider(1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="slider-controls">
+                <div class="slider-btn" onclick="UI.SliderMove(-1)"><i class="fas fa-chevron-left"></i></div>
+                <div class="slider-btn" onclick="UI.SliderMove(1)"><i class="fas fa-chevron-right"></i></div>
             </div>
+            <div class="slider-dots" id="slider-dots"></div>
         </div>
 
         <div style="padding:30px;">
-            <div id="det-price" class="mc-style" style="font-size:30px; color:var(--st-cyan);"></div>
-            <h2 id="det-title" style="margin:10px 0;"></h2>
+            <div id="det-price" class="mc-style" style="font-size:32px; color:var(--st-cyan);"></div>
+            <h2 id="det-title" style="margin:12px 0; font-size: 24px;"></h2>
             
             <div class="detail-table">
                 <div class="detail-row"><span class="detail-label">STATUS</span><span id="det-status" class="detail-value"></span></div>
@@ -338,15 +317,19 @@
                 <div class="detail-row"><span class="detail-label">SELLER</span><span id="det-owner" class="detail-value" style="color:var(--st-cyan)"></span></div>
             </div>
 
-            <button class="btn-main mc-style" style="margin-top:25px;" id="contact-seller-btn">
+            <button class="btn-main mc-style" style="margin-top:30px;" id="contact-seller-btn">
                 <i class="fas fa-comment"></i> CONTACT SELLER
+            </button>
+            <button class="btn-main mc-style" style="margin-top:12px; background:var(--st-danger); display:none;" id="delete-asset-btn">
+                <i class="fas fa-trash"></i> DELETE POST
             </button>
         </div>
     </div>
 
+    <!-- Chat Overlay -->
     <div id="chat-overlay" class="st-overlay">
         <div style="padding:20px; border-bottom:1px solid var(--st-border); display:flex; align-items:center; gap:15px;">
-            <i class="fas fa-times" onclick="UI.CloseChat()" style="cursor:pointer;"></i>
+            <i class="fas fa-times" onclick="UI.CloseChat()" style="cursor:pointer; font-size: 22px;"></i>
             <span id="chat-with-name" class="mc-style">MESSAGES</span>
         </div>
         <div id="pm-box" class="chat-stream"></div>
@@ -356,6 +339,7 @@
         </div>
     </div>
 
+    <!-- Auth Gate -->
     <div id="auth-gate" class="auth-overlay">
         <div class="auth-box" id="login-form">
             <h1 class="mc-style" style="color:var(--st-cyan); margin-bottom:30px;">AUTHORIZE</h1>
@@ -384,9 +368,9 @@
             </div>
         </header>
 
-        <!-- 1. Yellow Sticky Booking Button -->
-        <div class="sticky-booking-bar">
-            <button class="btn-book-sticky" onclick="UI.Page('services')">
+        <!-- 1. زر الحجز الأصفر الثابت -->
+        <div class="booking-sticky-container">
+            <button class="btn-booking mc-style" onclick="UI.Page('services')">
                 <i class="fas fa-calendar-check"></i> BOOK OFFICIAL SERVICE
             </button>
         </div>
@@ -399,7 +383,7 @@
             </section>
 
             <section id="page-services" class="page">
-                <div class="service-header-sticky" style="top:140px;">
+                <div class="service-header-sticky">
                     <h2 class="mc-style" style="color:var(--st-gold); font-size: 18px;">OFFICIAL SERVICES</h2>
                     <p style="color:var(--st-dim); font-size:10px;">VERIFIED TUNING BY STUTGARD ADMIN</p>
                 </div>
@@ -407,12 +391,12 @@
             </section>
 
             <section id="page-add" class="page">
-                <div class="auth-box" style="max-width:100%; border-radius:30px;">
-                    <h2 class="mc-style" style="margin-bottom:20px;">PUBLISH ASSET</h2>
+                <div class="auth-box" style="max-width:100%; border-radius:30px; text-align: left;">
+                    <h2 class="mc-style" style="margin-bottom:25px; text-align: center;">PUBLISH ASSET</h2>
                     <input type="text" id="post-title" class="st-field" placeholder="VEHICLE NAME">
                     <input type="number" id="post-price" class="st-field" placeholder="PRICE (CPM)">
                     
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                         <select id="post-status" class="st-field">
                             <option value="IKINCI EL">IKINCI EL (USED)</option>
                             <option value="0 KM (ZERO)">0 KM (ZERO)</option>
@@ -420,27 +404,28 @@
                         <input type="text" id="post-year" class="st-field" placeholder="MODEL YEAR">
                     </div>
 
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
                         <input type="text" id="post-km" class="st-field" placeholder="MILEAGE (KM)">
                         <input type="text" id="post-hp" class="st-field" placeholder="ENGINE HP">
                     </div>
 
-                    <!-- 2. Multiple Image Upload -->
-                    <p class="mc-style" style="font-size:10px; color:var(--st-dim); margin-bottom:5px; text-align:left;">SELECT MULTIPLE PHOTOS</p>
-                    <input type="file" id="post-imgs" class="st-field" accept="image/*" multiple>
-                    
+                    <!-- 2. نظام الصور المتعددة -->
+                    <p style="font-size:10px; color:var(--st-dim); margin-bottom:8px;" class="mc-style">SELECT MULTIPLE PHOTOS</p>
+                    <input type="file" id="post-imgs" class="st-field" accept="image/*" multiple onchange="UI.PreviewImages(this)">
+                    <div id="upload-preview" class="upload-preview-grid"></div>
+
                     <button class="btn-main mc-style" onclick="Data.Market.Add()">POST TO GRID</button>
                 </div>
             </section>
 
             <section id="page-ai" class="page">
-                <h2 class="mc-style" style="margin-bottom:20px;">STUTGARD AI (GEMINI)</h2>
+                <h2 class="mc-style" style="margin-bottom:20px;">STUTGARD GEMINI AI</h2>
                 <div class="chat-container">
                     <div id="chat-box" class="chat-stream">
-                        <div class="bubble bubble-ai">Systems online. I am powered by Gemini. Ask me anything about CPM mechanics or trading.</div>
+                        <div class="bubble bubble-ai">Systems online. I am STUTGARD GEMINI. Ask me anything about CPM mechanics, trading, or tuning.</div>
                     </div>
                     <div style="padding:15px; background:#0d0d0f; display:flex; gap:10px;">
-                        <input type="text" id="ai-input" class="st-field" style="margin:0;" placeholder="Type a message...">
+                        <input type="text" id="ai-input" class="st-field" style="margin:0;" placeholder="Ask Gemini AI...">
                         <button class="btn-main" style="width:60px;" onclick="Data.AI.Talk()"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
@@ -453,7 +438,7 @@
 
             <section id="page-admin" class="page">
                 <h2 class="mc-style" style="color:var(--st-danger); margin-bottom:25px;">ROOT TERMINAL</h2>
-                <div id="root-access-granted" class="grid">
+                <div id="root-access-granted" class="grid" style="grid-template-columns: 1fr;">
                     <div class="auth-box" style="max-width:100%; text-align:left; padding:25px;">
                         <h3 class="mc-style" style="font-size:14px; margin-bottom:15px; color:var(--st-gold);">ADD NEW SERVICE</h3>
                         <input type="text" id="mod-title" class="st-field" placeholder="SERVICE NAME">
@@ -483,20 +468,8 @@
         </nav>
     </div>
 
-    <!-- 5. Gemini Integration -->
-    <script type="importmap">
-        {
-          "imports": {
-            "@google/genai": "https://esm.sh/@google/genai"
-          }
-        }
-    </script>
-
-    <script type="module">
-        import { GoogleGenAI } from "@google/genai";
-
-        // Global State
-        window.State = {
+    <script>
+        const State = {
             users: JSON.parse(localStorage.getItem('st_u')) || [{ name: "Mustafa", email: "mustafabarbour5@gmail.com", pass: "Abd120120", role: "admin", status: "active" }],
             market: JSON.parse(localStorage.getItem('st_m')) || [],
             services: JSON.parse(localStorage.getItem('st_s')) || [],
@@ -505,30 +478,30 @@
             session: null,
             rootEmail: "mustafabarbour5@gmail.com",
             currentSliderIdx: 0,
-            activeCarImages: []
+            activeCar: null
         };
 
-        window.Storage = {
+        const Storage = {
             save: () => {
-                localStorage.setItem('st_u', JSON.stringify(window.State.users));
-                localStorage.setItem('st_m', JSON.stringify(window.State.market));
-                localStorage.setItem('st_s', JSON.stringify(window.State.services));
-                localStorage.setItem('st_o', JSON.stringify(window.State.orders));
-                localStorage.setItem('st_c', JSON.stringify(window.State.chats));
+                localStorage.setItem('st_u', JSON.stringify(State.users));
+                localStorage.setItem('st_m', JSON.stringify(State.market));
+                localStorage.setItem('st_s', JSON.stringify(State.services));
+                localStorage.setItem('st_o', JSON.stringify(State.orders));
+                localStorage.setItem('st_c', JSON.stringify(State.chats));
             }
         };
 
-        window.Data = {
+        const Data = {
             Market: {
                 Add: async () => {
                     const t = document.getElementById('post-title').value, 
                           p = document.getElementById('post-price').value, 
                           files = document.getElementById('post-imgs').files;
-                    
+
                     if(!t || !p || files.length === 0) return UI.Toast("MISSING ASSET DATA");
-                    
+
                     const images = [];
-                    for (let file of files) {
+                    for(let file of files) {
                         const base64 = await new Promise(resolve => {
                             const reader = new FileReader();
                             reader.onload = (e) => resolve(e.target.result);
@@ -537,7 +510,7 @@
                         images.push(base64);
                     }
 
-                    window.State.market.unshift({ 
+                    State.market.unshift({ 
                         id: Date.now(), 
                         title: t, 
                         price: p, 
@@ -545,34 +518,39 @@
                         year: document.getElementById('post-year').value || "2024", 
                         km: document.getElementById('post-km').value || "0", 
                         hp: document.getElementById('post-hp').value || "1695", 
-                        imgs: images, 
-                        owner: window.State.session.name, 
-                        ownerEmail: window.State.session.email 
+                        images: images, 
+                        owner: State.session.name, 
+                        ownerEmail: State.session.email 
                     });
-                    
+
                     Storage.save(); 
                     UI.Toast("ASSET DEPLOYED"); 
                     UI.Page('home'); 
                     Data.Market.Render();
+                    document.getElementById('upload-preview').innerHTML = "";
+                    document.getElementById('post-imgs').value = "";
                 },
-                // 4. Quick Delete Logic
                 Delete: (e, id) => {
                     e.stopPropagation();
                     if(confirm("DELETE THIS POST PERMANENTLY?")) {
-                        window.State.market = window.State.market.filter(m => m.id !== id);
+                        State.market = State.market.filter(m => m.id !== id);
                         Storage.save();
                         Data.Market.Render();
-                        UI.Toast("ASSET REMOVED");
+                        UI.Toast("POST REMOVED FROM MEMORY");
                     }
                 },
                 Render: () => {
-                    document.getElementById('market-grid').innerHTML = window.State.market.map(m => `
+                    document.getElementById('market-grid').innerHTML = State.market.map(m => `
                         <div class="card" onclick="UI.OpenDetail(${m.id})">
-                            <button class="quick-delete" onclick="Data.Market.Delete(event, ${m.id})"><i class="fas fa-times"></i></button>
+                            <!-- 4. زر الحذف السريع -->
+                            ${(State.session.email === m.ownerEmail || State.session.email === State.rootEmail) ? 
+                                `<button class="quick-del" onclick="Data.Market.Delete(event, ${m.id})"><i class="fas fa-times"></i></button>` : ''}
+                            
                             <div class="badge badge-sale">${m.status}</div>
                             <div class="img-area">
-                                <img src="${m.imgs[0]}">
-                                ${m.imgs.length > 1 ? `<div class="img-counter mc-style">+${m.imgs.length - 1} PHOTOS</div>` : ''}
+                                <img src="${m.images[0]}">
+                                <!-- 2. عداد الصور -->
+                                ${m.images.length > 1 ? `<div class="img-count-badge mc-style">+${m.images.length - 1} PHOTOS</div>` : ''}
                             </div>
                             <div class="card-body">
                                 <div class="price-text">${parseInt(m.price).toLocaleString()} CPM</div>
@@ -582,30 +560,51 @@
                         </div>`).join('');
                 }
             },
+            Chat: {
+                Open: (toName) => {
+                    if(toName === State.session.name) return UI.Toast("THIS IS YOUR AD");
+                    document.getElementById('chat-with-name').innerText = "CHAT WITH: " + toName;
+                    document.getElementById('chat-overlay').classList.add('active');
+                    Data.Chat.RenderPMs(toName);
+                    document.getElementById('pm-send-btn').onclick = () => Data.Chat.Send(toName);
+                },
+                Send: (toName) => {
+                    const inp = document.getElementById('pm-input');
+                    if(!inp.value.trim()) return;
+                    State.chats.push({ from: State.session.name, to: toName, text: inp.value, time: Date.now() });
+                    Storage.save(); inp.value = ""; Data.Chat.RenderPMs(toName);
+                },
+                RenderPMs: (target) => {
+                    const box = document.getElementById('pm-box');
+                    box.innerHTML = State.chats.filter(c => (c.from === State.session.name && c.to === target) || (c.from === target && c.to === State.session.name)).map(m => `<div class="bubble ${m.from === State.session.name ? 'bubble-user' : 'bubble-msg-recv'}">${m.text}</div>`).join('');
+                    box.scrollTop = box.scrollHeight;
+                },
+                RenderInbox: () => {
+                    const list = document.getElementById('chats-list');
+                    const contacts = [...new Set(State.chats.map(c => c.from === State.session.name ? c.to : c.from))];
+                    list.innerHTML = contacts.map(c => `<div class="user-row" onclick="Data.Chat.Open('${c}')"><span class="mc-style" style="font-size:14px;">${c}</span><i class="fas fa-chevron-right" style="color:var(--st-cyan)"></i></div>`).join('') || '<p style="text-align:center; color:var(--st-dim);">No messages yet.</p>';
+                }
+            },
             AI: {
-                Talk: async () => {
-                    const inp = document.getElementById('ai-input'), 
-                          box = document.getElementById('chat-box'), 
-                          val = inp.value.trim();
-                    
-                    if(!val) return;
-                    box.innerHTML += `<div class="bubble bubble-user">${val}</div>`;
+                Talk: () => {
+                    const inp = document.getElementById('ai-input'), box = document.getElementById('chat-box'), val = inp.value.trim().toLowerCase();
+                    if(!val) return; 
+                    box.innerHTML += `<div class="bubble bubble-user">${inp.value}</div>`;
                     inp.value = "";
                     box.scrollTop = box.scrollHeight;
 
-                    try {
-                        const genAI = new GoogleGenAI({ apiKey: "YOUR_API_KEY_HERE" }); // In AI Studio, process.env.GEMINI_API_KEY is used
-                        const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
-                        
-                        const result = await model.generateContent(`You are a helpful assistant for STUTGARD CPM Marketplace. User says: ${val}`);
-                        const response = await result.response;
-                        const text = response.text();
-                        
-                        box.innerHTML += `<div class="bubble bubble-ai">${text}</div>`;
-                    } catch (e) {
-                        box.innerHTML += `<div class="bubble bubble-ai">AI System Busy. Please try again later.</div>`;
-                    }
-                    box.scrollTop = box.scrollHeight;
+                    setTimeout(() => {
+                        let reply = "I am STUTGARD GEMINI. Ask me about 'Tuning', 'Trading', or 'Admin'.";
+                        const brain = [
+                            { keys: ['فلوس', 'money', 'cpm'], ans: "To make money fast in CPM, design unique cars and sell them at the World Market for high prices." },
+                            { keys: ['بيع', 'sell', 'publish'], ans: "Click the (+) button in the center, upload your car photos, set a price, and publish it to the grid." },
+                            { keys: ['أدمن', 'admin', 'mustafa'], ans: "The Head Admin and Developer of this platform is Mustafa Barbour." },
+                            { keys: ['tuning', 'تعديل', 'service'], ans: "Official services are provided by STUTGARD. You can book a session in the SERVICES tab." }
+                        ];
+                        for (let item of brain) { if (item.keys.some(k => val.includes(k))) { reply = item.ans; break; } }
+                        box.innerHTML += `<div class="bubble bubble-ai">${reply}</div>`; 
+                        box.scrollTop = box.scrollHeight;
+                    }, 800);
                 }
             },
             Admin: {
@@ -614,103 +613,88 @@
                     if(!t || !f) return UI.Toast("MISSING INFO");
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        window.State.services.unshift({ id: Date.now(), title: t, desc: d, img: e.target.result });
+                        State.services.unshift({ id: Date.now(), title: t, desc: d, img: e.target.result });
                         Storage.save(); UI.Toast("SERVICE PUBLISHED"); Data.Admin.RenderServices();
                     };
                     reader.readAsDataURL(f);
                 },
                 RenderServices: () => {
-                    document.getElementById('services-grid').innerHTML = window.State.services.map(s => `
+                    document.getElementById('services-grid').innerHTML = State.services.map(s => `
                         <div class="card">
+                            <!-- زر الحذف للخدمات -->
+                            ${State.session.email === State.rootEmail ? `<button class="quick-del" onclick="Data.Admin.DelService(event, ${s.id})"><i class="fas fa-times"></i></button>` : ''}
+                            
                             <div class="badge badge-mod">OFFICIAL</div>
                             <div class="img-area"><img src="${s.img}"></div>
                             <div class="card-body">
                                 <div class="title-text" style="color:var(--st-gold)">${s.title}</div>
                                 <div style="font-size:11px; color:var(--st-dim);">${s.desc}</div>
                                 <button class="btn-main mc-style" onclick="UI.OpenModOrder('${s.title}')" style="height:35px; font-size:8px; margin-top:10px; background:var(--st-gold);">
-                                   <i class="fas fa-calendar-check"></i> BOOK
+                                   <i class="fas fa-calendar-check"></i> BOOK NOW
                                 </button>
                             </div>
                         </div>`).join('');
                 },
-                SubmitOrder: async () => {
-                    const car = document.getElementById('order-car-name').value, 
-                          gid = document.getElementById('order-game-id').value,
-                          files = document.getElementById('order-imgs').files;
-                    
-                    if(!car || !gid) return UI.Toast("FILL ALL FIELDS");
-                    
-                    const images = [];
-                    for (let file of files) {
-                        const base64 = await new Promise(resolve => {
-                            const reader = new FileReader();
-                            reader.onload = (e) => resolve(e.target.result);
-                            reader.readAsDataURL(file);
-                        });
-                        images.push(base64);
+                DelService: (e, id) => {
+                    e.stopPropagation();
+                    if(confirm("DELETE THIS SERVICE?")) {
+                        State.services = State.services.filter(s => s.id !== id);
+                        Storage.save();
+                        Data.Admin.RenderServices();
+                        UI.Toast("SERVICE REMOVED");
                     }
-
-                    window.State.orders.unshift({ 
-                        id: Date.now(), 
-                        user: window.State.session.name, 
-                        service: window.State.activeService, 
-                        car: car, 
-                        gameID: gid,
-                        imgs: images
-                    });
-                    
-                    Storage.save(); 
-                    UI.Toast("ORDER SENT"); 
-                    UI.CloseModOrder(); 
-                    Data.Admin.RenderOrders();
+                },
+                SubmitOrder: () => {
+                    const car = document.getElementById('order-car-name').value, gid = document.getElementById('order-game-id').value;
+                    if(!car || !gid) return UI.Toast("FILL ALL FIELDS");
+                    State.orders.unshift({ id: Date.now(), user: State.session.name, service: State.activeService, car: car, gameID: gid });
+                    Storage.save(); UI.Toast("BOOKING REQUEST SENT"); UI.CloseModOrder(); Data.Admin.RenderOrders();
                 },
                 RenderOrders: () => {
-                    document.getElementById('mod-orders-list').innerHTML = window.State.orders.map(o => `
+                    document.getElementById('mod-orders-list').innerHTML = State.orders.map(o => `
                         <div class="user-row" style="flex-direction:column; align-items:flex-start;">
                             <div style="color:var(--st-gold); font-size:12px;">${o.service}</div>
                             <div style="font-size:11px;"><b>User:</b> ${o.user} | <b>ID:</b> ${o.gameID}</div>
-                            <div style="display:flex; gap:5px; margin-top:5px;">
-                                ${o.imgs ? o.imgs.map(img => `<img src="${img}" style="width:40px; height:40px; border-radius:5px; object-fit:cover;">`).join('') : ''}
-                            </div>
-                            <button onclick="Data.Admin.DelOrder(${o.id})" style="background:red; color:white; border:none; padding:3px 8px; border-radius:5px; margin-top:5px; font-size:10px;">DONE</button>
-                        </div>`).join('') || '<p style="color:var(--st-dim)">No orders.</p>';
+                            <div style="font-size:10px; color:var(--st-dim);"><b>Car:</b> ${o.car}</div>
+                            <button onclick="Data.Admin.DelOrder(${o.id})" style="background:var(--st-success); color:#000; border:none; padding:5px 12px; border-radius:5px; margin-top:8px; font-size:10px; font-weight:bold;">MARK AS DONE</button>
+                        </div>`).join('') || '<p style="color:var(--st-dim)">No pending orders.</p>';
                 },
-                DelOrder: (id) => { window.State.orders = window.State.orders.filter(o => o.id !== id); Storage.save(); Data.Admin.RenderOrders(); },
+                DelOrder: (id) => { State.orders = State.orders.filter(o => o.id !== id); Storage.save(); Data.Admin.RenderOrders(); },
                 Ban: (email) => {
-                    if(email === window.State.rootEmail) return UI.Toast("ROOT PROTECTED");
-                    const u = window.State.users.find(x => x.email === email);
+                    if(email === State.rootEmail) return UI.Toast("ROOT PROTECTED");
+                    const u = State.users.find(x => x.email === email);
                     u.status = (u.status === 'active') ? 'banned' : 'active';
                     Storage.save(); Data.Admin.RenderUsers();
                 },
                 RenderUsers: () => {
-                    document.getElementById('users-list').innerHTML = window.State.users.map(u => `
+                    document.getElementById('users-list').innerHTML = State.users.map(u => `
                         <div class="user-row">
                             <div><b>${u.name}</b><br><small>${u.email}</small></div>
-                            <button onclick="Data.Admin.Ban('${u.email}')" style="background:${u.status==='active'?'red':'green'}; color:#fff; border:none; padding:5px; border-radius:5px; font-size:10px;">${u.status==='active'?'BAN':'UNBAN'}</button>
+                            <button onclick="Data.Admin.Ban('${u.email}')" style="background:${u.status==='active'?'red':'green'}; color:#fff; border:none; padding:5px 10px; border-radius:5px; font-size:10px;">${u.status==='active'?'BAN':'UNBAN'}</button>
                         </div>`).join('');
                 }
             }
         };
 
-        window.App = {
+        const App = {
             Login: () => {
-                const u = window.State.users.find(x => x.email === document.getElementById('email-in').value && x.pass === document.getElementById('pass-in').value);
-                if(u) { if(u.status === 'banned') return UI.Toast("BANNED"); window.State.session = u; App.Launch(); } else UI.Toast("AUTH ERROR");
+                const u = State.users.find(x => x.email === document.getElementById('email-in').value && x.pass === document.getElementById('pass-in').value);
+                if(u) { if(u.status === 'banned') return UI.Toast("BANNED"); State.session = u; App.Launch(); } else UI.Toast("AUTH ERROR");
             },
             Register: () => {
                 const n = document.getElementById('reg-name').value, e = document.getElementById('reg-email').value, p = document.getElementById('reg-pass').value;
-                if(!n || !e || !p) return UI.Toast("FILL ALL"); window.State.users.push({ name: n, email: e, pass: p, role: "user", status: "active" });
-                Storage.save(); App.ShowReg(false); UI.Toast("CREATED");
+                if(!n || !e || !p) return UI.Toast("FILL ALL"); State.users.push({ name: n, email: e, pass: p, role: "user", status: "active" });
+                Storage.save(); App.ShowReg(false); UI.Toast("ACCOUNT CREATED");
             },
             ShowReg: (s) => { document.getElementById('login-form').style.display = s ? 'none' : 'block'; document.getElementById('reg-form').style.display = s ? 'block' : 'none'; },
             Launch: () => {
                 document.getElementById('auth-gate').style.display = 'none'; document.getElementById('app-root').style.display = 'block';
-                if(window.State.session.email === window.State.rootEmail) { document.getElementById('admin-tab').style.display = 'flex'; document.getElementById('admin-notif').style.display = 'block'; Data.Admin.RenderUsers(); Data.Admin.RenderOrders(); }
+                if(State.session.email === State.rootEmail) { document.getElementById('admin-tab').style.display = 'flex'; document.getElementById('admin-notif').style.display = 'block'; Data.Admin.RenderUsers(); Data.Admin.RenderOrders(); }
                 Data.Market.Render(); Data.Admin.RenderServices();
             }
         };
 
-        window.UI = {
+        const UI = {
             Page: (id, el) => { 
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); 
                 document.getElementById('page-' + id).classList.add('active'); 
@@ -719,16 +703,31 @@
                 if(id === 'msgs') Data.Chat.RenderInbox(); 
                 window.scrollTo(0,0); 
             },
-            OpenModOrder: (t) => { window.State.activeService = t; document.getElementById('order-service-name').innerText = t; document.getElementById('mod-order-overlay').classList.add('active'); },
+            PreviewImages: (input) => {
+                const preview = document.getElementById('upload-preview');
+                preview.innerHTML = "";
+                if (input.files) {
+                    Array.from(input.files).forEach(file => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            preview.innerHTML += `<div class="preview-box"><img src="${e.target.result}"></div>`;
+                        }
+                        reader.readAsDataURL(file);
+                    });
+                }
+            },
+            OpenModOrder: (t) => { State.activeService = t; document.getElementById('order-service-name').innerText = t; document.getElementById('mod-order-overlay').classList.add('active'); },
             CloseModOrder: () => document.getElementById('mod-order-overlay').classList.remove('active'),
             OpenDetail: (id) => {
-                const m = window.State.market.find(x => x.id === id);
-                window.State.activeCarImages = m.imgs;
-                window.State.currentSliderIdx = 0;
-                
-                // 3. Slider Rendering
+                const m = State.market.find(x => x.id === id);
+                State.activeCar = m;
+                State.currentSliderIdx = 0;
+
+                // 3. بناء السلايدر
                 const track = document.getElementById('detail-slider-track');
-                track.innerHTML = m.imgs.map(img => `<img src="${img}" class="slider-slide">`).join('');
+                const dots = document.getElementById('slider-dots');
+                track.innerHTML = m.images.map(img => `<div class="slider-item"><img src="${img}"></div>`).join('');
+                dots.innerHTML = m.images.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('');
                 track.style.transform = `translateX(0%)`;
 
                 document.getElementById('det-title').innerText = m.title; 
@@ -739,22 +738,36 @@
                 document.getElementById('det-hp').innerText = m.hp + " HP"; 
                 document.getElementById('det-owner').innerText = m.owner;
                 
+                const delBtn = document.getElementById('delete-asset-btn'); 
+                if(State.session.email === m.ownerEmail || State.session.email === State.rootEmail) {
+                    delBtn.style.display = 'block';
+                } else {
+                    delBtn.style.display = 'none';
+                }
+
+                delBtn.onclick = () => { 
+                    if(confirm("DELETE THIS ASSET?")) {
+                        State.market = State.market.filter(x => x.id !== id); 
+                        Storage.save(); UI.CloseDetail(); Data.Market.Render(); UI.Toast("ASSET REMOVED");
+                    }
+                };
                 document.getElementById('car-detail-overlay').classList.add('active'); 
                 document.getElementById('contact-seller-btn').onclick = () => Data.Chat.Open(m.owner);
             },
-            // 3. Slider Navigation
-            MoveSlider: (dir) => {
-                const total = window.State.activeCarImages.length;
-                window.State.currentSliderIdx = (window.State.currentSliderIdx + dir + total) % total;
+            SliderMove: (dir) => {
                 const track = document.getElementById('detail-slider-track');
-                track.style.transform = `translateX(-${window.State.currentSliderIdx * 100}%)`;
+                const dots = document.querySelectorAll('.dot');
+                const total = State.activeCar.images.length;
+                State.currentSliderIdx = (State.currentSliderIdx + dir + total) % total;
+                track.style.transform = `translateX(-${State.currentSliderIdx * 100}%)`;
+                dots.forEach((d, i) => d.classList.toggle('active', i === State.currentSliderIdx));
             },
             CloseDetail: () => document.getElementById('car-detail-overlay').classList.remove('active'),
             CloseChat: () => document.getElementById('chat-overlay').classList.remove('active'),
             Toast: (m) => { const t = document.getElementById('toast'); t.innerText = m; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 3000); }
         };
 
-        window.onload = () => setTimeout(() => document.getElementById('st-loader').style.display = 'none', 1000);
+        window.onload = () => setTimeout(() => document.getElementById('st-loader').style.display = 'none', 1200);
     </script>
 </body>
 </html>
